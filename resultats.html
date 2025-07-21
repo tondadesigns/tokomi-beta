@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Résultats de recherche – Tokomi</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="./TOKOMI - LOGO.jpg" type="image/jpeg" />
+<style>
+  .subcategory {
+  font-weight: 300; /* ou 600 pour semi-bold, 700 pour bold */
+  font-size: 8px;
+  font-family: 'Space Grotesk', sans-serif;
+  padding: 6px 12px;
+  margin-right: 8px;
+  border-radius: 0;
+  background-color: #f5f5f5; /* facultatif pour un style badge */
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+  
+.filter-fullscreen {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: white;
+      z-index: 2000;
+      display: none;
+      flex-direction: column;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .filter-fullscreen.active {
+      display: flex;
+    }
+    .filter-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      border-bottom: 1px solid #eee;
+    }
+    .filter-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      max-height: 120px !important;
+      overflow-y: auto;
+      border: none;
+      margin-top: 24px;
+      margin-left: 12px ;  
+      margin-right: 10px;    
+      font-size: 8px;
+      font-weight: 300;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .filter-tag {
+      background: #f2f2f2;
+      padding: 4px 8px;
+      border-radius: 0;
+    }
+    .filter-body {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+    .filter-left {
+      width: 120px;
+      padding-top: 140px;
+      border-right: none;
+      overflow-y: auto;
+      left: 16px;
+    }
+
+    .filter-link {
+      font-size: 12px;
+      margin-bottom: 20px;
+      font-weight: 300;
+      cursor: pointer;
+      color: #666;
+    }
+    .filter-link.active {
+      
+      font-weight: bold;
+      color: #000;
+    }
+    .filter-center {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+    }
+    .filter-option {
+      margin-top: 32px ;
+      justify-content: center;
+      align-items: center;
+      border-left: 42px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      cursor: pointer;
+
+    }
+    .filter-right {
+      width: 24px;
+      padding: 8px;
+      overflow-y: auto;
+      border-left: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 120px;
+    }
+    .filter-right .letter {
+      font-size: 8px;
+      text-align: center;
+      color: #aaa;
+      cursor: pointer;
+      margin-bottom: 2px;
+      line-height: 1.5;
+    }
+    .filter-footer {
+      padding: 16px;
+      text-align: center;
+      border-top: none;
+    }
+    .apply-button {
+      padding: 12px 24px;
+      background: black;
+      color: white;
+      border: none;
+      border-radius: 0;
+      cursor: pointer;
+      width: 90%;
+      max-width: 320px;
+      margin: 0 auto;
+      display: block;
+      font-weight: 300;
+      font-size: 12px;
+    }
+
+</style>
+</head>
+<body>
+
+<!-- Panneau de filtrage plein écran -->
+  <div id="filterPanel" class="filter-fullscreen">
+    <div class="filter-topbar">
+      <button class="btn-retour" onclick="window.location.href='resultats.html'">RETOUR</button>
+      <div id="filter-tags" class="filter-tags"></div>
+      <button class="btn-effacer" onclick="clearAllFilters()">EFFACER</button>
+
+    </div>
+    <div class="filter-body">
+      <div class="filter-left">
+<div id="btn-enregistres" class="filter-link">ENREGISTRÉ</div>
+<div id="btn-categories" class="filter-link" >CATÉGORIES</div>
+<div id="btn-marques" class="filter-link">MARQUES</div>
+<div id="btn-couleurs" class="filter-link">COULEURS</div>
+<div id="btn-tailles" class="filter-link">TAILLES</div>
+<div id="btn-nouveautes" class="filter-link">NOUVEAUTÉS</div>
+<div id="btn-origine" class="filter-link">ORIGINE</div>
+<div id="btn-selections" class="filter-link">SÉLECTIONS</div>
+        
+      </div>
+
+     <div id="filter-center" class="filter-center"></div>
+
+      <div class="filter-right hidden" id="filter-right">
+        <div class="letter">#</div>
+        <div class="letter">A</div><div class="letter">B</div><div class="letter">C</div>
+        <div class="letter">D</div><div class="letter">E</div><div class="letter">F</div>
+        <div class="letter">G</div><div class="letter">H</div><div class="letter">I</div>
+        <div class="letter">J</div><div class="letter">K</div><div class="letter">L</div>
+        <div class="letter">M</div><div class="letter">N</div><div class="letter">O</div>
+        <div class="letter">P</div><div class="letter">Q</div><div class="letter">R</div>
+        <div class="letter">S</div><div class="letter">T</div><div class="letter">U</div>
+        <div class="letter">V</div><div class="letter">W</div><div class="letter">X</div>
+        <div class="letter">Y</div><div class="letter">Z</div>
+      </div>
+    </div>
+    <div class="filter-footer">
+      <button class="apply-button" onclick="applyFilters()">VOIR LES RÉSULTATS</button>
+    </div>
+  </div>
+
+
+
+
+
+<header class="top-bar" style="display: flex; justify-content: space-between; align-items: center; padding: 0 16px;">
+  <button class="btn-retour" onclick="history.back()">RETOUR</button>
+  <button class="btn-panier" onclick="window.location.href='panier.html'">PANIER</button>
+</header>
+
+
+<nav class="category-switch">
+  <div class="category-button active" data-category="femme">FEMME <span class="arrow-up"></span></div>
+  <div class="category-button" data-category="homme">HOMME</div>
+  <div class="category-button" data-category="enfant">ENFANT</div>
+</nav>
+
+<div class="subcategory-carousel hidden" id="subcategory-carousel"></div>
+
+<main class="product-gallery" id="product-gallery">
+  <div class="product-card"><div class="img-placeholder"><div class="color-tag">+ 3 COULEURS</div></div><div class="brand">RICK OWENS</div><div class="product-name">BASKETS GEOBASKET</div><div class="price">€400</div></div>
+
+  <div class="product-card"><div class="img-placeholder"><div class="color-tag">+ 3 COULEURS</div></div><div class="brand">BALENCIAGA</div><div class="product-name">TRIPLE S CLEAR SOLE</div><div class="price">€520</div></div>
+
+  <div class="product-card"><div class="img-placeholder"><div class="color-tag">+ 3 COULEURS</div></div><div class="brand">FEAR OF GOD</div><div class="product-name">ESSENTIALS HOODIE</div><div class="price">€350</div></div>
+  <div class="product-card"><div class="img-placeholder"><div class="color-tag">+ 3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+  <div class="product-card"><div class="img-placeholder"><div class="color-tag"> +3 COULEURS</div></div><div class="brand">RICK OWENS</div><div class="product-name">BASKETS GEOBASKET</div><div class="price">€400</div></div>
+
+  <div class="product-card"><div class="img-placeholder"><div class="color-tag">+ 3 COULEURS</div></div><div class="brand">BALENCIAGA</div><div class="product-name">TRIPLE S CLEAR SOLE</div><div class="price">€520</div></div>
+
+  <div class="product-card"><div class="img-placeholder"><div class="color-tag">+ 3 COULEURS</div></div><div class="brand">FEAR OF GOD</div><div class="product-name">ESSENTIALS HOODIE</div><div class="price">€350</div></div>
+  <div class="product-card"><div class="img-placeholder"><div class="color-tag">+ 3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+  <div class="product-card"><div class="img-placeholder"><div class="color-tag">+ 3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+  <div class="product-card"><div class="img-placeholder"><div class="color-tag">+ 3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+  <div class="product-card"><div class="img-placeholder"><div class="color-tag">+ 3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+  <div class="product-card"><div class="img-placeholder"><div class="color-tag">+ 3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+  <div class="product-card"><div class="img-placeholder"><div class="color-tag">+ 3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+  <div class="product-card"><div class="img-placeholder"><div class="color-tag">+ 3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+  <div class="product-card"><div class="img-placeholder"><div class="color-tag">+ 3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+  <div class="product-card"><div class="img-placeholder"><div class="color-tag">+ 3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+<div class="product-card"><div class="img-placeholder"><div class="color-tag">+ 3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+<div class="product-card"><div class="img-placeholder"><div class="color-tag">+ 3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+<div class="product-card"><div class="img-placeholder"><div class="color-tag">+3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+<div class="product-card"><div class="img-placeholder"><div class="color-tag">+3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+<div class="product-card"><div class="img-placeholder"><div class="color-tag">+3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+<div class="product-card"><div class="img-placeholder"><div class="color-tag">+3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+<div class="product-card"><div class="img-placeholder"><div class="color-tag">+3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+<div class="product-card"><div class="img-placeholder"><div class="color-tag">+3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+<div class="product-card"><div class="img-placeholder"><div class="color-tag">+3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+<div class="product-card"><div class="img-placeholder"><div class="color-tag">+3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+<div class="product-card"><div class="img-placeholder"><div class="color-tag">+3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+<div class="product-card"><div class="img-placeholder"><div class="color-tag">+3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+<div class="product-card"><div class="img-placeholder"><div class="color-tag">+3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+<div class="product-card"><div class="img-placeholder"><div class="color-tag">+3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+<div class="product-card"><div class="img-placeholder"><div class="color-tag">+3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+<div class="product-card"><div class="img-placeholder"><div class="color-tag">+3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+<div class="product-card"><div class="img-placeholder"><div class="color-tag">+3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+<div class="product-card"><div class="img-placeholder"><div class="color-tag">+3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+<div class="product-card"><div class="img-placeholder"><div class="color-tag">+3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+<div class="product-card"><div class="img-placeholder"><div class="color-tag">+3 COULEURS</div></div><div class="brand">KITH</div><div class="product-name">CHELSEA SUEDE BOOTS</div><div class="price">€260</div></div>
+
+</main>
+
+
+<footer class="sticky-footer">
+    <a href="accueil.html" class="menu-item active">
+      
+      <span>ACCUEIL</span>
+    </a>
+    <a href="explorer.html" class="menu-item active">
+      
+      <span>EXPLORER</span>
+    </a>
+    <a href="profil.html" class="menu-item">
+      <span>PROFIL</span>
+    </a>
+</footer>
+
+
+
+
+
+
+    <!-- Sticky buttons -->
+<div class="sticky-options">
+  <button class="option-button" onclick="openSortModal()">TRIER PAR</button>
+  <button class="option-button" onclick="openFilter()">FILTRES</button>
+</div>
+
+<script>
+  
+ const urlParams = new URLSearchParams(window.location.search);
+  const filtres = urlParams.getAll("filtre"); // tableau de tags sélectionnés
+  console.log("Filtres actifs :", filtres);
+
+  // Catalogue de produits simplifié
+  const allProducts = [
+    { brand: "RICK OWENS", name: "BASKETS GEOBASKET", tags: ["RICK OWENS", "CHAUSSURES", "NOIR"], price: 400 },
+    { brand: "BALENCIAGA", name: "TRIPLE S CLEAR SOLE", tags: ["BALENCIAGA", "CHAUSSURES", "NOIR"], price: 520 },
+    { brand: "FEAR OF GOD", name: "ESSENTIALS HOODIE", tags: ["FEAR OF GOD", "VÊTEMENTS", "NOIR"], price: 350 },
+    { brand: "KITH", name: "CHELSEA BOOTS", tags: ["KITH", "CHAUSSURES", "BEIGE"], price: 260 }
+  ];
+
+    // Filtrage des produits selon les filtres de l'URL
+  const filteredProducts = allProducts.filter(product =>
+    filtres.every(filtre => product.tags.includes(filtre.toUpperCase()))
+  );
+
+  // Affichage dans la galerie
+  const gallery = document.getElementById("product-gallery");
+  filteredProducts.forEach(product => {
+    const card = document.createElement("div");
+    card.className = "product-card";
+    card.innerHTML = `
+      <div class="img-placeholder">
+        <div class="color-tag">+ 3 COULEURS</div>
+      </div>
+      <div class="brand">${product.brand}</div>
+      <div class="product-name">${product.name}</div>
+      <div class="price">€${product.price}</div>
+    `;
+    gallery.appendChild(card);
+  });
+
+  const subcatCarousel = document.getElementById('subcategory-carousel');
+  const categoryButtons = document.querySelectorAll('.category-button');
+
+  const subcategories = {
+    femme: ["Robes", "Talons", "Bijoux", "Vestes", "Bags", "Casual", "Workwear", "Sport", "Soirée", "Lingerie", "Été", "Nouveautés", "Minimal", "Chic"],
+    homme: ["Sneakers", "Pantalons", "Chemises", "Vestes", "Accessoires", "Business", "Casual", "Luxe", "Créateurs", "Streetwear", "Sacs", "Sport", "T-shirts", "Caps"],
+    enfant: ["Pyjamas", "Jeux", "Mini looks", "T-shirts", "Sandales", "Vestes", "Bibs", "Sport", "Accessoires", "Tenues cérémonie", "Doudounes", "École", "Mini sacs", "Basics"]
+  };
+
+  function updateSubcategories(category) {
+    subcatCarousel.innerHTML = "";
+    subcategories[category].forEach(label => {
+      const el = document.createElement("div");
+      el.className = "subcategory";
+      el.textContent = label.toUpperCase();
+      subcatCarousel.appendChild(el);
+    });
+    subcatCarousel.classList.remove("hidden");
+  }
+
+  categoryButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      categoryButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      updateSubcategories(btn.dataset.category);
+    });
+  });
+
+  updateSubcategories("femme");
+</script>
+<script>
+    function openFilter() {
+      document.getElementById('filterPanel').classList.add('active');
+    }
+    function closeFilter() {
+      document.getElementById('filterPanel').classList.remove('active');
+    }
+    function applyFilters() {
+      window.location.href = "resultats.html?categorie=chaussures&couleur=noir";
+    }
+  </script>
+
+<script>
+  const filterData = {
+    enregistres: ["RICK OWENS", "BALENCIAGA", "FEAR OF GOD", "KITH", "LORO PIANA", "MELON JAUNE"],
+    categories: ["MODE", "MANTEAUX & BLOUSONS", "COSTUMES","BLAZERS & VESTES","CHEMISES","POLO, T-SHIRTS & DÉBARDEURS","SWEATERS & KNITWEAR", "PANTALONS","JEANS","LINGERIE & VÊTEMENTS D'INTÉRIEURS","MAILLOTS DE BAIN & VÊTEMENTS DE PLAGE", "CHAUSSURES", "SANDALES & MULES", "ESCARPINS","BASKETS","BOTTES & BOTTINES", "MOCASSINS & DERBIES", "ACCESSOIRES", "SACS","BIJIOUX", "CEINTURES","CHAUSSETTES","CRAVATES & NOEUDS PAPILLON","LUNETTES DE SOLEIL","ÉCHARPES & FOULARDS", "CHAPEAUX & CASQUETTES","GANTS","PORTE-CLÉS","PORTEFEUILLES & PORTE-CARTES","MONTRES","BEAUTÉ","SOIN DU VISAGE","SOIN DU CORPS","SOIN CAPILLAIRE","MAQUILLAGE","PARFUMS", "LIFESTYLE","MAISON","DÉCORATION","BOUGIES","ART DE LA TABLE", "PAPETERIE & ART", "LIVRES & MAGAZINES","COFFRETS CADEAUX", "VOYAGES & ACCESSOIRES"],
+    marques: ["3.PARADIS","ACNE STUDIOS", "ZEGNAA", "AESOP","ALEXANDER MCQUEEN","BALENCIAGA","BALMAIN","BOTTEGA VENETA","BURBERRY","C.P. COMPANY","CASABLANCA","CELINE HOMME", "CHARLOTTE TILBURY","CHRISTIE BROWN","COPERNI","COS","DAILY PAPER","DRIES VAN NOTEN","FENDI","GUCCI","HANIFA", "IAMSIGO","ISABEL MARANT","ISSEY MIYAKE", "JACQUEMUS","JUNYA WATANABE","KATUSHA", "LE LABO","LEMAIRE","LOEWE", "MAISON KITSUNÉ","MAISON MARGIELA","MARINE SERRE","MAX MARA","MAXHORA AFRICA","MELON JAUNE","MIMI PLANGE","MONCLER","MR P","NIKE","OFF-WHITE","ON","ORANGE CULTURE","PRADA","RAINS","RALPH LAUREN","RICH MNSI","SAINT LAURENT","SKIMS","STONE ISLAND","STUDIO 189","THE FRANKIE SHOP","THE ROW","TOM FORD","TONGORO","UCHAWI","ULLA JOHNSON","VALENTINO","VEJA","VÊTEMENTS","WALES DONNER","Y/PROJECT","ZEGNA",],
+    couleurs: ["BLANC", "BLEU","BRUN", "GRIS", "JAUNE", "NOIR", "ORANGE", "ROSE","ROUGE", "VERT"],
+    tailles: [,"XXS","XS", "S", "M", "L", "XL","XXL", "32", "34", "36", "38", "40", "42", "44", "46", "48","50", "52", "54"],
+    tailles: [,"XXS","XS", "S", "M", "L", "XL","XXL", "32", "34", "36", "38", "40", "42", "44", "46", "48","50", "52", "54"],
+    nouveautes: ["NOUVEAUX ARRIVAGES", "BESTSELLERS", "COLLECTIONS CAPSULES", "EN AVANT-PREMIÈRE", "SOLDES PRIVÉES", "OFFRES TEMPORAIRES", "DERNIÈRES CHANCES"],
+    origine: ["NOIR", "BLANC", "JAUNE", "ROUGE", "VERT", "BLEU", "ROSE"],
+    selections: ["CURATED BY TOKOMI", "DESIGNERS ÉMERGENTS", "CONSCIENCE & DURABILITÉ","POUR ELLE/POUR LUI"]
+    // Tu peux ajouter plus de groupes ici
+  };
+
+const spacingKeys = [
+  ["ACCESSOIRES", "Sacs"],
+  ["CHAUSSURES", "Sandales & Mules"],
+  ["BEAUTÉ", "Soin du visage"],
+  ["LIFESTYLE", "Maison"]
+];
+const boldKeys = ["MODE", "CHAUSSURES", "ACCESSOIRES", "BEAUTÉ", "LIFESTYLE"];
+
+
+  const selectedTags = new Set();
+
+
+  function showFilterOptions(key) {
+    const container = document.getElementById('filter-center');
+    container.innerHTML = ""; // Efface l'ancien contenu
+
+const items = filterData[key]; // ✅ ici on récupère les bons items
+
+// 🔽 Si c'est le filtre "marques", trier les items alphabétiquement
+if (key === 'marques') {
+  items.sort((a, b) => a.localeCompare(b));
+}
+
+    // Montre ou cache la colonne de lettres selon le filtre
+  const letterColumn = document.getElementById('filter-right');
+  if (key === 'marques') {
+    letterColumn.classList.remove('hidden');
+  } else {
+    letterColumn.classList.add('hidden');
+  }
+
+if (!items) return;
+
+     items.forEach((name, index, array) => {
+        const div = document.createElement('div');
+        div.className = 'filter-option';
+        div.textContent = name;
+
+// Ajoute une classe spéciale pour les catégories
+      if (key === 'categories') {
+        div.classList.add('category-item');
+      }
+
+ // Appliquer du gras si l'élément est dans boldKeys
+  if (boldKeys.includes(name.toUpperCase())) {
+    div.style.fontWeight = 'bold';
+  }
+
+// Vérifie si cet élément doit déclencher une séparation après lui
+      for (const [before, after] of spacingKeys) {
+        if (name === before && array[index + 1] === after) {
+          div.classList.add('separator');
+          break;
+        }
+      }
+         div.onclick = () => {
+        if (!selectedTags.has(name)) {
+          selectedTags.add(name);
+          addTagToBar(name);
+        }
+      };
+        container.appendChild(div);
+      });
+    }
+  
+  function addTagToBar(name) {
+  const tagBar = document.getElementById('filter-tags');
+  
+   if (selectedTags.size >= 20) {
+    alert("Vous ne pouvez sélectionner que 20 filtres maximum.");
+    return;
+  }
+  selectedTags.add(name);
+
+  const tag = document.createElement('span');
+  tag.className = 'filter-tag';
+  tag.textContent = `${name} ×`;
+
+  tag.onclick = () => {
+    tag.remove();
+    selectedTags.delete(name);
+  };
+
+  
+  tagBar.appendChild(tag);
+  }
+
+  function clearAllFilters() {
+  selectedTags.clear(); // Vide les filtres mémorisés
+  const tagBar = document.getElementById('filter-tags');
+  tagBar.innerHTML = ''; // Efface tous les tags visibles
+}
+
+// ✅ INSERTION DE LA NOUVELLE FONCTION ICI :
+  function applyFilters() {
+    const params = Array.from(selectedTags).map(tag => `filtre=${encodeURIComponent(tag)}`).join('&');
+    window.location.href = `resultats.html?${params}`;
+  }
+
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterButtons = {
+      'btn-enregistres': 'enregistres',
+      'btn-categories': 'categories',
+      'btn-marques': 'marques',
+      'btn-couleurs': 'couleurs',
+      'btn-tailles': 'tailles',
+      'btn-nouveautes': 'nouveautes',
+      'btn-origine': 'origine',
+      'btn-selections': 'selections'
+    };
+
+    for (const [id, key] of Object.entries(filterButtons)) {
+      const button = document.getElementById(id);
+      if (button) {
+        button.addEventListener('click', () => {
+          showFilterOptions(key);
+          // Optionnel : mise à jour visuelle du bouton actif
+          document.querySelectorAll('.filter-link').forEach(el => el.classList.remove('active'));
+          button.classList.add('active');
+        });
+      }
+    }
+  });
+</script>
+
+<script>
+document.querySelectorAll('.filter-right .letter').forEach(letterEl => {
+  letterEl.addEventListener('click', () => {
+    const currentActive = document.querySelector('.filter-link.active');
+if (!currentActive || currentActive.id !== 'btn-marques') return;
+    const selectedLetter = letterEl.textContent;
+
+    const container = document.getElementById('filter-center');
+    container.innerHTML = "";
+
+ // 🔁 Désactiver les autres lettres
+    document.querySelectorAll('.filter-right .letter').forEach(l => l.classList.remove('active'));
+
+    // ✅ Activer la lettre actuelle
+    letterEl.classList.add('active');
+
+
+    const allMarques = [...filterData['marques']].sort((a, b) => a.localeCompare(b));
+
+    const filtered = selectedLetter === "#" 
+      ? allMarques.filter(name => /^[0-9]/.test(name.trim()))
+      : allMarques.filter(name => name.trim().charAt(0).toUpperCase() === selectedLetter);
+ const elements = [];
+    filtered.forEach(name => {
+      const div = document.createElement('div');
+      div.className = 'filter-option';
+      div.textContent = name;
+      div.dataset.letter = name.trim().charAt(0).toUpperCase(); // 👈 ajout important
+
+      div.onclick = () => {
+        if (!selectedTags.has(name)) {
+          selectedTags.add(name);
+          addTagToBar(name);
+        }
+      };
+
+      container.appendChild(div);
+       elements.push(div);
+    });
+
+    if (elements.length > 0) {
+      elements[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+</script>
+
+<script>
+  function openSortModal() {
+    document.getElementById('sortModal').classList.add('active');
+    document.getElementById('sortOverlay').style.display = 'block';
+  }
+function closeSortModal() {
+  document.getElementById('sortModal').classList.remove('active');
+  document.getElementById('sortOverlay').style.display = 'none';
+}
+  function selectSort(option) {
+    // Applique le tri ici si nécessaire
+    console.log("Tri sélectionné :", option);
+    closeSortModal();
+  }
+</script>
+<div id="sortOverlay" class="sort-overlay" onclick="closeSortModal()"></div>
+<!-- MODAL DE TRI -->
+<div id="sortModal" class="sort-modal">
+   
+  <div class="sort-options">
+    <div class="sort-item" onclick="selectSort('RECOMMANDÉ')">RECOMMANDÉ</div>
+    <div class="sort-item" onclick="selectSort('PRIX CROISSANT')">PRIX CROISSANT</div>
+    <div class="sort-item" onclick="selectSort('PRIX DÉCROISSANT')">PRIX DÉCROISSANT</div>
+    <div class="sort-title">TRIER PAR</div>
+  </div>
+</div>
+
+</body>
+</html>

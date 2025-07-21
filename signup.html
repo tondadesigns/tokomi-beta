@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Créer un compte – Tokomi</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Space Grotesk', sans-serif;
+      text-transform: uppercase;
+      background-color: #fff;
+      height: 100vh;
+      display: flex;
+    }
+
+    .form-container {
+      flex: 1;
+      padding: 64px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      
+    }
+
+    .form-container h2 {
+      font-size: 16px;
+      font-weight: 500;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      font-size: 12px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+
+    }
+
+    .form-group label {
+      font-size: 12px;
+      font-weight: 300;
+      margin-bottom: 4px;
+    }
+
+    .form-group input {
+      padding: 8px 0;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      text-transform: uppercase;
+      margin-bottom: 1px;
+      border: none !important;
+      border-bottom: 1px solid #eee !important;
+      border-top: transparent;
+      border-left: transparent;
+      border-right: transparent;
+      border-radius: 0;
+      outline: none;
+    }
+
+  
+
+    .submit-btn {
+      margin-top: 24px;
+      padding: 12px;
+      font-size: 12px;
+      font-weight: 300 !important;
+      text-transform: uppercase;
+      font-weight: 500;
+      background-color: black;
+      color: white;
+      border: none;
+      border-radius: 0;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      font-weight: 300;
+      background-color: #333;
+    }
+
+    .social-container {
+      flex: 1;
+      padding: 64px 48px;
+      background-color: #fafafa;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .social-container h3 {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+
+    .social-button {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 0;
+      padding: 10px 20px;
+      width: 260px;
+      margin: 8px 0;
+      font-size: 12px;
+      font-weight: 300;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .social-button:hover {
+      background-color: #f0f0f0;
+    }
+
+    .social-button img {
+      height: 20px;
+      width: 20px;
+      margin-right: 12px;
+    }
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: flex-end;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background-color: white;
+      font-size: 12px;
+      font-weight: 300;
+      width: 100%;
+      border-radius: 0;
+      padding: 24px;
+      text-align: center;
+      animation: slideUp 0.4s ease forwards;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(100%);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Créer un compte Tokomi</h2>
+    <form onsubmit="showModal(event)">
+      <div class="form-group">
+        <label for="first-name" style="color: grey; font-size: 300;">Prénom</label>
+        <input type="text" id="first-name" name="first-name" required>
+      </div>
+      <div class="form-group">
+        <label for="last-name" style="color: grey; font-size: 300;" >Nom</label>
+        <input type="text" id="last-name" name="last-name" required>
+      </div>
+      <div class="form-group">
+        <label for="last-name" style="color: grey; font-size: 300;" >Adresse postale</label>
+        <input type="text" id="last-name" name="last-name" required>
+      </div>
+      <div class="form-group">
+        <label for="email" style="color: grey; font-size: 300;">Adresse e-mail</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="email" style="color: grey; font-size: 300;">Téléphone</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password" style="color: grey; font-size: 300;">Mot de passe</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit" class="submit-btn">Créer mon compte</button>
+    </form>
+  </div>
+
+  <div class="social-container">
+    <h3>VIA</h3>
+    <button class="social-button"><img src="apple-logo.png" alt="Apple"> Apple</button>
+    <button class="social-button"><img src="google-logo.png" alt="Google"> Google</button>
+    <button class="social-button"><img src="facebook-logo.png" alt="Facebook"> Facebook</button>
+  </div>
+
+  <div class="modal-overlay" id="confirmationModal">
+    <div class="modal-content">
+      <p>Merci, vous allez recevoir un message de confirmation à l'adresse email fournie.</p>
+    </div>
+  </div>
+  <script>
+    function showModal(event) {
+      event.preventDefault();
+      const modal = document.getElementById('confirmationModal');
+    modal.style.display = 'flex';
+
+    // Redirection vers la page d’accueil après 2,5 secondes
+    setTimeout(() => {
+      window.location.href = 'index.html'; // remplace par ta page d'accueil réelle si besoin
+    }, 2500);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,469 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Détail de la Liste</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: #fff;
+      padding: 16px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      height: 95px;
+    }
+
+    .btn-back {
+      font-family: 'Space Grotesk', sans-serif;
+      background: none;
+      border: none;
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: 300;
+      margin-left: -6px;
+    }
+
+
+    .btn-back div {
+      padding: 6px 12px;
+      cursor: pointer;
+      font-weight: 300;
+      font-size: 12px;
+    }
+
+     
+
+
+
+    .menu-icon {
+      margin-top: 3px;
+      font-size: 12px;
+      font-weight: 300;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .context-menu {
+      position: absolute;
+      top: 40px;
+      right: 16px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      font-size: 12px;
+      display: none;
+      z-index: 10;
+    }
+
+    .context-menu div {
+      padding: 6px 12px;
+      cursor: pointer;
+      font-weight: 300;
+      font-size: 12px;
+      transition: background 0.2s ease;
+    }
+
+
+    .list-title {
+      margin-top: -47px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .list-count {
+      font-size: 12px;
+      font-weight: 300;
+      margin-bottom: 16px;
+    }
+
+    .product-grid {
+       display: flex;
+       flex-wrap: wrap;
+      gap: 8px;
+      padding: 0 6px 64px ;
+      justify-content: space-between;
+      
+    }
+.product-link {
+  text-decoration: none;
+  display: block;
+  width: calc(33.333% - 1.5px);
+
+}
+.product-thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3 ;
+  object-fit: cover;
+  border-radius: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+
+@media (max-width: 600px) {
+  .product-link {
+    width: 48%;
+  }
+}
+   
+
+    .sticky-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      border-top: 1px solid #ccc;
+      
+    }
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  color: #666;
+  text-decoration: none;
+  transition: color 0.2 ease;
+}
+    .menu-item.active {
+  color: #000;
+  font-weight: 600;
+}
+.icon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
+  filter: invert(0%) grayscale(100%); /* pour un style premium noir */
+}
+    .selection-actions {
+  position: fixed;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  z-index: 1000;
+  font-weight: 300;
+}
+
+.selection-actions button {
+  background-color: black;
+  border: 1px solid #ccc;
+  padding: 12px 20px;
+  min-width: 200px;
+  font-size: 12px;
+  font-weight: 300;
+  color: white;
+  text-decoration: none;
+  border-radius: 0;
+  cursor: pointer;
+  text-align: center;
+  height: 40px;
+}
+/* Appliqué à .product-link lorsqu’il est sélectionné */
+.product-link.selectable {
+  position: relative;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.product-link.selected {
+  box-shadow: 0 0 0 1.5px grey;
+  transform: scale(0.98);
+}
+
+/* Petit check animé */
+.product-link::after {
+  
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: black;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.product-link.selected::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="header">
+   <button id="btnBack" onclick="window.location.href='listes.html'" class="btn-back">RETOUR</button>
+
+    <div class="menu-wrapper">
+      <div class="menu-icon" id="menuToggle" onclick="toggleMenu()">PLUS</div>
+      <div class="context-menu" id="contextMenu">
+        <div onclick="selectionner()">SÉLECTIONNER</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="list-title" id="detailTitle">Titre de la liste</div>
+  <div class="list-count" id="detailCount">0 ARTICLE</div>
+
+  <div class="product-grid" id="productGrid">
+  </div>
+  
+<div class="selection-actions" id="selectionActions" style="display: none;">
+  <button onclick="supprimerSelection()">SUPPRIMER</button>
+</div>
+
+  <footer class="sticky-footer">
+    <a href="accueil.html" class="menu-item active">
+      <span>ACCUEIL</span>
+    </a>
+    <a href="explorer.html" class="menu-item"> 
+      <span>EXPLORER</span>
+    </a>
+    <a href="profil.html" class="menu-item">
+      <span>PROFIL</span>
+    </a>
+    
+
+  </footer>
+
+
+  <script>
+    
+    const listName = localStorage.getItem('tokomiCurrentList');
+
+    const lists = JSON.parse(localStorage.getItem("tokomiLists") || "[]");
+    const list = lists.find(l => l.title === listName);
+
+   if (list) {
+  document.getElementById("detailTitle").textContent = list.title;
+  document.getElementById("detailCount").textContent = list.count.toUpperCase();
+
+  const productGrid = document.getElementById("productGrid");
+
+  const imagesToShow = (list.covers && list.covers.length > 0)
+    ? list.covers
+    : [
+        "https://via.placeholder.com/100x100?text=1",
+        "https://via.placeholder.com/100x100?text=2",
+        "https://via.placeholder.com/100x100?text=3"
+      ];
+
+  imagesToShow.forEach((src, index) => {
+    const link = document.createElement("a");
+      link.href = `produit-detail.html?id=${encodeURIComponent(listName)}-${index}`;
+      link.className = "product-link";
+
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = "Produit";
+    img.className = "product-thumb";
+    
+    link.appendChild(img);
+    productGrid.appendChild(link);
+  });
+document.getElementById("detailCount").textContent = `${imagesToShow.length} ARTICLE${imagesToShow.length > 1 ? 'S' : ''}`;
+
+} else {
+  console.warn("Liste introuvable.");
+}
+
+    function toggleMenu() {
+      const menu = document.getElementById("contextMenu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest('.menu-wrapper')) {
+        document.getElementById("contextMenu").style.display = "none";
+      }
+    });
+
+    function ajouter() {
+      window.location.href = `favoris.html?addTo=${encodeURIComponent(listName)}`;
+    }
+
+    function modifier() {
+      alert("Fonction modifier à implémenter");
+    }
+
+    function selectionner() {
+       // 1. Remplacer "RETOUR" par "ANNULER"
+  const btnBack = document.getElementById("btnBack");
+  btnBack.textContent = "ANNULER";
+  btnBack.onclick = annulerSelection;
+
+  // 2. Remplacer "PLUS" par "TOUT SÉLECTIONNER (0)"
+  const menuToggle = document.getElementById("menuToggle");
+  menuToggle.textContent = "TOUT SÉLECTIONNER (0)";
+  menuToggle.onclick = toggleToutSelection;
+
+  // 3. Masquer le menu contextuel
+  document.getElementById("contextMenu").style.display = "none";
+
+  // 4. Activer la sélection visuelle
+  document.querySelectorAll('.product-link').forEach(link => {
+    link.classList.add('selectable');
+    link.addEventListener('click', handleSelectionClick);
+  });
+    }
+    function annulerSelection() {
+  // Restaure les boutons
+  document.getElementById("btnBack").textContent = "RETOUR";
+  document.getElementById("btnBack").onclick = () => window.location.href = 'listes.html';
+
+  const menuToggle = document.getElementById("menuToggle");
+  menuToggle.textContent = "PLUS";
+  menuToggle.onclick = toggleMenu;
+
+  // Désactive le mode sélection
+  document.querySelectorAll('.product-link').forEach(link => {
+    link.classList.remove('selectable');
+    link.classList.remove('selected');
+    link.removeEventListener('click', handleSelectionClick);
+  });
+}
+
+function toggleToutSelection() {
+  const links = document.querySelectorAll('.product-link.selectable');
+  const allSelected = [...links].every(link => link.classList.contains('selected'));
+
+  links.forEach(link => {
+    if (allSelected) {
+      link.classList.remove('selected');
+    } else {
+      link.classList.add('selected');
+    }
+  });
+
+  updateSelectionCount();
+}
+
+function handleSelectionClick(e) {
+  e.preventDefault(); // Empêche la navigation
+  this.classList.toggle('selected');
+  updateSelectionCount();
+}
+
+function updateSelectionCount() {
+  const selected = document.querySelectorAll('.product-link.selected').length;
+  document.getElementById("menuToggle").textContent = `TOUT SÉLECTIONNER (${selected})`;
+
+  const actionBar = document.getElementById("selectionActions");
+  if (selected > 0) {
+    actionBar.style.display = "flex";
+  } else {
+    actionBar.style.display = "none";
+  }
+}
+
+    function supprimer() {
+      showConfirmationModal(`Supprimer de ${listName} ?`, () => {
+        const updated = lists.filter(l => l.title !== listName);
+        localStorage.setItem("tokomiLists", JSON.stringify(updated));
+        window.location.href = "index.html";
+      });
+      }
+      window.onload = function () {
+    const albumTitle = document.getElementById('albumTitle');
+    const albumContent = document.getElementById('albumContent');
+    const addItemForm = document.getElementById('addItemForm');
+
+    const title = localStorage.getItem('tokomiCurrentList');
+    if (!title) {
+      albumTitle.textContent = "Liste introuvable";
+      return;
+    }
+
+    albumTitle.textContent = title;
+
+    // Afficher le formulaire d’ajout si besoin
+    if (addItemForm) addItemForm.style.display = 'block';
+
+    // Charger les contenus enregistrés
+    const albumItems = JSON.parse(localStorage.getItem('tokomiAlbumItems') || '{}');
+    const items = albumItems[title] || [];
+
+    albumContent.innerHTML = ''; // vider avant d’ajouter
+    items.forEach(item => {
+      const div = document.createElement('div');
+      div.textContent = item; // adapte selon ton format réel
+      albumContent.appendChild(div);
+    });
+  };
+
+  function supprimerSelection() {
+  const selected = document.querySelectorAll('.product-link.selected');
+  if (selected.length === 0) return;
+
+  showConfirmationModal(
+    `Supprimer de ${listName.toUpperCase()} ?`,
+  () => {
+    selected.forEach(link => link.remove());
+    // 2. Mettre à jour la liste des couvertures dans localStorage
+      const index = lists.findIndex(l => l.title === listName);
+      if (index !== -1) {
+        const currentImages = Array.from(document.querySelectorAll('.product-link img')).map(img => img.src);
+        lists[index].covers = currentImages;
+        lists[index].count = currentImages.length + " article" + (currentImages.length > 1 ? "s" : "");
+        localStorage.setItem("tokomiLists", JSON.stringify(lists));
+      }
+    // Mise à jour du compteur
+    const total = document.querySelectorAll('.product-link').length;
+    document.getElementById("detailCount").textContent = `${total} ARTICLE${total > 1 ? 'S' : ''}`;
+
+    // Cacher la barre d'action si plus rien
+    updateSelectionCount();
+  }
+);
+}
+function showConfirmationModal(message, onConfirm) {
+  const modal = document.getElementById("confirmModal");
+  const confirmText = document.getElementById("confirmText");
+  const confirmBtn = document.getElementById("confirmBtn");
+
+  confirmText.textContent = message;
+
+  confirmBtn.onclick = () => {
+    closeModal();
+    onConfirm();
+  };
+
+  modal.style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("confirmModal").style.display = "none";
+}
+
+  </script>
+  <!-- MODALE DE CONFIRMATION -->
+<div id="confirmModal" style="display: none; position: fixed; inset: 0; background-color: rgba(0,0,0,0.4); z-index: 10000; align-items: center; justify-content: center;">
+  <div style="background: white; padding: 24px 20px; border-radius: 0; width: 80%; max-width: 320px; text-align: center; font-family: 'Space Grotesk', sans-serif;">
+    <p id="confirmText" style="font-size: 12px; margin-bottom: 24px; font-weight: 300; text-transform: uppercase;">Confirmer la suppression ?</p>
+    <div style="display: flex; justify-content: space-between; gap: 12px;">
+      <button onclick="closeModal()" style="flex: 1; padding: 10px; border: none; background: #ccc; color: black; font-size: 12px; font-weight: 300; text-transform: uppercase;">Annuler</button>
+      <button id="confirmBtn" style="flex: 1; padding: 10px; border: none; background: black; color: white; font-size: 12px; font-weight: 300; text-transform: uppercase;">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

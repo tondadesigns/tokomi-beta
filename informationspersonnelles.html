@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Informations personnelles – Tokomi</title>
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+      text-transform: uppercase;
+    }
+
+    .btn-retour {
+      position: absolute;
+  left: 10px;
+  top: 54px;
+  background: none;
+  border: none;
+  font-size: 12px;
+  font-weight: 300;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+    }
+
+    header {
+      padding: 24px 16px;
+      text-align: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      margin-top: 82px;
+    }
+    #menuToggle { 
+      position: absolute;
+  right: 16px;
+  top: 58px;
+  background: none;
+  border: none;
+  font-size: 12px;
+  font-weight: 300;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+    }
+    
+    #menuToggle.selection-active {
+  font-size: 12px; /* pour "TOUT SÉLECTIONNER" */
+  font-weight: 300; /* si tu veux aussi en gras */
+}
+
+    .menu-icon {
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .context-menu {
+      position: absolute;
+      top: 40px;
+      right: 16px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      font-size: 11.5px;
+      display: none;
+      z-index: 10;
+    }
+
+    .context-menu div {
+      padding: 6px 12px;
+      cursor: pointer;
+      font-weight: 300;
+      transition: background 0.2s ease;
+      
+    }
+    #menu {
+      justify-content: right;
+    }
+    .section {
+      margin-left: 18px;
+      margin-top: -18px;
+    }
+
+    .info-block {
+      margin-bottom: 24px;
+    }
+
+    .info-title {
+      font-size: 10px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #555;
+    }
+
+    .info-value {
+      font-size: 12px;
+      font-weight: 300;
+    }
+
+    .masked {
+      letter-spacing: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <button class="btn-retour" onclick="location.href='profil.html'">RETOUR</button>
+
+    <span id="menuToggle" class="menu-icon" onclick="toggleContextMenu(event)">PLUS</span>
+    
+    <div class="context-menu" id="menu" style="display: none;" >
+      <div onclick="enterSelectionMode()">SÉLECTIONNER</div>
+      <div onclick="exitSelectionMode()">ANNULER</div>
+    </div>
+   
+
+
+  </header>
+
+  <div class="section">
+    <div class="info-block" data-key="fullname">
+      <div class="info-title">Prénom Nom</div>
+      <div class="info-value" contenteditable="false">Kevin Djamboleka</div>
+    </div>
+    <div class="info-block">
+      <div class="info-title">Adresse postale</div>
+      <div class="info-value" id="user-address">9 Avenue Flamboyant, Gombe Kinshasa, RDC</div>
+    </div>
+    <div class="info-block">
+      <div class="info-title">Adresse email</div>
+      <div class="info-value" id="user-email">kevin.djamboleka@gmail.com</div>
+    </div>
+    <div class="info-block">
+      <div class="info-title">Téléphone</div>
+      <div class="info-value" id="user-phone">+243 85 63 68 560</div>
+    </div>
+    <div class="info-block">
+      <div class="info-title">Mot de passe</div>
+      <div class="info-value masked">****</div>
+    </div>
+  </div>
+
+  <script>
+    const userData = JSON.parse(localStorage.getItem("signupData")) || {};
+
+    document.getElementById("user-fullname").textContent = (userData.prenom || "x") + " " + (userData.nom || "x");
+    document.getElementById("user-address").textContent = userData.adresse || "x x";
+    document.getElementById("user-email").textContent = userData.email || "x x";
+    document.getElementById("user-phone").textContent = userData.telephone || "x x";
+  </script>
+
+  <script>
+  const menu = document.getElementById("menu");
+
+  function toggleContextMenu(event) {
+    event.stopPropagation();
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+  }
+
+  // Fermer le menu si on clique ailleurs
+  window.addEventListener("click", () => {
+    menu.style.display = "none";
+  });
+
+  menu.addEventListener("click", e => e.stopPropagation());
+
+  function enterSelectionMode() {
+    const blocks = document.querySelectorAll(".info-block .info-value");
+    blocks.forEach(block => {
+      block.setAttribute("contenteditable", "true");
+      block.style.display = "inline-block";
+      block.style.width = "95%"; // par exemple
+      block.style.border = "none";
+      block.style.borderBottom = "1px solid #aaa";
+      block.style.padding = "6px";
+      block.style.fontFamily = "'Space Grotesk', sans-serif";
+      block.style.fontSize = "12px";
+      block.style.fontWeight = "300";
+    });
+  }
+
+  function exitSelectionMode() {
+    const blocks = document.querySelectorAll(".info-block .info-value");
+    blocks.forEach(block => {
+      block.setAttribute("contenteditable", "false");
+      block.style.borderBottom = "none";
+      block.style.padding = "0";
+      block.style.fontFamily = "";
+      block.style.fontSize = "";
+      block.style.fontWeight = "";
+    });
+    document.getElementById("menu").style.display = "none";
+
+  }
+</script>
+
+
+
+
+</body>
+</html>

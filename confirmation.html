@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Confirmation de commande</title>
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 300;
+      padding: 32px;
+      background: #fff;
+      color: #111;
+    }
+    h1 {
+      text-align: center;
+      font-size: 14px;
+      font-weight: 300;
+      margin-bottom: 24px;
+    }
+    .section {
+      margin-bottom: 24px;
+      
+    }
+    .label {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .value {
+      font-size: 12px;
+      font-weight: 300;
+      text-transform: uppercase;
+    }
+    .summary {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 12px;
+      font-weight: 300;
+    }
+    .total {
+      border-top: 1px solid #ddd;
+      padding-top: 8px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <h1>MERCI POUR VOTRE COMMANDE !</h1>
+  <div class="section">
+    <div class="label">COMMANDE</div>
+    <div class="value">#000000</div>
+    <div class="value">Vous recevrez un numéro de suivi dès que votre commande aura été expédiée.</div>
+  </div>
+  <div class="section">
+    <div class="label">ARRIVÉE ESTIMÉE</div>
+    <p id="estimated-date" class="value"></p>
+  </div>
+  <div class="section">
+    <div class="label">LIVRAISON</div>
+    <div class="value" id="confirmation-address"></div>
+  </div>
+  <div class="section">
+    <div class="label">RÉSUMÉ</div>
+    <div class="summary"><span>SOUS-TOTAL</span><span>€1440.00</span></div>
+    <div class="summary"><span>EXPÉDITION</span><span>€9.00</span></div>
+    <div class="summary total"><span>TOTAL</span><span>€1449.00</span></div>
+  </div>
+
+
+  <script>
+  document.getElementById("order-number").textContent = localStorage.getItem('tokomi_order_number') || "#000000";
+  document.getElementById("estimated-date").textContent = localStorage.getItem('tokomi_estimated_date') || "DATE NON DISPONIBLE";
+  document.getElementById("confirmation-address").textContent = localStorage.getItem('tokomi_summary_address') || "Non fournie";
+  document.getElementById("subtotal").textContent = `€${localStorage.getItem('tokomi_subtotal') || '0'}`;
+  document.getElementById("shipping-fee").textContent = `€${localStorage.getItem('tokomi_shipping') || '0'}`;
+  document.getElementById("total").textContent = `€${localStorage.getItem('tokomi_total') || '0'}`;
+
+  const estimated = localStorage.getItem('tokomi_estimated_date') || "PROCHAINE LIVRAISON";
+  document.getElementById('estimated-date').textContent = estimated;
+
+</script>
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const date = localStorage.getItem('tokomi_estimated_date') || "PROCHAINE LIVRAISON";
+    document.getElementById('estimated-date').textContent = date;
+  });
+</script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+  const date = localStorage.getItem("tokomi_shipping_date") || "À CONFIRMER";
+  const price = localStorage.getItem("tokomi_shipping_price") || "€0.00";
+  const total = localStorage.getItem("tokomi_total") || "€0.00";
+
+  document.getElementById("estimated-date").textContent = date;
+  document.querySelector(".summary:nth-of-type(1) span:last-child").textContent = localStorage.getItem("tokomi_cart_total") || "€0.00";
+  document.querySelector(".summary:nth-of-type(2) span:last-child").textContent = price;
+  document.querySelector(".summary.total span:last-child").textContent = `€${total}`;
+});
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const address = localStorage.getItem("tokomi_summary_address");
+    if (address) {
+      document.getElementById("confirmation-address").innerText = address;
+    } else {
+      document.getElementById("confirmation-address").innerText = "Adresse non disponible";
+    }
+  });
+
+  
+</script>
+
+
+</body>
+</html>

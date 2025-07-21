@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Déconnexion – Tokomi</title>
+  
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: #fff;
+      margin: 0;
+      padding: 40px 16px;
+      box-sizing: border-box;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: #222;
+    }
+
+    .btn-retour {
+      position: absolute;
+      left: 10px;
+      top: 54px;
+      background: none;
+      border: none;
+      font-size: 12px;
+      font-weight: 300;
+      cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    header {
+      padding: 80px 16px 24px;
+      font-size: 14px;
+      font-weight: 500;
+      text-align: left;
+      text-transform: uppercase;
+      margin-top: -26px;
+      margin-left: -16px;
+    }
+
+ .section p {
+
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      text-transform: none;
+      margin-bottom: 22px;
+    }
+
+    .btn-deconnexion {
+      font-size: 12px;
+      font-weight: 300;
+      background: none;
+      border: 1px solid #000;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="btn-retour" onclick="location.href='profil.html'">RETOUR</button>
+
+  <header>Déconnexion</header>
+
+  <div class="section">
+  <p>Appuyez sur le bouton ci-dessous pour vous déconnecter de votre compte Tokomi.</p>
+</div>
+
+  <button onclick="logout()" class="btn-deconnexion">DÉCONNEXION</button>
+
+  <script>
+    function logout() {
+      // Efface les données du "compte" côté client
+      localStorage.removeItem('user');
+      sessionStorage.clear();
+
+      // Redirige vers la page d'accueil
+      window.location.href = "index.html";
+    }
+  </script>
+
+</body>
+</html>

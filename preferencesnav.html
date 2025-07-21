@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Préférences de navigation – Tokomi</title>
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+    }
+
+    .btn-retour {
+      position: absolute;
+      left: 10px;
+      top: 54px;
+      background: none;
+      border: none;
+      font-size: 12px;
+      font-weight: 300;
+      cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .title {
+  text-align: center;
+  margin-top: 120px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+
+    .container {
+      margin-top: -38px;
+      padding: 120px 24px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .catalogue-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+    }
+
+    .catalogue-label {
+      font-size: 12px;
+      font-weight: 300;
+      color: #333;
+      text-transform: uppercase;
+    }
+
+    .custom-radio {
+      width: 12px;
+      height: 12px;
+      border: 1px solid #333;
+      border-radius: 50%;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .custom-radio::after {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background-color: #000;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.2s ease;
+    }
+
+    input[type="radio"] {
+      display: none;
+    }
+
+    input[type="radio"]:checked + .custom-radio::after {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  </style>
+</head>
+<body>
+
+  <button class="btn-retour" onclick="location.href='profil.html'">RETOUR</button>
+
+  <div class="title">Préférences de navigation</div>
+
+  <div class="container">
+    <label class="catalogue-option">
+      <span class="catalogue-label">Catalogue masculin</span>
+      <input type="radio" name="catalogue" id="masculin">
+      <span class="custom-radio" onclick="selectRadio('masculin')"></span>
+    </label>
+
+    <label class="catalogue-option">
+      <span class="catalogue-label">Catalogue féminin</span>
+      <input type="radio" name="catalogue" id="feminin">
+      <span class="custom-radio" onclick="selectRadio('feminin')"></span>
+    </label>
+  </div>
+
+  <script>
+    function selectRadio(id) {
+      document.getElementById(id).checked = true;
+    }
+  </script>
+
+</body>
+</html>

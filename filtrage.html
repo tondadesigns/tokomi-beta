@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Filtres – Tokomi</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body, html {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+  .btn-retour,
+  .btn-effacer {
+  margin-top: -11px !important;
+  font-size: 12px;
+  font-weight: 300;
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: black;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+
+
+
+.header-top {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row; /* ou row si tu veux retour + tags sur une seule ligne */
+  align-items: center;
+  left: 0;
+  right: 0;
+  justify-content: space-between;
+  gap: 410px;
+  
+
+}
+
+
+.selected-filters-box {
+  margin: 12px auto 0 auto;
+  width: 80%; /* ou 100% max si tu veux qu’elle prenne toute la largeur du contenu */
+  padding: 8px 12px;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  max-height: 120px; /* optionnel, si tu veux bloquer la hauteur */
+  overflow-y: auto;  /* ajoute une scroll bar si trop de tags */
+  font-size: 11px;
+  font-family: 'Space Grotesk', sans-serif;
+  background: #f9f9f9;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.filter-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap; /* pas de retour à la ligne */
+  overflow-x: auto;
+  max-width: 100%;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+}
+
+.filter-tag {
+  background: #f5f5f5;
+  padding: 6px 12px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.filter-center {
+  position: absolute;
+  top: 17.5%;
+  left: 27.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  justify-content:center;
+  align-self: center;
+  text-align: left;
+   overflow-y: auto;
+   cursor: pointer;
+  flex: 1;
+  padding: 12px;
+  height: calc(100vh - 160px);
+  box-sizing: border-box;
+  padding-bottom: 75px;
+  
+}
+.filter-body {
+  display: flex;
+  height: calc(100vh - 80px); /* 🧮 hauteur totale - header - footer */
+}
+
+.filter-left {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  padding-left: 17px !important;
+  padding-top: 140px !important; /* 👈 tu peux ajuster cette marge selon besoin */
+  gap: 0 !important;
+}
+
+.filter-option {
+font-size: 12px !important;
+font-weight: 300;
+margin: 1px  !important;
+margin-top: 8px;
+margin-bottom: 8px;
+cursor: pointer;
+color: #111;
+margin-top: 32px ;
+      justify-content: center;
+      align-items: center;
+      border-left: 42px;
+      margin-bottom: 100px;
+      font-size: 13px;
+      cursor: pointer;
+}
+
+.filter-fullscreen {
+  z-index: 9999;
+}
+
+    .filter-link {
+      font-size: 12px;
+      margin: 10px 0;
+      gap: 2px;
+      cursor: pointer;
+      color: #666;
+    }
+    .filter-link.active {
+      
+      font-weight: bold;
+      color: #000;
+    }
+    
+    .filter-right {
+      position: absolute;
+      right: 8px;
+      top: 60px;
+      width: 10px;
+      padding: 8px;
+      overflow-y: auto;
+      border-left: none;
+      display: flex;
+      z-index: 10;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 120px;
+      background: white !important;
+    }
+    .filter-right .letter {
+      font-size: 8px;
+      text-align: center;
+      color: #aaa;
+      cursor: pointer;
+      margin-bottom: 2px;
+      line-height: 1.5;
+    }
+    
+    .sticky-footer {
+  position: fixed;
+  bottom: 0;
+  
+  z-index: 1000;
+  width: 100%;
+  display: flex;
+  background-color: white;
+  text-align: center;
+  padding: 16px 0; /* ↘️ réduit la hauteur du footer */
+  border-top: 1px solid #eee;
+
+}
+
+    .apply-button {
+      padding: 12px 24px;
+      background: black;
+      color: white;
+      border: none;
+      border-radius: 0;
+      cursor: pointer;
+      width: 90%;
+      max-width: 320px;
+      font-family: 'Space Grotesk', sans-serif;
+       text-transform: uppercase;
+      font-size: 11px;
+      font-weight: 300;
+    }
+
+</style>
+</head>
+<body>
+
+<header class="filter-header">
+  <div class="header-top">
+    <button class="btn-retour" onclick="window.location.href='resultats.html'">RETOUR</button>   
+  <button class="btn-effacer" onclick="clearAllFilters()">EFFACER</button>
+</div>
+
+<div class="selected-filters-box">
+      <div id="filter-tags" class="filter-tags"></div>
+    </div>
+  </div>
+</header>
+
+<div class="filter-body">
+      <div class="filter-left">
+<div id="btn-enregistres" class="filter-link">ENREGISTRÉ</div>
+<div id="btn-categories" class="filter-link" >CATÉGORIES</div>
+<div id="btn-marques" class="filter-link">MARQUES</div>
+<div id="btn-couleurs" class="filter-link">COULEURS</div>
+<div id="btn-tailles" class="filter-link">TAILLES</div>
+<div id="btn-nouveautes" class="filter-link">NOUVEAUTÉS</div>
+<div id="btn-origine" class="filter-link">ORIGINE</div>
+<div id="btn-selections" class="filter-link">SÉLECTIONS</div>
+        
+      </div>
+
+ <div id="filter-center" class="filter-center"></div>
+
+
+
+
+
+</div>
+<div class="filter-right hidden" id="filter-right">
+        <div class="letter">#</div>
+        <div class="letter">A</div><div class="letter">B</div><div class="letter">C</div>
+        <div class="letter">D</div><div class="letter">E</div><div class="letter">F</div>
+        <div class="letter">G</div><div class="letter">H</div><div class="letter">I</div>
+        <div class="letter">J</div><div class="letter">K</div><div class="letter">L</div>
+        <div class="letter">M</div><div class="letter">N</div><div class="letter">O</div>
+        <div class="letter">P</div><div class="letter">Q</div><div class="letter">R</div>
+        <div class="letter">S</div><div class="letter">T</div><div class="letter">U</div>
+        <div class="letter">V</div><div class="letter">W</div><div class="letter">X</div>
+        <div class="letter">Y</div><div class="letter">Z</div>
+      </div>
+      </div>
+
+      
+    
+
+<script>
+
+  const subcatCarousel = document.getElementById('subcategory-carousel');
+  const categoryButtons = document.querySelectorAll('.category-button');
+
+  const subcategories = {
+    femme: ["Robes", "Talons", "Bijoux", "Vestes", "Bags", "Casual", "Workwear", "Sport", "Soirée", "Lingerie", "Été", "Nouveautés", "Minimal", "Chic"],
+    homme: ["Sneakers", "Pantalons", "Chemises", "Vestes", "Accessoires", "Business", "Casual", "Luxe", "Créateurs", "Streetwear", "Sacs", "Sport", "T-shirts", "Caps"],
+    enfant: ["Pyjamas", "Jeux", "Mini looks", "T-shirts", "Sandales", "Vestes", "Bibs", "Sport", "Accessoires", "Tenues cérémonie", "Doudounes", "École", "Mini sacs", "Basics"]
+  };
+
+  function updateSubcategories(category) {
+    subcatCarousel.innerHTML = "";
+    subcategories[category].forEach(label => {
+      const el = document.createElement("div");
+      el.className = "subcategory";
+      el.textContent = label.toUpperCase();
+      subcatCarousel.appendChild(el);
+    });
+    subcatCarousel.classList.remove("hidden");
+  }
+
+  categoryButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      categoryButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      updateSubcategories(btn.dataset.category);
+    });
+  });
+
+  updateSubcategories("femme");
+</script>
+<script>
+    function openFilter() {
+      document.getElementById('filterPanel').classList.add('active');
+    }
+    function closeFilter() {
+      document.getElementById('filterPanel').classList.remove('active');
+    }
+    function applyFilters() {
+      const params = Array.from(selectedTags).map(tag => `filtre=${encodeURIComponent(tag)}`).join('&');
+    window.location.href = `resultats.html?${params}`;
+      
+    }
+  </script>
+
+<script>
+  const filterData = {
+    enregistres: ["RICK OWENS", "BALENCIAGA", "FEAR OF GOD", "KITH", "LORO PIANA", "MELON JAUNE"],
+    categories: ["MODE", "MANTEAUX & BLOUSONS", "COSTUMES","BLAZERS & VESTES","CHEMISES","POLO, T-SHIRTS & DÉBARDEURS","SWEATERS & KNITWEAR", "PANTALONS","JEANS","LINGERIE & VÊTEMENTS D'INTÉRIEURS","MAILLOTS DE BAIN & VÊTEMENTS DE PLAGE", "CHAUSSURES", "SANDALES & MULES", "ESCARPINS","BASKETS","BOTTES & BOTTINES", "MOCASSINS & DERBIES", "ACCESSOIRES", "SACS","BIJIOUX", "CEINTURES","CHAUSSETTES","CRAVATES & NOEUDS PAPILLON","LUNETTES DE SOLEIL","ÉCHARPES & FOULARDS", "CHAPEAUX & CASQUETTES","GANTS","PORTE-CLÉS","PORTEFEUILLES & PORTE-CARTES","MONTRES","BEAUTÉ","SOIN DU VISAGE","SOIN DU CORPS","SOIN CAPILLAIRE","MAQUILLAGE","PARFUMS", "LIFESTYLE","MAISON","DÉCORATION","BOUGIES","ART DE LA TABLE", "PAPETERIE & ART", "LIVRES & MAGAZINES","COFFRETS CADEAUX", "VOYAGES & ACCESSOIRES"],
+    marques: ["3.PARADIS","ACNE STUDIOS", "ZEGNAA", "AESOP","ALEXANDER MCQUEEN","BALENCIAGA","BALMAIN","BOTTEGA VENETA","BURBERRY","C.P. COMPANY","CASABLANCA","CELINE HOMME", "CHARLOTTE TILBURY","CHRISTIE BROWN","COPERNI","COS","DAILY PAPER","DRIES VAN NOTEN","FENDI","GUCCI","HANIFA", "IAMSIGO","ISABEL MARANT","ISSEY MIYAKE", "JACQUEMUS","JUNYA WATANABE","KATUSHA", "LE LABO","LEMAIRE","LOEWE", "MAISON KITSUNÉ","MAISON MARGIELA","MARINE SERRE","MAX MARA","MAXHORA AFRICA","MELON JAUNE","MIMI PLANGE","MONCLER","MR P","NIKE","OFF-WHITE","ON","ORANGE CULTURE","PRADA","RAINS","RALPH LAUREN","RICH MNSI","SAINT LAURENT","SKIMS","STONE ISLAND","STUDIO 189","THE FRANKIE SHOP","THE ROW","TOM FORD","TONGORO","UCHAWI","ULLA JOHNSON","VALENTINO","VEJA","VÊTEMENTS","WALES DONNER","Y/PROJECT","ZEGNA",],
+    couleurs: ["BLANC", "BLEU","BRUN", "GRIS", "JAUNE", "NOIR", "ORANGE", "ROSE","ROUGE", "VERT"],
+    tailles: [,"XXS","XS", "S", "M", "L", "XL","XXL", "32", "34", "36", "38", "40", "42", "44", "46", "48","50", "52", "54"],
+    nouveautes: ["NOUVEAUX ARRIVAGES", "BESTSELLERS", "COLLECTIONS CAPSULES", "EN AVANT-PREMIÈRE", "SOLDES PRIVÉES", "OFFRES TEMPORAIRES", "DERNIÈRES CHANCES"],
+    origine: ["NOIR", "BLANC", "JAUNE", "ROUGE", "VERT", "BLEU", "ROSE"],
+    selections: ["CURATED BY TOKOMI", "DESIGNERS ÉMERGENTS", "CONSCIENCE & DURABILITÉ","POUR ELLE/POUR LUI"]
+    // Tu peux ajouter plus de groupes ici
+  };
+
+const spacingKeys = [
+  ["ACCESSOIRES", "Sacs"],
+  ["CHAUSSURES", "Sandales & Mules"],
+  ["BEAUTÉ", "Soin du visage"],
+  ["LIFESTYLE", "Maison"]
+];
+const boldKeys = ["MODE", "CHAUSSURES", "ACCESSOIRES", "BEAUTÉ", "LIFESTYLE"];
+
+
+  const selectedTags = new Set();
+
+
+  function showFilterOptions(key) {
+    const container = document.getElementById('filter-center');
+    container.innerHTML = ""; // Efface l'ancien contenu
+
+const items = filterData[key]; // ✅ ici on récupère les bons items
+
+// 🔽 Si c'est le filtre "marques", trier les items alphabétiquement
+if (key === 'marques') {
+  items.sort((a, b) => a.localeCompare(b));
+}
+
+    // Montre ou cache la colonne de lettres selon le filtre
+  const letterColumn = document.getElementById('filter-right');
+  if (key === 'marques') {
+    letterColumn.classList.remove('hidden');
+    letterColumn.style.display = 'flex';
+  } else {
+    letterColumn.classList.add('hidden');
+    letterColumn.style.display = 'none';
+  }
+
+if (!items) return;
+
+     items.forEach((name, index, array) => {
+        const div = document.createElement('div');
+        div.className = 'filter-option';
+        div.textContent = name;
+
+// Ajoute une classe spéciale pour les catégories
+      if (key === 'categories') 
+        div.classList.add('category-item');
+      
+
+ // Appliquer du gras si l'élément est dans boldKeys
+  if (boldKeys.includes(name.toUpperCase())) {
+    div.style.fontWeight = 'bold';
+  }
+
+// Vérifie si cet élément doit déclencher une séparation après lui
+      for (const [before, after] of spacingKeys) {
+        if (name === before && array[index + 1] === after) {
+          div.classList.add('separator');
+          break;
+        }
+      }
+         div.onclick = () => {
+        if (!selectedTags.has(name)) {
+          selectedTags.add(name);
+          addTagToBar(name);
+        }
+      };
+        container.appendChild(div);
+      });
+    }
+  
+  function addTagToBar(name) {
+  const tagBar = document.getElementById('filter-tags');
+  const tag = document.createElement('span');
+  tag.className = 'filter-tag';
+  tag.textContent = `${name} ×`;
+
+  tag.onclick = () => {
+    tag.remove();
+    selectedTags.delete(name);
+  };
+
+  tagBar.appendChild(tag);
+  }
+
+  function clearAllFilters() {
+  selectedTags.clear(); // Vide les filtres mémorisés
+  const tagBar = document.getElementById('filter-tags');
+  tagBar.innerHTML = ''; // Efface tous les tags visibles
+}
+
+// ✅ INSERTION DE LA NOUVELLE FONCTION ICI :
+  function applyFilters() {
+    const params = Array.from(selectedTags).map(tag => `filtre=${encodeURIComponent(tag)}`).join('&');
+    window.location.href = `resultats.html?${params}`;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterButtons = {
+      'btn-enregistres': 'enregistres',
+      'btn-categories': 'categories',
+      'btn-marques': 'marques',
+      'btn-couleurs': 'couleurs',
+      'btn-tailles': 'tailles',
+      'btn-nouveautes': 'nouveautes',
+      'btn-origine': 'origine',
+      'btn-selections': 'selections'
+    };
+
+    for (const [id, key] of Object.entries(filterButtons)) {
+      const button = document.getElementById(id);
+      if (button) {
+        button.addEventListener('click', () => {
+          showFilterOptions(key);
+          // Optionnel : mise à jour visuelle du bouton actif
+          document.querySelectorAll('.filter-link').forEach(el => el.classList.remove('active'));
+          button.classList.add('active');
+        });
+      }
+    }
+ 
+const letterElements = document.querySelectorAll('.filter-right .letter');
+    letterElements.forEach(letterEl => {
+  letterEl.addEventListener('click', () => {
+    const currentActive = document.querySelector('.filter-link.active');
+if (!currentActive || currentActive.id !== 'btn-marques') return;
+    const selectedLetter = letterEl.textContent;
+
+    const container = document.getElementById('filter-center');
+    container.innerHTML = "";
+
+ // 🔁 Désactiver les autres lettres
+    document.querySelectorAll('.filter-right .letter').forEach(l => l.classList.remove('active'));
+
+    // ✅ Activer la lettre actuelle
+    letterEl.classList.add('active');
+
+
+    const allMarques = [...filterData['marques']].sort((a, b) => a.localeCompare(b));
+
+    const filtered = selectedLetter === "#" 
+      ? allMarques.filter(name => /^[0-9]/.test(name.trim()))
+      : allMarques.filter(name => name.trim().charAt(0).toUpperCase() === selectedLetter);
+ const elements = [];
+    filtered.forEach(name => {
+      const div = document.createElement('div');
+      div.className = 'filter-option';
+      div.textContent = name;
+      div.dataset.letter = name.trim().charAt(0).toUpperCase(); // 👈 ajout important
+
+      div.onclick = () => {
+        if (!selectedTags.has(name)) {
+          selectedTags.add(name);
+          addTagToBar(name);
+        }
+      };
+
+      container.appendChild(div);
+       elements.push(div);
+    });
+
+    if (elements.length > 0) {
+      elements[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+});
+</script>
+<footer class="sticky-footer">
+  <button class="apply-button" onclick="applyFilters()">VOIR LES RÉSULTATS</button>
+</footer>
+
+</body>
+</html>

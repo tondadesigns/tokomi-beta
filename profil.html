@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Profil – Tokomi</title>
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      margin: 0;
+      padding: 0;
+      text-transform: uppercase;
+    }
+
+    header {
+      margin-top: 55px;
+      text-align: center;
+      padding: 24px 0;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .btn {
+      display: block;
+      width: calc(100% - 48px);
+      margin-top: 57px;
+      margin-bottom: -14px;
+      margin-left: 4px;
+      padding: 12px;
+      font-size: 12px;
+      font-weight: 300;
+      font-family: 'Space Grotesk', sans-serif;
+      text-transform: uppercase;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    .carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .carousel-item {
+      min-width: 160px;
+      flex: 0 0 auto;
+      text-align: left;
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 240px; /* ou plus si tu veux encore plus long */
+  object-fit: cover;
+      border: 1px solid #ddd;
+    }
+
+    .carousel-item .brand,
+    .carousel-item .product,
+    .carousel-item .price {
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .carousel-item .product {
+      font-weight: 300;
+    }
+
+    .carousel-item  .brand {
+      font-weight: 600;
+    }
+
+    .carousel-item .price {
+      margin-bottom: -16px;
+      }
+
+    .section {
+      padding: 16px;
+      font-weight: 600;
+    }
+
+    .section h3 {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .section .btn {
+      border: none;
+      text-align: left;
+      padding-left: 0;
+      margin: 0 0 8px 0;
+      background: none;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0;
+      background: white;
+    }
+
+    .footer-item {
+      font-size: 10px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+  .footer-item:hover,
+  .footer-item.active {
+       color: #000;
+  font-weight: 600;
+    }
+    .footer-item span {
+      display: block;
+      margin-top: 4px;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <header>
+    BIENVENUE 
+  </header>
+  <div style="text-align: center; font-size: 16px; font-weight: 300;  margin-bottom: -20px;font-family: 'Space Grotesk', sans-serif;"></div>
+  <span id="user-name" style="text-align: center;font-size: 15px; font-weight: 400; margin-top: -30px; margin-bottom: 22px !important; margin-left: 240px; font-family: 'Space Grotesk', sans-serif;">Utilisateur</span>
+  </div>
+
+  <button class="btn" style="text-align: left; font-weight: 600;" onclick="window.location.href='favoris.html'">Mes favoris</button>
+
+  <div class="carousel">
+    <div class="carousel-item">
+      <img src="https://via.placeholder.com/150x200" alt="Produit">
+      <div class="brand">MARQUE</div>
+      <div class="product">PRODUIT</div>
+      <div class="price">€ PRIX</div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://via.placeholder.com/150x200" alt="Produit">
+      <div class="brand">MARQUE</div>
+      <div class="product">PRODUIT</div>
+      <div class="price">€ PRIX</div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://via.placeholder.com/150x200" alt="Produit">
+      <div class="brand">MARQUE</div>
+      <div class="product">PRODUIT</div>
+      <div class="price">€ PRIX</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>MON COMPTE</h3>
+    <button class="btn" style="margin-top: -8px;" onclick="window.location.href='informationspersonnelles.html'">Informations personnelles</button>
+    <button class="btn" style="margin-top: -19px;" onclick="window.location.href='historique-2.html'">Historique des commandes</button>
+    <button class="btn" style="margin-top: -18px; margin-bottom: -34px;" onclick="window.location.href='membership.html'">Programme de membre</button>
+  </div>
+
+  <div class="section">
+    <h3>MES RÉGLAGES</h3>
+    <button class="btn" style="margin-top: -8px;" onclick="window.location.href='preferencesnav.html'">Préférences de navigation</button>
+    <button class="btn" style="margin-top: -19px;" onclick="window.location.href='notification.html'">Notifications</button>
+    <button class="btn" style="margin-top: -20px;" onclick="window.location.href='langue.html'"  >Langue</button>
+    <button class="btn" style="margin-top: -18px; margin-bottom: -34px;" onclick="window.location.href='paysregion-7.html'">Pays / Région</button>
+  </div>
+
+  <div class="section">
+    <h3>ASSISTANCE</h3>
+    <button class="btn" style="margin-top: -8px; margin-bottom: -10px;" onclick="window.location.href='contactez-nous.html'">CONTACTEZ-NOUS</button>
+    <button class="btn" style="margin-top: -8px;" onclick="window.location.href='frasqu.html'">FAQ</button>
+    <button class="btn" style="margin-top: -18px;margin-bottom: 32px;" onclick="window.location.href='politique-confidentialite.html'">POLITIQUE DE CONFIDENTIALITÉ</button>
+    <button class="btn" style="margin-top: -40px;margin-bottom: 32px;" onclick="window.location.href='conditions-generales.html'">CONDITIONS GÉNÉRALES DE TOKOMI</button>
+  </div>
+
+  <button class="btn" style="margin-top: -40px;margin-bottom: 42px; margin-left: -202px;">Déconnexion</button>
+
+
+  <div class="footer">
+    <div class="footer-item">
+      <div></div>
+      <span>Accueil</span>
+    </div>
+    <div class="footer-item">
+      <div></div>
+      <span>Explorer</span>
+    </div>
+    <div class="footer-item">
+      <div></div>
+      <span>Profil</span>
+    </div>
+  </div>
+
+  <script>
+    const userName = localStorage.getItem('tokomiUserName') || 'Utilisateur';
+    document.getElementById('user-name').textContent = userName.toUpperCase();
+  </script>
+
+</body>
+</html>

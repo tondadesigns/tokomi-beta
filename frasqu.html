@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>FAQ – Tokomi</title>
+  
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+      box-sizing: border-box;
+      text-transform: uppercase;
+    }
+
+    .btn-retour {
+      position: absolute;
+      left: 10px;
+      top: 54px;
+      background: none;
+      border: none;
+      font-size: 12px;
+      font-weight: 300;
+      cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    header {
+      padding: 80px 16px 24px;
+      font-size: 14px;
+      font-weight: 500;
+      text-align: left;
+      margin-top: 12px;
+    }
+
+    .dropdown-section {
+      padding: 16px;
+    }
+
+    .dropdown {
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+      font-weight: 300;
+    }
+
+    .dropdown-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+    }
+
+    .dropdown-title {
+      font-size: 12px;
+      font-weight: 300;
+      color: #000;
+    }
+
+    .dropdown-toggle {
+      font-size: 16px;
+      font-weight: 100;
+      color: #000;
+      transition: transform 0.3s ease;
+    }
+
+    .dropdown-content {
+      display: none;
+      text-transform: uppercase;
+      font-weight: 300;
+      padding: 0 0 12px 0;
+      font-size: 12px;
+      color: #444;
+    }
+
+    .dropdown.open .dropdown-content {
+      display: block;
+    }
+
+    .dropdown.open .dropdown-toggle {
+      transform: rotate(45deg);
+    }
+  </style>
+</head>
+<body>
+
+  <button class="btn-retour" onclick="location.href='profil.html'">RETOUR</button>
+
+  <header>Questions fréquentes</header>
+
+  <div class="dropdown-section">
+
+    <!-- Commandes & Produits -->
+    <div class="dropdown" onclick="toggleDropdown(this)">
+      <div class="dropdown-header">
+        <span class="dropdown-title">COMMENT PASSER COMMANDE SUR TOKOMI ?</span>
+        <span class="dropdown-toggle">+</span>
+      </div>
+      <div class="dropdown-content"><p>Connectez-vous à votre compte, explorez les articles et cliquez sur “commander”.</p></div>
+    </div>
+
+    <div class="dropdown" onclick="toggleDropdown(this)">
+      <div class="dropdown-header">
+        <span class="dropdown-title">LES ARTICLES SONT-ILS AUTHENTIQUES ?</span>
+        <span class="dropdown-toggle">+</span>
+      </div>
+      <div class="dropdown-content"><p>Tous les articles sont 100% authentiques, provenant directement des marques ou revendeurs certifiés.</p></div>
+    </div>
+
+    <!-- Livraison -->
+    <div class="dropdown" onclick="toggleDropdown(this)">
+      <div class="dropdown-header">
+        <span class="dropdown-title">QUELS SONT LES DÉLAIS DE LIVRAISON ?</span>
+        <span class="dropdown-toggle">+</span>
+      </div>
+      <div class="dropdown-content"><p>Les délais varient entre 3 et 7 jours ouvrés selon la destination.</p></div>
+    </div>
+
+    <div class="dropdown" onclick="toggleDropdown(this)">
+      <div class="dropdown-header">
+        <span class="dropdown-title">PUIS-JE SUIVRE MA COMMANDE ?</span>
+        <span class="dropdown-toggle">+</span>
+      </div>
+      <div class="dropdown-content"><p>Oui, un lien de suivi est disponible dans votre compte après expédition.</p></div>
+    </div>
+
+    <!-- Retours -->
+    <div class="dropdown" onclick="toggleDropdown(this)">
+      <div class="dropdown-header">
+        <span class="dropdown-title">COMMENT RETOURNER OU ÉCHANGER UN ARTICLE ?</span>
+        <span class="dropdown-toggle">+</span>
+      </div>
+      <div class="dropdown-content"><p>Connectez-vous et soumettez une demande de retour dans votre espace client.</p></div>
+    </div>
+
+    <!-- Paiement -->
+    <div class="dropdown" onclick="toggleDropdown(this)">
+      <div class="dropdown-header">
+        <span class="dropdown-title">QUELS MOYENS DE PAIEMENT ACCEPTEZ-VOUS ?</span>
+        <span class="dropdown-toggle">+</span>
+      </div>
+      <div class="dropdown-content"><p>Nous acceptons les cartes Visa, Mastercard, PayPal, ainsi que les paiements mobile money (Orange, M-Pesa...)</p></div>
+    </div>
+
+    <!-- Fidélité -->
+    <div class="dropdown" onclick="toggleDropdown(this)">
+      <div class="dropdown-header">
+        <span class="dropdown-title">COMMENT FONCTIONNE LE PROGRAMME DE FIDÉLITÉ ?</span>
+        <span class="dropdown-toggle">+</span>
+      </div>
+      <div class="dropdown-content"><p>Plus vous commandez, plus vous progressez dans les niveaux et débloquez des avantages exclusifs.</p></div>
+    </div>
+
+    <!-- Diaspora -->
+    <div class="dropdown" onclick="toggleDropdown(this)">
+      <div class="dropdown-header">
+        <span class="dropdown-title">PUIS-JE COMMANDER POUR UN PROCHE EN AFRIQUE DEPUIS L’ÉTRANGER ?</span>
+        <span class="dropdown-toggle">+</span>
+      </div>
+      <div class="dropdown-content"><p>Oui, vous pouvez commander de l’étranger et faire livrer dans les zones desservies par Tokomi.</p></div>
+    </div>
+
+  </div>
+
+  <script>
+    function toggleDropdown(element) {
+      element.classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>

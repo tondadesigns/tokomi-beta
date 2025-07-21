@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Bienvenue – Tokomi</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      font-family: 'Space Grotesk', sans-serif;
+      overflow: hidden;
+    }
+
+    .background {
+      background: url('homepage-preview.jpg') center center / cover no-repeat;
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      filter: brightness(0.4) blur(2px);
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 2;
+    }
+
+    .content {
+      position: relative;
+      z-index: 3;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      padding: 0 24px;
+    }
+
+    .content h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+
+    .content button {
+      background: white;
+      color: black;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 0;
+      cursor: pointer;
+      margin: 8px 0;
+      width: 220px;
+      transition: background 0.3s ease;
+    }
+
+    .content button:hover {
+      background: black;
+      color: white;
+      border: 1px solid white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="background"></div>
+  <div class="overlay"></div>
+
+  <div class="content">
+    <button onclick="continueAsGuest()">Poursuivre en tant qu’invité</button>
+    <button onclick="redirectToSignUp()">Créer un compte</button>
+  </div>
+
+  <script>
+    function continueAsGuest() {
+      window.location.href = 'index.html';
+    }
+
+    function redirectToSignUp() {
+      window.location.href = 'signup.html';
+    }
+  </script>
+</body>
+</html>

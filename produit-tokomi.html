@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Produit – Tokomi</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="product-hero">
+    <div class="top-bar">
+      <a href="javascript:history.back()" class="btn-retour">RETOUR</a>
+      <a href="panier-favoris.html" class="btn-panier">PANIER</a>
+    </div>
+  </div>
+<div class="main-product-carousel">
+  <img id="img1" src="./hoodie-avant.png" class="carousel-image" alt="Produit noir" />
+  <img id="img2" src="./hoodiefavant.png" class="carousel-image" alt="Produit beige" />
+  <img id="img3" src="./hoodieprofil.png" class="carousel-image" alt="Produit rouge" />
+  <img id="img4" src="./hoodiearriere.png" class="carousel-image" alt="Produit bleu" />
+  <!-- Ajoute autant d’images que nécessaire -->
+</div>
+
+<div class="scroll-indicator-bar">
+<div class="scroll-dot" onclick="scrollToImage('img1')"></div>
+  <div class="scroll-dot" onclick="scrollToImage('img2')"></div>
+  <div class="scroll-dot" onclick="scrollToImage('img3')"></div>
+  <div class="scroll-dot" onclick="scrollToImage('img4')"></div>
+</div>
+
+
+  <div class="thumbnail-carousel">
+    <div class="thumbnail" onclick="showColor(this)">
+      <div class="thumb-image" style="background-image: url('noir.jpg');"></div>
+      <span class="selected-color-label"></span>
+    </div>
+    <div class="thumbnail" onclick="showColor(this)">
+      <div class="thumb-image" style="background-image: url('beige.jpg');"></div>
+      <span class="selected-color-label"></span>
+    </div>
+    <div class="thumbnail" onclick="showColor(this)">
+      <div class="thumb-image" style="background-image: url('rouge.jpg');"></div>
+      <span class="selected-color-label"></span>
+    </div>
+    <div class="thumbnail" onclick="showColor(this)">
+      <div class="thumb-image" style="background-image: url('bleu.jpg');"></div>
+      <span class="selected-color-label"></span>
+    </div>
+    <div class="thumbnail" onclick="showColor(this)">
+      <div class="thumb-image" style="background-image: url('gris.jpg');"></div>
+      <span class="selected-color-label"></span>
+    </div>
+    <div class="thumbnail" onclick="showColor(this)">
+      <div class="thumb-image" style="background-image: url('vert.jpg');"></div>
+      <span class="selected-color-label"></span>
+    </div>
+    <div class="thumbnail" onclick="showColor(this)">
+      <div class="thumb-image" style="background-image: url('blanc.jpg');"></div>
+      <span class="selected-color-label"></span>
+    </div>
+  </div>
+
+  <div class="product-details">
+    <div class="brand">RICK OWENS</div>
+    <div class="product-name">BASKETS GEOBASKET</div>
+    <div class="price">€400</div>
+  </div>
+
+  <div class="action-buttons">
+    <button class="btn-cart" onclick="openSizeModal()">AJOUTER AU PANIER</button>
+    <button class="btn-fav" onclick="addToFavorites()">AJOUTER AUX FAVORIS</button>
+  </div>
+
+  <div class="dropdown-section">
+    <div class="dropdown" onclick="toggleDropdown(this)">
+      <div class="dropdown-header">
+        <span class="dropdown-title">COMPOSITION & CARACTÉRISTIQUES ENVIRONNEMENTALES</span>
+        <span class="dropdown-toggle">+</span>
+      </div>
+      <div class="dropdown-content">
+        <p>Ce produit est composé de matériaux durables :
+          <li>coton (70%)</li> 
+          <li>laine (14%)</li>
+        </p>
+      </div>
+    </div>
+    <div class="dropdown" onclick="toggleDropdown(this)">
+      <div class="dropdown-header">
+        <span class="dropdown-title">LIVRAISONS, ÉCHANGES ET RETOURS</span>
+        <span class="dropdown-toggle">+</span>
+      </div>
+      <div class="dropdown-content">
+        <p>Livraison en 3 à 5 jours ouvrés. Échanges gratuits sous 14 jours...</p>
+      </div>
+    </div>
+    <div class="dropdown" onclick="toggleDropdown(this)">
+      <div class="dropdown-header">
+        <span class="dropdown-title">DISPONIBILITÉS</span>
+        <span class="dropdown-toggle">+</span>
+      </div>
+      <div class="dropdown-content">
+        <p>Ce produit est disponible en ligne et dans nos boutiques partenaires...</p>
+      </div>
+    </div>
+  </div>
+  <div class="carousel-block first-carousel">
+<h3 class="section-title">VOUS POURRIEZ ÉGALEMENT AIMER</h3>
+
+<div class="product-carousel">
+  <!-- Produit 1 -->
+  <div class="product-card" onclick="openProductPage(this)" data-url="produit-lechiquito.html">
+    <img src="product1.jpg" alt="Produit 1" class="product-image" />
+<!-- Bouton + -->
+  <button class="size-toggle" onclick="openSizeModal(event)">+</button>
+
+    <div class="product-info">
+      <div class="brand-name">JACQUEMUS</div>
+      <div class="product-name">LE CHIQUITO</div>
+      <div class="product-price">€590</div>
+    </div>
+  </div>
+
+<!-- Produit 2 -->
+  <div class="product-card">
+    <img src="product2.jpg" alt="Produit 2" class="product-image" />
+    <button class="size-toggle" onclick="openSizeModal()">+</button>
+    <div class="product-info">
+      <div class="brand-name">Ami Paris</div>
+      <div class="product-name">Chemise Oversize</div>
+      <div class="product-price">€250</div>
+    </div>
+  </div>
+
+<!-- Produit 3 -->
+  <div class="product-card">
+    <img src="product3.jpg" alt="Produit 3" class="product-image" />
+    <button class="size-toggle" onclick="openSizeModal()">+</button>
+    <div class="product-info">
+      <div class="brand-name">Lemaire</div>
+      <div class="product-name">Pantalon Relaxed</div>
+      <div class="product-price">€390</div>
+    </div>
+  </div>
+
+  <!-- Produit 4 -->
+  <div class="product-card">
+    <img src="product4.jpg" alt="Produit 4" class="product-image" />
+    <button class="size-toggle" onclick="openSizeModal()">+</button>
+    <div class="product-info">
+      <div class="brand-name">Margiela</div>
+      <div class="product-name">Tabi Loafers</div>
+      <div class="product-price">€680</div>
+    </div>
+  </div>
+
+  <!-- Produit 5 -->
+  <div class="product-card">
+    <img src="product5.jpg" alt="Produit 5" class="product-image" />
+    <button class="size-toggle" onclick="openSizeModal()">+</button>
+    <div class="product-info">
+      <div class="brand-name">Marine Serre</div>
+      <div class="product-name">Moon Top</div>
+      <div class="product-price">€310</div>
+    </div>
+  </div>
+
+  <!-- Produit 6 -->
+  <div class="product-card">
+    <img src="product6.jpg" alt="Produit 6" class="product-image" />
+    <button class="size-toggle" onclick="openSizeModal()">+</button>
+    <div class="product-info">
+      <div class="brand-name">Off-White</div>
+      <div class="product-name">Sacs Arrow</div>
+      <div class="product-price">€950</div>
+    </div>
+  </div>
+
+
+
+  </div>
+
+  <div class="carousel-block second-carousel">
+    <h3 class="section-title">NOS SÉLECTIONS EN EXCLUSIVITÉ</h3>
+    <div class="product-carousel">
+      <div class="product-card">
+        <img src="product12.jpg" alt="Produit 12" class="product-image" />
+        <button class="size-toggle" onclick="openSizeModal()">+</button>
+        <div class="product-info">
+          <div class="brand-name">The Row</div>
+          <div class="product-name">Sandales Ginza</div>
+          <div class="product-price">€790</div>
+        </div>
+      </div>
+
+      <!-- Produit 8 -->
+  <div class="product-card">
+    <img src="product8.jpg" alt="Produit 8" class="product-image" />
+    <button class="size-toggle" onclick="openSizeModal()">+</button>
+    <div class="product-info">
+      <div class="brand-name">Y/Project</div>
+      <div class="product-name">Jean Spiralé</div>
+      <div class="product-price">€420</div>
+    </div>
+  </div>
+
+  <!-- Produit 9 -->
+  <div class="product-card">
+    <img src="product9.jpg" alt="Produit 9" class="product-image" />
+    <button class="size-toggle" onclick="openSizeModal()">+</button>
+    <div class="product-info">
+      <div class="brand-name">Peter Do</div>
+      <div class="product-name">Tailored Blazer</div>
+      <div class="product-price">€1 200</div>
+    </div>
+  </div>
+
+  <!-- Produit 10 -->
+  <div class="product-card">
+    <img src="product10.jpg" alt="Produit 10" class="product-image" />
+    <button class="size-toggle" onclick="openSizeModal()">+</button>
+    <div class="product-info">
+      <div class="brand-name">Wales Bonner</div>
+      <div class="product-name">College Jacket</div>
+      <div class="product-price">€980</div>
+    </div>
+  </div>
+
+  <!-- Produit 11 -->
+  <div class="product-card">
+    <img src="product11.jpg" alt="Produit 11" class="product-image" />
+    <button class="size-toggle" onclick="openSizeModal()">+</button>
+    <div class="product-info">
+      <div class="brand-name">Bode</div>
+      <div class="product-name">Chemise brodée</div>
+      <div class="product-price">€660</div>
+    </div>
+  </div>
+
+  <!-- Produit 12 -->
+  <div class="product-card">
+    <img src="product12.jpg" alt="Produit 12" class="product-image" />
+    <button class="size-toggle" onclick="openSizeModal()">+</button>
+
+
+    <div class="product-info">
+      <div class="brand-name">The Row</div>
+      <div class="product-name">Sandales Ginza</div>
+      <div class="product-price">€790</div>
+    </div>
+</div>
+
+    </div>
+  </div>
+
+  <div class="size-modal" id="sizeModal" onclick="closeSizeModal(event)">
+    <div class="size-modal-content">
+      <div class="size-options">
+        <div class="size-item" onclick="addToCart('37')">37</div>
+        <div class="size-item" onclick="addToCart('38')">38</div>
+        <div class="size-item" onclick="addToCart('39')">39</div>
+        <div class="size-item" onclick="addToCart('40')">40</div>
+        <div class="size-item" onclick="addToCart('41')">41</div>
+        <div class="size-item" onclick="addToCart('42')">42</div>
+        <div class="size-item" onclick="addToCart('43')">43</div>
+        <div class="size-item" onclick="addToCart('44')">44</div>
+      </div>
+      <div class="size-guide">TROUVEZ VOTRE TAILLE</div>
+    </div>
+  </div>
+
+  <footer class="sticky-footer">
+    <a href="#" class="menu-item">ACCUEIL</a>
+    <a href="#" class="menu-item">EXPLORER</a>
+    <a href="#" class="menu-item">PROFIL</a>
+  </footer>
+
+  <script>
+    const cart = [];
+    function showColor(thumbnailElement) {
+      document.querySelectorAll('.selected-color-label').forEach(label => {
+        label.textContent = '';
+        label.classList.remove('active');
+      });
+
+      const thumb = thumbnailElement.querySelector('.thumb-image');
+      const imageStyle = thumb.style.backgroundImage;
+      const match = imageStyle.match(/url\\(["']?([^"')]+)["']?\\)/);
+      const imageName = match ? match[1].split('/').pop() : ''; // ex: "beige.jpg"
+
+      const colorName = imageName.split('.')[0]; // ex: "beige"
+      const colorLabel = colorName.charAt(0).toUpperCase() + colorName.slice(1);
+      
+      const label = thumbnailElement.querySelector('.selected-color-label');
+      label.textContent = colorLabel;
+      label.classList.add('active');
+
+      const mainImage = document.getElementById('mainProductImage');
+    if (mainImage) {
+      mainImage.src = imageName; // ex: "beige.jpg"
+       }
+    }
+
+    function toggleDropdown(dropdown) {
+      const isOpen = dropdown.classList.contains('open');
+      document.querySelectorAll('.dropdown').forEach(d => {
+        d.classList.remove('open');
+        d.querySelector('.dropdown-toggle').textContent = '+';
+      });
+      if (!isOpen) {
+        dropdown.classList.add('open');
+        dropdown.querySelector('.dropdown-toggle').textContent = '−';
+      }
+    }
+
+    window.addEventListener('click', function(e) {
+      const modal = document.getElementById('sizeModal');
+      if (e.target === modal) {
+        modal.classList.remove('active');
+      }
+    });
+
+    function openSizeModal() {
+      document.getElementById('sizeModal').classList.add('active');
+    }
+
+    function closeSizeModal(event) {
+      const modal = document.getElementById('sizeModal');
+      if (modal.classList.contains('active') && !modal.querySelector('.size-modal-content').contains(event.target)) {
+        modal.classList.remove('active');
+      }
+    }
+
+    function addToCart(size) {
+      const product = { name: "Baskets Geobasket", brand: "Rick Owens", price: 400, size: size };
+      cart.push(product);
+      // Affiche le message personnalisé dans une boîte flottante
+  const cartMsg = document.getElementById('cartMessage');
+  cartMsg.textContent = `Ajouté au panier : Taille ${size}`;
+  cartMsg.classList.add('show');
+
+  setTimeout(() => {
+    cartMsg.classList.remove('show');
+  }, 2000);
+
+  document.getElementById('sizeModal').classList.remove('active');
+
+    }
+    function addToFavorites() {
+  const msg = document.getElementById('favMessage');
+  msg.classList.add('show');
+
+  // Disparition automatique après 2 secondes
+  setTimeout(() => {
+    msg.classList.remove('show');
+  }, 2000);
+}
+
+function openProductPage(cardElement) {
+  const url = cardElement.getAttribute('data-url');
+  if (url) {
+    window.location.href = url;
+  }
+}
+
+function openSizeModal(event) {
+  if (event) event.stopPropagation(); // évite d'ouvrir la page produit
+  document.getElementById('sizeModal').classList.add('active');
+}
+function scrollToImage(imageId) {
+  const target = document.getElementById(imageId);
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+  </script>
+  <div id="cartMessage" class="confirmation-message"></div>
+
+  <div id="favMessage" class="confirmation-message">Ajouté aux favoris</div>
+
+</body>
+</html>

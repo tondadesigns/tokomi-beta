@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pays – Tokomi</title>
+  <style>
+html, body {
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+    }
+
+    .btn-retour {
+      position: absolute;
+      left: 10px;
+      top: 54px;
+      background: none;
+      border: none;
+      font-size: 14px;
+      font-weight: 300;
+      cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .title {
+      text-align: center;
+      margin-top: 100px;
+      margin-bottom: 4px;
+      font-size: 16px;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    .search-container {
+  position: sticky;
+  top: 80px;
+  width: 100%;
+  background: white;
+  z-index: 10;
+  display: flex;
+  padding: 20px 194px;
+  outline: none;
+  height: 2px;
+  width: 100% ;
+  border-bottom: 1px solid white !important;
+  transition: none !important;
+  margin-bottom: -46px;
+}
+
+    .search-bar {
+      width: 100vw;
+      height: 18px;
+  padding: 12px 32px;
+  font-size: 12px;
+  font-weight: 300;
+  margin-top: -12px;
+  margin-bottom: -22px;
+  border: none;
+  border-radius: 0;
+  text-transform: uppercase;
+  font-family: 'Space Grotesk', sans-serif;
+   transition: none !important;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.container {
+  overflow-y: auto;
+  height: calc(100vh - 140px);
+      margin-top: 28px;
+      padding: 20px 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .country-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 10px;
+    }
+
+    .left-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .flag {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .country-label {
+      font-size: 12px;
+      font-weight: 300;
+      color: #333;
+      text-transform: capitalize;
+    }
+
+    input[type="radio"] {
+      display: none;
+    }
+
+    .custom-radio {
+      width: 12px;
+      height: 12px;
+      border: 1px solid #333;
+      border-radius: 50%;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .custom-radio::after {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background-color: #000;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.2s ease;
+    }
+
+    input[type="radio"]:checked + .custom-radio::after {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  </style>
+</head>
+<body>
+
+  <button class="btn-retour" onclick="location.href='profil.html'">RETOUR</button>
+
+  <div class="title">Pays</div>
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="OÙ RECHERCHEZ-VOUS ?" class="search-bar">
+    </div>
+
+    <div class="container">
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/af.png" alt="Afghanistan">
+        <span class="country-label">Afghanistan</span>
+      </div>
+      <input type="radio" name="country" id="af">
+      <span class="custom-radio" onclick="selectCountry('af')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Afrique du Sud">
+        <span class="country-label">Afrique du Sud</span>
+      </div>
+      <input type="radio" name="country" id="xx">
+      <span class="custom-radio" onclick="selectCountry('xx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Albanie">
+        <span class="country-label">Albanie</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Algérie">
+        <span class="country-label">Algérie</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Allemagne">
+        <span class="country-label">Allemagne</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Andorre">
+        <span class="country-label">Andorre</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/ao.png" alt="Angola">
+        <span class="country-label">Angola</span>
+      </div>
+      <input type="radio" name="country" id="ao">
+      <span class="custom-radio" onclick="selectCountry('ao')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/ar.png" alt="Argentine">
+        <span class="country-label">Argentine</span>
+      </div>
+      <input type="radio" name="country" id="ar">
+      <span class="custom-radio" onclick="selectCountry('ar')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Arménie">
+        <span class="country-label">Arménie</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Australie">
+        <span class="country-label">Australie</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Autriche">
+        <span class="country-label">Autriche</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Azerbaïdjan">
+        <span class="country-label">Azerbaïdjan</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Belgique">
+        <span class="country-label">Belgique</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/bw.png" alt="Botswana">
+        <span class="country-label">Botswana</span>
+      </div>
+      <input type="radio" name="country" id="bw">
+      <span class="custom-radio" onclick="selectCountry('bw')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Brésil">
+        <span class="country-label">Brésil</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/bf.png" alt="Burkina Faso">
+        <span class="country-label">Burkina Faso</span>
+      </div>
+      <input type="radio" name="country" id="bf">
+      <span class="custom-radio" onclick="selectCountry('bf')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/bi.png" alt="Burundi">
+        <span class="country-label">Burundi</span>
+      </div>
+      <input type="radio" name="country" id="bi">
+      <span class="custom-radio" onclick="selectCountry('bi')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/bj.png" alt="Bénin">
+        <span class="country-label">Bénin</span>
+      </div>
+      <input type="radio" name="country" id="bj">
+      <span class="custom-radio" onclick="selectCountry('bj')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Cameroun">
+        <span class="country-label">Cameroun</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/ca.png" alt="Canada">
+        <span class="country-label">Canada</span>
+      </div>
+      <input type="radio" name="country" id="ca">
+      <span class="custom-radio" onclick="selectCountry('ca')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Chili">
+        <span class="country-label">Chili</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Chine">
+        <span class="country-label">Chine</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Colombie">
+        <span class="country-label">Colombie</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Comores">
+        <span class="country-label">Comores</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/cg.png" alt="Congo">
+        <span class="country-label">Congo</span>
+      </div>
+      <input type="radio" name="country" id="cg">
+      <span class="custom-radio" onclick="selectCountry('cg')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Croatie">
+        <span class="country-label">Croatie</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Danemark">
+        <span class="country-label">Danemark</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/dj.png" alt="Djibouti">
+        <span class="country-label">Djibouti</span>
+      </div>
+      <input type="radio" name="country" id="dj">
+      <span class="custom-radio" onclick="selectCountry('dj')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Espagne">
+        <span class="country-label">Espagne</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Finlande">
+        <span class="country-label">Finlande</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/fr.png" alt="France">
+        <span class="country-label">France</span>
+      </div>
+      <input type="radio" name="country" id="fr">
+      <span class="custom-radio" onclick="selectCountry('fr')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/ga.png" alt="Gabon">
+        <span class="country-label">Gabon</span>
+      </div>
+      <input type="radio" name="country" id="ga">
+      <span class="custom-radio" onclick="selectCountry('ga')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/gh.png" alt="Ghana">
+        <span class="country-label">Ghana</span>
+      </div>
+      <input type="radio" name="country" id="gh">
+      <span class="custom-radio" onclick="selectCountry('gh')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Grèce">
+        <span class="country-label">Grèce</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Guinée">
+        <span class="country-label">Guinée</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/ht.png" alt="Haïti">
+        <span class="country-label">Haïti</span>
+      </div>
+      <input type="radio" name="country" id="ht">
+      <span class="custom-radio" onclick="selectCountry('ht')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/pg.png" alt="Inde">
+        <span class="country-label">Inde</span>
+      </div>
+      <input type="radio" name="country" id="pg">
+      <span class="custom-radio" onclick="selectCountry('pg')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Indonésie">
+        <span class="country-label">Indonésie</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Irlande">
+        <span class="country-label">Irlande</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Islande">
+        <span class="country-label">Islande</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Italie">
+        <span class="country-label">Italie</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Japon">
+        <span class="country-label">Japon</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/ke.png" alt="Kenya">
+        <span class="country-label">Kenya</span>
+      </div>
+      <input type="radio" name="country" id="ke">
+      <span class="custom-radio" onclick="selectCountry('ke')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/lb.png" alt="Liban">
+        <span class="country-label">Liban</span>
+      </div>
+      <input type="radio" name="country" id="lb">
+      <span class="custom-radio" onclick="selectCountry('lb')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/lu.png" alt="Luxembourg">
+        <span class="country-label">Luxembourg</span>
+      </div>
+      <input type="radio" name="country" id="lu">
+      <span class="custom-radio" onclick="selectCountry('lu')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/mg.png" alt="Madagascar">
+        <span class="country-label">Madagascar</span>
+      </div>
+      <input type="radio" name="country" id="mg">
+      <span class="custom-radio" onclick="selectCountry('mg')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/mw.png" alt="Malawi">
+        <span class="country-label">Malawi</span>
+      </div>
+      <input type="radio" name="country" id="mw">
+      <span class="custom-radio" onclick="selectCountry('mw')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/ml.png" alt="Mali">
+        <span class="country-label">Mali</span>
+      </div>
+      <input type="radio" name="country" id="ml">
+      <span class="custom-radio" onclick="selectCountry('ml')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Maroc">
+        <span class="country-label">Maroc</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Maurice">
+        <span class="country-label">Maurice</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Mexique">
+        <span class="country-label">Mexique</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/mc.png" alt="Monaco">
+        <span class="country-label">Monaco</span>
+      </div>
+      <input type="radio" name="country" id="mc">
+      <span class="custom-radio" onclick="selectCountry('mc')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/mz.png" alt="Mozambique">
+        <span class="country-label">Mozambique</span>
+      </div>
+      <input type="radio" name="country" id="mz">
+      <span class="custom-radio" onclick="selectCountry('mz')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Namibie">
+        <span class="country-label">Namibie</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/ng.png" alt="Niger">
+        <span class="country-label">Niger</span>
+      </div>
+      <input type="radio" name="country" id="ng">
+      <span class="custom-radio" onclick="selectCountry('ng')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/ng.png" alt="Nigéria">
+        <span class="country-label">Nigéria</span>
+      </div>
+      <input type="radio" name="country" id="ngx">
+      <span class="custom-radio" onclick="selectCountry('ngx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Norvège">
+        <span class="country-label">Norvège</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Nouvelle-Zélande">
+        <span class="country-label">Nouvelle-Zélande</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Ouganda">
+        <span class="country-label">Ouganda</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/pk.png" alt="Pakistan">
+        <span class="country-label">Pakistan</span>
+      </div>
+      <input type="radio" name="country" id="pk">
+      <span class="custom-radio" onclick="selectCountry('pk')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Pays-Bas">
+        <span class="country-label">Pays-Bas</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/ph.png" alt="Philippines">
+        <span class="country-label">Philippines</span>
+      </div>
+      <input type="radio" name="country" id="ph">
+      <span class="custom-radio" onclick="selectCountry('ph')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Pologne">
+        <span class="country-label">Pologne</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/pt.png" alt="Portugal">
+        <span class="country-label">Portugal</span>
+      </div>
+      <input type="radio" name="country" id="pt">
+      <span class="custom-radio" onclick="selectCountry('pt')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Pérou">
+        <span class="country-label">Pérou</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/qa.png" alt="Qatar">
+        <span class="country-label">Qatar</span>
+      </div>
+      <input type="radio" name="country" id="qa">
+      <span class="custom-radio" onclick="selectCountry('qa')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Roumanie">
+        <span class="country-label">Roumanie</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/rw.png" alt="Rwanda">
+        <span class="country-label">Rwanda</span>
+      </div>
+      <input type="radio" name="country" id="rw">
+      <span class="custom-radio" onclick="selectCountry('rw')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="République Démocratique du Congo">
+        <span class="country-label">République Démocratique du Congo</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Serbie">
+        <span class="country-label">Serbie</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Singapour">
+        <span class="country-label">Singapour</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Slovaquie">
+        <span class="country-label">Slovaquie</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Slovénie">
+        <span class="country-label">Slovénie</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Somalie">
+        <span class="country-label">Somalie</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Suisse">
+        <span class="country-label">Suisse</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Suède">
+        <span class="country-label">Suède</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/sn.png" alt="Sénégal">
+        <span class="country-label">Sénégal</span>
+      </div>
+      <input type="radio" name="country" id="sn">
+      <span class="custom-radio" onclick="selectCountry('sn')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Tanzanie">
+        <span class="country-label">Tanzanie</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Tchad">
+        <span class="country-label">Tchad</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Thaïlande">
+        <span class="country-label">Thaïlande</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/tg.png" alt="Togo">
+        <span class="country-label">Togo</span>
+      </div>
+      <input type="radio" name="country" id="tg">
+      <span class="custom-radio" onclick="selectCountry('tg')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Tunisie">
+        <span class="country-label">Tunisie</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Turquie">
+        <span class="country-label">Turquie</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/ua.png" alt="Ukraine">
+        <span class="country-label">Ukraine</span>
+      </div>
+      <input type="radio" name="country" id="ua">
+      <span class="custom-radio" onclick="selectCountry('ua')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/uy.png" alt="Uruguay">
+        <span class="country-label">Uruguay</span>
+      </div>
+      <input type="radio" name="country" id="uy">
+      <span class="custom-radio" onclick="selectCountry('uy')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/ve.png" alt="Venezuela">
+        <span class="country-label">Venezuela</span>
+      </div>
+      <input type="radio" name="country" id="ve">
+      <span class="custom-radio" onclick="selectCountry('ve')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/vn.png" alt="Vietnam">
+        <span class="country-label">Vietnam</span>
+      </div>
+      <input type="radio" name="country" id="vn">
+      <span class="custom-radio" onclick="selectCountry('vn')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Zambie">
+        <span class="country-label">Zambie</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/zw.png" alt="Zimbabwe">
+        <span class="country-label">Zimbabwe</span>
+      </div>
+      <input type="radio" name="country" id="zw">
+      <span class="custom-radio" onclick="selectCountry('zw')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Égypte">
+        <span class="country-label">Égypte</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="États-Unis">
+        <span class="country-label">États-Unis</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+    <label class="country-option">
+      <div class="left-info">
+        <img class="flag" src="https://flagcdn.com/w40/xx.png" alt="Éthiopie">
+        <span class="country-label">Éthiopie</span>
+      </div>
+      <input type="radio" name="country" id="xxx">
+      <span class="custom-radio" onclick="selectCountry('xxx')"></span>
+    </label>
+    
+  </div>
+
+  <script>
+    function selectCountry(id) {
+      document.getElementById(id).checked = true;
+    }
+    document.getElementById("searchInput").addEventListener("input", function () {
+    const query = this.value.toLowerCase();
+    document.querySelectorAll(".country-option").forEach(option => {
+      const text = option.innerText.toLowerCase();
+      option.style.display = text.includes(query) ? "flex" : "none";
+    });
+  });
+</script>
+
+</body>
+</html>

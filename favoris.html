@@ -1,0 +1,763 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Favoris – Tokomi</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      border-bottom: none;
+    }
+    .btn-cancel{
+      margin-top: 36px;
+      }
+    .menu-icon {
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .context-menu {
+      position: absolute;
+      top: 40px;
+      right: 16px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      font-size: 11.5px;
+      display: none;
+      z-index: 10;
+    }
+
+    .context-menu div {
+      padding: 6px 12px;
+      cursor: pointer;
+      font-weight: 300;
+      transition: background 0.2s ease;
+      
+    }
+
+    
+
+
+    .btn-back {
+  background: white;
+  color: black;
+  border: none;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300;
+  transition: background 0.2s ease;
+}
+
+.btn-back:hover {
+  background: black;
+  color: white;
+}
+
+
+
+    .tabs {
+      display: flex;
+      justify-content: flex-start;
+      gap: 34.5px;
+      font-size: 14px;
+      margin-top: 1px;
+      margin-bottom: 4px;
+      padding-left: 16px;
+      margin-bottom: 46px;
+    }
+    .tabs span {
+      font-size: 12px;
+      font-weight: 300;
+      cursor: pointer;
+    }
+    .tabs .active {
+      font-weight: 700;
+    }
+    .tabs a.tab-link {
+  text-decoration: none;
+  color: black;
+  font-weight: 300;
+  font-size: 12px;
+}
+.tabs a.tab-link:hover {
+  opacity: 0.6;
+}
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding: 0px 16px 80px 16px;
+      margin-top: -20px;
+    }
+    .product {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      
+    }
+    .product img {
+      width: 100%;
+      height: 225px;
+      object-fit: cover;
+      background: #ddd;
+      border: 1px solid #aaa;
+    }
+    .product-info {
+      text-align: left;
+      font-size: 12px;
+      font-weight: 300;
+      margin-top: 6px;
+      width: 100%;
+      gap: 12px;
+      padding-left: 4px;
+      text-transform: uppercase;
+      
+    }
+
+
+    .product-info .brand {
+      font-size: 14px;
+  font-weight: 600; /* marque en gras */
+}
+.product-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+ 
+.price {
+  font-size: 13px;
+  font-weight: 400;
+  color: black;
+}
+/* FOOTER  */
+.sticky-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  margin: 0;
+  border-top: 1px solid #ccc;
+  z-index: 10;
+}
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  color: #666;
+  text-decoration: none;
+  transition: color 0.2 ease;
+}
+
+.menu-item:hover,
+.menu-item.active {
+  color: #000;
+  font-weight: 600;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* ICONES DU MENU */
+.icon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
+  filter: invert(0%) grayscale(100%); /* pour un style premium noir */
+}
+
+.shopping-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.shopping-btn img {
+  height: 22px;
+  }
+.product {
+  position: relative; /* nécessaire pour le positionnement absolu du bouton radio */
+}
+
+  .selection-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255,255,255,0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .product.selected .selection-overlay {
+      display: flex;
+    }
+
+    .selection-overlay button {
+      font-size: 10px;
+      border: none;
+      background: black;
+      color: white;
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+
+    .selection-radio {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      display: none;
+      z-index: 5;
+      cursor: pointer;
+      
+    }
+    .product.selected .selection-radio {
+      display: block;
+       }
+
+    .selection-radio input {
+  display: none;
+}
+
+.selectable .selection-radio {
+  display: block;
+}
+
+
+.custom-check {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+
+  background: #fff;
+  background-color: white;
+  box-shadow: inset 0 0 0 2px #c4c4c4, 0 1px 2px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+
+
+.selection-radio input:checked + .custom-check {
+  background: radial-gradient(circle at center, white 30%, #007AFF 31%, #007AFF 100%);
+  box-shadow: 0 0 3px rgba(0, 122, 255, 0.4);
+}
+    .liste-dropdown {
+      position: fixed ;
+      display: none;
+      bottom: 0 ;
+      right: 0 ;
+      inset: 0 ;
+     z-index: 999;
+      background: rgba(0, 0, 0, 0.4);
+      align-items: flex-end;
+  justify-content: center;
+  font-weight: 300;
+  font-family: 'Space Grotesk', sans-serif;
+  transition: bottom 0.3s ease;
+  border-radius: 0;
+    }
+
+    .liste-dropdown.show {
+  display: flex;
+}
+.liste-dropdown-content {
+  background: white;
+  width: 100%;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  padding: 32px 0;
+  animation: slideUp 0.3s ease;
+  text-align: center;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.liste-header {
+  margin-bottom: 20px;
+  color: grey;
+}
+
+.liste-header h4 {
+  font-size: 12px;
+  font-weight: 300;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.list-card-item {
+  text-transform: uppercase;
+  margin: 8px 0;
+  font-size: 12px;
+  font-weight: 300;
+  cursor: pointer;
+}
+    .selection-actions {
+      position: fixed;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  z-index: 1000;
+  font-weight: 300;
+    }
+
+    .selection-actions button {
+      background-color: black;
+  border: 1px solid #ccc;
+  padding: 12px 20px;
+  min-width: 200px;
+  font-size: 12px;
+  font-weight: 300;
+  color: white;
+  text-decoration: none;
+  border-radius: 0;
+  cursor: pointer;
+  text-align: center;
+  height: 40px;
+      
+    }
+
+    #menuToggle {
+      margin-top: 42px;
+      font-size: 12px;
+      font-weight: 300;
+    }
+    
+    #menuToggle.selection-active {
+  font-size: 12px; /* pour "TOUT SÉLECTIONNER" */
+  font-weight: 300; /* si tu veux aussi en gras */
+}
+  </style>
+</head>
+<body>
+<!-- À placer UNIQUEMENT pour tester, dans un <script> au début du <body> -->
+<script>
+  // ⚠️ À utiliser uniquement pour test. À retirer en production.
+  localStorage.setItem("tokomiFavorites", JSON.stringify([
+    { id: 1, brand: "CELINE", name: "T-shirt", price: 350 },
+    { id: 2, brand: "BALENCIAGA", name: "Casquette", price: 290 }
+  ]));
+</script>
+
+  <div class="header">
+    <span id="btnCancel" class="btn-cancel" onclick="exitSelectionMode()" style="display: none; font-size: 12px; font-weight: 300; cursor: pointer; ">ANNULER</span>
+    
+    <div class="menu-wrapper" style="position: relative; display: inline-block;"></div>
+
+    <span id="menuToggle" class="menu-icon" onclick="toggleContextMenu(event)">PLUS</span>
+
+    <div class="context-menu" id="menu"  >
+      <div onclick="enterSelectionMode()">SÉLECTIONNER</div>
+      <div onclick="exitSelectionMode()">ANNULER</div>
+    </div>
+  </div>    
+  </div>
+
+  <div class="tabs">
+    <a href="panier-favoris.html" class="tab-link">PANIER <strong id="cart-count"></strong></a>
+    <span class="active">FAVORIS <strong id="favorites-count"></strong></span>
+    <a href="listes.html" class="tab-link">LISTES</a>
+  </div>
+
+  <div class="grid" id="favorites-grid">
+    <div class="product">
+      <img src="#" alt="Produit" onclick="selectProduct(this)">
+
+      <label class="selection-radio">
+      <input type="checkbox"/> 
+      <span class="custom-check"></span>
+      </label>
+
+      <div class="product-info">
+        <div class="brand">BALENCIAGA</div>
+        <div class="product-name">BASKETS GEOBASKET</div>
+        <div class="price">€400</div>
+    </div>    
+    </div>
+
+    <div class="product">
+      <img src="#" alt="Produit" onclick="selectProduct(this)">
+
+      <label class="selection-radio">
+      <input type="checkbox"/>
+      <span class="custom-check"></span>
+      </label>
+
+      <div class="product-info">
+        <div class="brand">CÉLINE</div>
+        <div class="product-name">CASQUETTE</div>
+        <div class="price">€ 500</div>
+      </div>    
+</div>
+    <div class="product">
+      <img src="#" alt="Produit" onclick="selectProduct(this)">
+
+      <label class="selection-radio">
+      <input type="checkbox"/>
+      <span class="custom-check"></span>
+      </label>
+
+      <div class="product-info">
+        <div class="brand">THOM BROWNE</div>
+        <div class="product-name">Nom produit</div>
+        <div class="price">€ 500</div>
+      </div>
+</div>
+
+    <div class="product">
+      <img src="#" alt="Produit" onclick="selectProduct(this)">
+
+      <label class="selection-radio">
+      <input type="checkbox"/>
+      <span class="custom-check"></span>
+      </label>
+
+      <div class="product-info">
+        <div class="brand">THOM BROWNE</div>
+        <div class="product-name">Nom produit</div>
+        <div class="price">€ 500</div>
+      </div>
+</div>
+
+  <div class="liste-dropdown" id="listeDropdown">
+    <div class="liste-dropdown-content" id="listeDropdownContent">
+    <div class="liste-header">
+    <h4>AJOUTER À</h4>
+    
+  </div>
+    
+  </div>
+</div>
+
+<div class="selection-actions" id="selectionActions" style="display: none;">
+    <button id="btnAddToList" onclick="showListeDropdown(event)" disabled >AJOUTER À LA LISTE</button>
+    <button id="btnDelete" onclick="deleteSelectedProducts()" disabled >SUPPRIMER</button>
+  </div>
+
+
+<footer class="sticky-footer">
+    <a href="accueil.html" class="menu-item active"><span>ACCUEIL</span></a>
+    <a href="explorer.html" class="menu-item"><span>EXPLORER</span></a>
+    <a href="profil.html"class="menu-item"><span>PROFIL</span></a>
+  </footer>
+  <script>
+    function toggleContextMenu(e) {
+      e.stopPropagation();
+      const menu = document.getElementById('menu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function enterSelectionMode() {
+      document.getElementById('menu').style.display = 'none';
+      document.getElementById('selectionActions').style.display = 'none';
+
+      document.querySelectorAll('.product').forEach(p => { 
+      p.classList.add('selectable');
+      p.classList.remove('selected');
+      p.querySelector('input[type="checkbox"]').checked = false;
+      });
+
+      const toggle = document.getElementById('menuToggle');
+      toggle.classList.add('selection-active');
+      toggle.textContent = `TOUT SÉLECTIONNER (0)`;
+      toggle.onclick = selectAllProducts;
+      updateSelectionButtonsState();
+      document.getElementById('btnCancel').style.display = 'inline-block';
+
+    }
+document.querySelectorAll('.product input[type="checkbox"]').forEach(input => {
+  input.addEventListener('change', () => {
+    const product = input.closest('.product');
+    if (input.checked) {
+      product.classList.add('selected');
+    } else {
+      product.classList.remove('selected');
+    }
+    updateSelectionButtonsState();
+  });
+});
+
+    function selectAllProducts() {
+      const products = document.querySelectorAll('.product.selectable');
+      const allSelected = Array.from(products).every(p => p.classList.contains('selected'));
+
+      products.forEach(p => {
+        p.classList.toggle('selected' , !allSelected);
+        p.querySelector('input[type="checkbox"]').checked = !allSelected;
+      });
+      updateSelectionButtonsState();
+    }
+
+function deleteSelectedProducts() {
+  const selectedProducts = document.querySelectorAll('.product.selectable.selected');
+   if (selectedProducts.length === 0) return;
+
+  const message = `Supprimer ${selectedProducts.length} article${selectedProducts.length > 1 ? 's' : ''} ?`;
+  showConfirmationModal(message, () => {
+    selectedProducts.forEach(product => product.remove());
+  // Après suppression, quitter le mode sélection
+  exitSelectionMode();
+  updateFavoritesCount(); // Met à jour le compteur
+  });
+}
+
+    function exitSelectionMode() {
+      document.querySelectorAll('.product').forEach(p =>{
+      p.classList.remove('selected');
+      p.classList.remove('selectable');
+  });
+      document.getElementById('menu').style.display = 'none';
+      document.getElementById('selectionActions').style.display = 'none';
+      document.getElementById('listeDropdown').style.display = 'none';
+
+      const toggle = document.getElementById('menuToggle');
+      toggle.classList.remove('selection-active');
+      document.getElementById('btnCancel').style.display = 'none';
+      toggle.textContent = 'PLUS';
+      toggle.onclick = toggleContextMenu;
+
+      document.getElementById('btnAddToList').disabled = true;
+      document.getElementById('btnCancel').disabled = true;
+    }
+
+
+    function showListeDropdown(e) {
+      e.stopPropagation();
+      document.getElementById('selectionActions').style.display = 'none';
+      document.getElementById('listeDropdown').classList.add('show');
+    }
+
+    document.addEventListener('click', () => {
+      document.getElementById('menu').style.display = 'none';
+      document.getElementById('listeDropdown').classList.remove('show');
+    });
+    function selectProduct(imgElement) {
+  const product = imgElement.closest('.product');
+  if (!product.classList.contains('selectable')) return;
+const checkbox = product.querySelector('input[type="checkbox"]');
+  checkbox.checked = !checkbox.checked;
+
+  if (checkbox.checked) {
+    product.classList.add('selected');
+  } else {
+    product.classList.remove('selected');
+  }
+
+  updateSelectionButtonsState();
+}
+
+    
+  function updateSelectionButtonsState() {
+  const allProducts = document.querySelectorAll('.product.selectable');
+  const selectedProducts = document.querySelectorAll('.product.selectable.selected');
+  const selectedCount = selectedProducts.length;
+
+  const btnAdd = document.getElementById('btnAddToList');
+  const btnDelete = document.getElementById('btnDelete');
+  const actions = document.getElementById('selectionActions');
+  const toggle = document.getElementById('menuToggle');
+
+  const shouldEnable = selectedCount > 0;
+  btnAdd.disabled = !shouldEnable;
+  btnDelete.disabled = !shouldEnable;
+
+  actions.style.display = selectedCount > 0 ? 'flex' : 'none';
+
+  if (toggle.classList.contains('selection-active')) {
+    if (selectedCount === allProducts.length && selectedCount > 0) {
+      toggle.textContent = `TOUT DÉSÉLECTIONNER (${selectedCount})`;
+    } else {
+      toggle.textContent = `TOUT SÉLECTIONNER (${selectedCount})`;
+  }
+ }
+}
+document.querySelectorAll('.list-card-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const listName = item.textContent.trim();
+    alert(`Ajouté à "${listName.toUpperCase()}"`);
+    // Optionnel : fermer le menu après ajout
+    document.getElementById('listeDropdown').classList.remove('show');
+  });
+});
+
+
+function showConfirmationModal(message, onConfirm) {
+  const modal = document.getElementById("confirmModal");
+  const confirmText = document.getElementById("confirmText");
+  const confirmBtn = document.getElementById("confirmBtn");
+
+  confirmText.textContent = message;
+
+  confirmBtn.onclick = () => {
+    closeModal();
+    onConfirm();
+  };
+
+  modal.style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("confirmModal").style.display = "none";
+}
+
+
+  </script>
+ <!-- MODALE DE CONFIRMATION -->
+<div id="confirmModal" style="display: none; position: fixed; inset: 0; background-color: rgba(0,0,0,0.4); z-index: 10000; align-items: center; justify-content: center;">
+  <div style="background: white; padding: 24px 20px; border-radius: 0; width: 80%; max-width: 320px; text-align: center; font-family: 'Space Grotesk', sans-serif;">
+    <p id="confirmText" style="font-size: 12px; margin-bottom: 24px; font-weight: 300; text-transform: uppercase;">Confirmer la suppression ?</p>
+    <div style="display: flex; justify-content: space-between; gap: 12px;">
+      <button onclick="closeModal()" style="flex: 1; padding: 10px; border: none; background: #ccc; color: black; font-size: 12px; font-weight: 300; text-transform: uppercase;">Annuler</button>
+      <button id="confirmBtn" style="flex: 1; padding: 10px; border: none; background: black; color: white; font-size: 12px; font-weight: 300; text-transform: uppercase;">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Charger dynamiquement les listes dans le dropdown
+  function loadListsInDropdown() {
+    const raw = localStorage.getItem("tokomiLists");
+    const content = document.getElementById("listeDropdownContent");
+    content.innerHTML = "";
+    if (!raw) return;
+
+    const lists = JSON.parse(raw);
+
+    lists.forEach(list => {
+      const item = document.createElement("div");
+      item.className = "list-card-item";
+      item.textContent = list.title?.toUpperCase() || "SANS NOM";
+      item.onclick = () => {
+        addSelectedProductsToList(list.id);
+        alert(`Ajouté à "${list.title}"`);
+        document.getElementById("listeDropdown").classList.remove("show");
+        // Tu peux ici appeler une fonction pour ajouter un produit à cette liste
+      };
+
+      content.appendChild(item);
+    });
+  }
+
+  function openListeDropdown() {
+      loadListsInDropdown();
+      document.getElementById("listeDropdown").classList.add("show");
+    }
+
+    function addSelectedProductsToList(listId) {
+      const checkboxes = document.querySelectorAll(".product-checkbox:checked");
+      const products = Array.from(checkboxes).map(cb => {
+        const p = cb.closest(".product");
+        return {
+          id: p.dataset.id,
+          brand: p.dataset.brand,
+          name: p.dataset.name,
+          price: p.dataset.price
+        };
+      });
+
+      const raw = localStorage.getItem("tokomiLists");
+      if (!raw) return;
+
+      const lists = JSON.parse(raw);
+      const list = lists.find(l => l.id === listId);
+      if (!list) return;
+
+      list.products = list.products || [];
+      products.forEach(p => {
+        if (!list.products.find(existing => existing.id === p.id)) {
+          list.products.push(p);
+        }
+      });
+
+      localStorage.setItem("tokomiLists", JSON.stringify(lists));
+      alert(`Ajouté à "${list.title}"`);
+    }
+
+    // Init example data if not existing
+    window.addEventListener("DOMContentLoaded", () => {
+      if (!localStorage.getItem("tokomiLists")) {
+        const example = [
+          { id: "1", title: "Préférés", products: [] },
+          { id: "2", title: "Cadeaux", products: [] }
+        ];
+        localStorage.setItem("tokomiLists", JSON.stringify(example));
+      }
+    });
+
+
+</script>
+<script>
+  function updateFavoritesCount() {
+   
+    // Compter le nombre de produits affichés dans la page
+    const products = document.querySelectorAll('.product');
+    const count = products.length;
+
+    // Cibler l'élément qui affiche le compteur
+    const counter = document.getElementById('favorites-count');
+    if (counter) {
+      counter.textContent = count;
+   
+    }
+  }
+
+  // Exécuté au chargement de la page
+  document.addEventListener("DOMContentLoaded", updateFavoritesCount);
+
+  // 🔁 Appelle cette fonction après tout ajout ou suppression de favoris
+  function addToFavorites(product) {
+    const raw = localStorage.getItem("tokomiFavorites");
+    const favorites = raw ? JSON.parse(raw) : [];
+    favorites.push(product);
+    localStorage.setItem("tokomiFavorites", JSON.stringify(favorites));
+    updateFavoritesCount();
+  }
+
+  function removeFromFavorites(productId) {
+    const raw = localStorage.getItem("tokomiFavorites");
+    const favorites = raw ? JSON.parse(raw) : [];
+    const updated = favorites.filter(p => p.id !== productId);
+    localStorage.setItem("tokomiFavorites", JSON.stringify(updated));
+    updateFavoritesCount();
+  }
+</script>
+
+
+</body>
+</html>

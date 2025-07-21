@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Contactez-nous – Tokomi</title>
+  
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+      text-transform: uppercase;
+      box-sizing: border-box;
+    }
+*, *::before, *::after {
+  font-family: 'Space Grotesk', sans-serif !important;
+}
+
+    .btn-retour {
+      position: absolute;
+      left: 10px;
+      top: 54px;
+      background: none;
+      border: none;
+      font-size: 12px;
+      font-weight: 300;
+      cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif !important;
+    }
+
+    header {
+      text-align: left;
+      padding: 80px 16px 24px;
+
+      font-family: 'Space Grotesk', sans-serif !important;
+      font-size: 14px;
+      font-weight: 500;
+      margin-top: 12px;
+    }
+
+    .section {
+      padding: 24px 16px;
+      text-align: left;
+      margin-top: -32px;
+    }
+
+    .section p {
+
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      text-transform: none;
+      line-height: 1.5;
+      margin-top: -3px;
+      margin-bottom: 42px;
+    }
+
+    .btn-contact {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 300;
+      font-family: 'Space Grotesk', sans-serif;
+      padding: 10px 0;
+      margin: 12px 0;
+      border: none;
+      box-shadow: none;
+      background: none;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    .btn-contact img {
+      width: 14px;
+      height: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="btn-retour" onclick="location.href='profil.html'">RETOUR</button>
+
+  <header>Contactez-nous</header>
+
+  <div class="section">
+    <p>Nous sommes disponibles pour vous aider<br>du lundi au vendredi de 9h à 17h GMT.</p>
+
+    <button class="btn-contact" onclick="window.location='mailto:support@tokomi.com'">
+      <img src="email-icon.png" alt="Courriel" />
+      Courriel
+    </button>
+
+    <button class="btn-contact" onclick="window.location='tel:+243000000000'">
+      <img src="phone-icon.png" alt="Téléphone" />
+      Téléphone
+    </button>
+  </div>
+
+</body>
+</html>

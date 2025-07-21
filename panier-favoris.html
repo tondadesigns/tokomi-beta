@@ -1,0 +1,2356 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Page Panier – Tokomi</title>
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      border-bottom: 1px solid white;
+      
+    }
+
+    .header {
+      margin-top: 37px;
+      padding: 16px;
+      border: whi;
+      border-bottom:none;
+    }
+
+    .btn-retour{
+  margin-top: 40px ;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: red;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+}
+
+.btn-retourccp {
+  margin: -32px -12px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: blue;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+}
+
+.btn-retouracp {
+  margin-top: 40px ;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: red;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.payment-header-section {
+  top: 0;
+}
+.btn-retourpcp {
+  position: relative;
+  top: -183px;
+  left: 0;
+  margin: 0;
+  padding: 16px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: sienna;
+  background: none;
+  border: none;
+  cursor: pointer;
+  
+}
+
+.payment-heading {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  margin-top: -182px;
+  margin-left: 16px ;
+  margin-bottom: -122px;
+}
+
+.back-arrow {
+      font-size: 24px;
+      cursor: pointer;
+      margin-bottom: 16px;
+      padding-left: 16px;
+    }
+
+    .nav-tabs {
+      margin-top: 17px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 3px;
+    }
+    .cart-tab {
+      font-size: 12px;
+}
+    .tab-button {  
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: black;
+    }
+
+    .tab-button.active {
+      font-size: 12.75px;
+      font-weight: 600;
+    }
+
+    .cart-count {
+      font-weight: 600;
+      font-size: 12px;
+      margin-left: 4px;
+    }
+
+    .product-item {
+    position: relative;
+      display: flex;
+      padding: 8px 12px;
+      border-top: 1px solid transparent;
+      min-height: auto;
+      height: auto;
+      
+    }
+
+    .product-image {
+      width: 40vw;
+      height: 260px;
+      background: #ddd;
+      border: 1px solid #ccc;
+      margin-right: 16px;
+    }
+
+    .product-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-grow: 1;
+    }
+
+    .product-lines {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .product-name {
+      font-size: 12px;
+      font-weight: 300;
+      text-transform: uppercase;
+    }
+
+    .product-meta,
+    .product-price {
+      font-weight: 300;
+      font-size: 12px;
+      color: black;
+      text-transform: uppercase;
+    }
+
+    .product-actions {
+      display: flex;
+      align-items: center;
+      margin-top: 12px;
+      gap: 12px;
+    }
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  margin-bottom: 160px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300;
+}
+
+.quantity-controls button {
+  gap: 2px;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300;
+}
+
+.qty-productItem1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+}
+    .btn-remove {
+      background: white;
+      color: black;
+      border: none;
+      padding: 6px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      margin-bottom: -140px;
+      margin-left: -90px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 300;
+        transition: background 0.2s ease;
+    }
+
+    
+
+.btn-save {
+  background: none;
+  border: none;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300;
+  cursor: pointer;
+  color: black;
+  transition: background 0.2s ease;
+  margin-bottom: -140px;
+  margin-left: auto;
+}
+
+
+    .icon-save svg {
+      cursor: pointer;
+      transition: transform 0.2s ease;
+
+    }
+
+    .icon-save svg:hover {
+      transform: scale(1.1);
+    }
+
+    .icon-save {
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .alert {
+      position: fixed;
+      bottom: 80px;              /* ✔ Positionné en bas */
+      left: 50%; 
+      transform: translateX(-50%);
+      background-color: #000;
+      color: white;
+      padding: 10px 16px;
+      border-radius: none;
+      display: none;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      text-transform: uppercase;
+      z-index: 9999; 
+    }
+
+    .cart-footer {
+  position: sticky;
+  bottom: 0;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-top: 1px solid #eee;
+  z-index: 10;
+}
+
+.cart-footer-left {
+  width: 40vw; /* même largeur que les images produit */
+}
+
+.continue-button {
+  width: 100%;
+  background: black;
+  color: white;
+  padding: 10px;
+  border: none;
+  font-size: 12px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+.cart-footer-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.cart-total {
+  font-weight: 300;
+  font-size: 14px;
+  color: black;
+}
+
+.cart-note {
+  font-size: 12px;
+  font-weight: 300;
+  color: #555;
+}
+
+#checkout-article-count {
+  font-family: 'Space Grotesk', sans-serif; /* ou une autre police si tu préfères */
+  text-transform: uppercase;
+  font-weight: 300; /* optionnel : pour une apparence légère */
+  font-size: 12px;   /* optionnel : ajuste selon ta maquette */
+  color: #111;       /* optionnel : couleur du texte */
+}
+
+#checkout-date {
+  margin-top: -14px;
+  font-weight: 300; /* ou 400, 500, 600 selon ce que tu veux */
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px; /* modifiable selon ton design */
+  color: red; /* ou une autre couleur si nécessaire */
+}
+
+
+
+#checkout-carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 12px;
+  padding: 0 16px 16px 16px;
+  scroll-behavior: smooth;
+  margin-top: -8px; /* ajuste la valeur selon le rendu */
+}
+
+.carousel::-webkit-scrollbar {
+  display: none; /* pour cacher la scrollbar sur Chrome/Safari */
+}
+
+#address-form {
+  display: flex !important;
+  margin-bottom: 230px;
+}
+
+.carousel-item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  width: 120px;
+  height: 160px;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 0;
+}
+
+
+.address-header {
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  margin-top: -8px;
+  margin-bottom: -26px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  color: #111;
+  border: white;
+  border-color: white;
+  border-bottom:none;
+  cursor: pointer;
+}
+
+.address-arrow {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+
+
+.address-input {
+  width: 100%;
+  padding: 8px 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  border: none !important;
+  border-bottom: 1px solid #eee !important;
+  outline: none;
+  background:white;
+  text-transform: uppercase;
+  margin-bottom: 1px;
+}
+
+.submit-address-btn {
+  width: 300%;
+  padding-right: 2px;
+  margin-top: 16px;
+  background: black;
+  color: white;
+  border-top-color: none;
+  border: none;
+  font-size: 12px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-bottom: 24px;
+}
+
+.submit-address-btn:hover { 
+  background: #222;
+}
+
+.autocomplete-wrapper {
+  position: relative;
+  margin-bottom: px;
+}
+
+.autocomplete-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  max-height: 180px;
+  overflow-y: auto;
+  z-index: 1000;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: none;
+}
+
+.autocomplete-list li {
+  padding: 8px 12px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.autocomplete-list li:hover {
+  background-color: #f0f0f0;
+}
+
+
+.hidden {
+  display: none;
+}
+
+.displayed-address {
+
+font-size: 12px;
+font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300;
+  color: #333;
+  white-space: pre-line;
+  min-height: 48px; /* réserve la hauteur */
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  margin: 0; /* évite de fausser le flux */
+  transform: translateX(0); /* Position par défaut */
+transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+  overflow: hidden;
+}
+.displayed-address.visible {
+  margin: -12px -40px -30px 16px;
+  font-size: 12px;
+  font-weight: 300;
+  color: red;
+  opacity: 1;
+  transform: translateX(-16px); /* Glisse vers la gauche */
+
+}
+
+
+.payment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  color: #111;
+  border-top: none;
+  border-bottom: none;
+  cursor: pointer;
+  margin-top: 16px;
+  margin-bottom: -20px;
+}
+
+.payment-summary {
+      display: none;
+      padding: 16px 20px;
+      background-color: #fafafa;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 15px;
+      margin-top: 0;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+
+
+
+.payment-arrow {
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.payment-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 700px;
+  margin: 0 auto;
+  margin-top: 32px;
+  margin-bottom: 183px;
+  
+}
+
+.payment-row {
+  display: flex;
+  
+  gap: 24px;
+  align-items: flex-start;
+  
+}
+
+
+.payment-column {
+ display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  min-width: 300px; 
+}
+
+.payment-column.gauche {
+  align-items: flex-start;
+}
+
+.payment-column.droite {
+  align-items: flex-end;
+}
+
+.payment-column:first-child .payment-option-wrapper {
+  align-items: flex-start;
+}
+
+.payment-column:first-child {
+  padding-left: 12px; /* Ajuste cette valeur selon le rendu */
+}
+
+
+.payment-option {
+  border: none !important;
+  border: 1px solid white;
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
+  background: white;
+}
+
+.payment-option img {
+  max-width: 60px;
+  max-height: 40px;
+  margin-bottom: 12px;
+}
+
+.payment-option p {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+
+.payment-option:hover {
+  background: black;
+  color: white;
+  border-color: black;
+}
+
+
+.payment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;              /* Prend toute la largeur */
+  border-left: none;
+  border-right: none;
+  border-radius: 0;         /* Optionnel : bordures droites */
+  margin-bottom: 12px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.payment-button {
+  display: flex;
+  color: black;
+  align-items: center;
+  justify-content: flex-start;
+   width: 100%;
+   padding: 6px 12px;
+  gap: 12px;
+  border:none !important;
+  border-color: white;
+  border-bottom: none !important;
+  background: white;
+  cursor: pointer;
+  height: 20px;
+  transition: background 0.2s, ease;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  outline: none !important;
+  box-shadow: none !important;
+ 
+}
+
+.payment-logo {
+ 
+  width: 60px;
+  height: 40px;
+  flex-shrink: 0;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+}
+
+.payment-logo img {
+  max-width: 100%;
+  max-height: 100%;
+ object-fit: contain;
+}
+
+.visa-logo {
+  height: 12px !important; /* réduit la hauteur uniquement pour Visa */
+  width: auto;
+  object-fit: contain;
+}
+
+.mastercard-logo {
+  height: 24px !important; /* réduit la hauteur uniquement pour Visa */
+  width: auto;
+  object-fit: contain;
+}
+
+
+.paypal-logo {
+  height: 20px !important;
+  width: auto;
+  object-fit: contain;
+}
+
+
+.americanexpress-logo {
+  height: 26px; 
+  width: auto;
+}
+
+.applepay-logo {
+  height: 18px !important; 
+  width: auto;
+  object-fit: contain;
+}
+
+.taptapsend-logo {
+  height: 20px !important; 
+  width: auto;
+  object-fit: contain;
+}
+
+.mpesa-logo {
+  height: 18px !important; 
+  width: auto;
+  object-fit: contain;
+}
+
+.illicocash-logo {
+  height: 24px !important; 
+  width: auto;
+  object-fit: contain;
+}
+
+.orangemoney-logo {
+  height: 20px !important; 
+  width: auto;
+  object-fit: contain;
+}
+
+.airtelmoney-logo {
+  height: 20px !important; 
+  width: auto;
+  object-fit: contain;
+}
+
+.afrimoney-logo {
+  height: 20px !important; 
+  width: auto;
+  object-fit: contain;
+}
+
+.mtnmomo-logo {
+  height: 20px !important; 
+  width: auto;
+  object-fit: contain;
+}
+
+.payment-dropdown {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: -0.15px;
+  padding:0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  background: white !important;
+  border: none;
+  border-bottom: 1px solid #eee !important; 
+  
+}
+
+.payment-dropdown.show {
+  background: white !important;
+  max-height: 600px; /* hauteur suffisante pour tous les champs */
+  border: none !important;
+  border-color:red;
+  padding: 16px;
+  transition: max-height 0.4s ease;
+  border-bottom: white;
+}
+
+
+.payment-dropdown input {
+  display: block;
+  width: 100%;
+  margin-bottom: 1px;
+  padding: 10px;
+  border: none !important;
+  border-top: transparent;
+  border-bottom: 1px solid #eee !important ;
+  background: white !important;
+  color: black !important;
+  background-color: white;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300;
+  font-size: 11px;
+  border-radius: 0;
+  outline: none;
+}
+
+.payment-dropdown-elegant-dropdown {
+  background-color: rgb(115, 136, 68);
+  background: crimson;
+  }
+
+.payment-dropdown button {
+  padding: 10px;
+  background: black;
+  color: white;
+  border: white;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300;
+  width: 100%;
+}
+
+
+.paymentFields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: darkgoldenrod;
+  color: red;
+  border: none;
+  border-bottom: 1px solid #eee !important;
+}
+
+.paymentFields input {
+  margin-left: auto;
+  padding: 8px;
+  color: greenyellow;
+  background-color: green;
+  font-size: 10px;
+  border: none;
+  border-bottom: 1px solid #eee !important;
+  border-radius: none !important;
+}
+
+.select-wrapper {
+  margin-bottom: 16px;
+}
+
+.select-wrapper select:focus {
+  border-bottom: 2px solid black;
+}
+
+ 
+    .submit-address-btn {
+      padding: 10px;
+      background: black;
+      color: white;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+    }
+
+.payment-footer {
+  position: sticky;
+  bottom: 0;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-top: 1px solid #eee;
+  z-index: 1000;
+}
+
+.payment-footer-left .payment-footer-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  color: black;
+  text-transform: uppercase;
+}
+
+.payment-footer-right {
+  text-align: right;
+}
+
+.payment-footer-amount {
+  font-size: 14px;
+  font-weight: 300;
+  color: black;
+}
+
+.payment-footer-note {
+  font-size: 12px;
+  font-weight: 300;
+  color: #555;
+}
+
+.payment-option-wrapper {
+  flex-direction: column !important;
+  display: flex;  
+  width: 100%;
+  align-items: flex-start;
+ font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  border: none !important;
+  border-bottom: 1px solid #eee !important;
+  outline: none;
+  background: none !important;
+  background-color: transparent !important;
+  color: black;
+  text-transform: uppercase;
+  margin-bottom: 1px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.elegant-dropdown {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+  background: white !;
+
+
+  border: 1px solid white;
+  border-top: none;
+  padding: 0 16px;
+}
+
+.elegant-dropdown.show {
+  max-height: 500px;
+  padding: 16px;
+}
+
+.elegant-dropdown input,
+.elegant-dropdown button {
+  margin-bottom: 10px;
+}
+
+.payment-button,
+.payment-option-wrapper,
+.payment-option-wrapper * {
+  border: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+
+
+
+
+.selected-shipping {
+  margin-left: 14px;
+      font-weight: 600;
+      font-size: 12px;
+      background: #f9f9f9;
+}
+
+
+
+.shipping-title {
+  text-transform: uppercase;
+}
+
+.shipping-arrow {
+  font-size: 16px;
+}
+
+.shipping-options-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  padding: 8px 12px 0;
+  cursor: pointer;
+  font-weight: 300;
+  color: blueviolet;
+}
+
+.shipping-options-container input[type="radio"] {
+  margin-right: 12px;
+font-weight: 300;
+  
+
+
+}
+.shipping-option {
+  font-weight: 300;
+}
+.shipping-label {
+  font-weight: 300;
+    flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.shipping-separator {
+  margin: 0 4px;
+}
+
+.shipping-line {
+  flex-grow: 1;
+  height: 1px;
+  background-color: #ccc;
+  margin: 0 8px;
+}
+
+.shipping-price {
+  white-space: nowrap;
+  font-weight: 300;
+  align-items: end;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
+  </style>
+</head>
+<body>
+<div id="main-cart">
+  <!-- contenu actuel de la page panier -->
+</div>
+  <div class="header">
+    <a href="javascript:history.back()" class="btn-retour">RETOUR</a>
+    <div class="nav-tabs">
+      <button class="tab-button active" id="cart-tab" onclick="selectTab('cart')">
+        PANIER <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="tab-button" id="favorites-tab" onclick="window.location.href='favoris.html'">
+        FAVORIS <span class="cart-count" id="favoritesCount"></span>
+      </button>
+      <button class="tab-button" id="lists-tab" onclick="window.location.href='listes.html'">
+      LISTES
+      </button>
+    </div>
+  </div>
+
+  <div class="product-item" id="productItem1">
+    <div class="product-image"></div>
+    <div class="product-info">
+
+      <div class="product-lines">
+        <div class="product-name">BASKETS GEOBASKET</div>
+        <div class="product-meta">TAILLE 42 – NOIR</div>
+        <div class="product-price" data-price="400"> €400</div>
+      </div>
+      <div class="product-actions">
+        <div class="quantity-controls">
+  <button onclick="updateQty('productItem1', -1)">−</button>
+  <span id="qty-productItem1">1</span>
+  <button onclick="updateQty('productItem1', 1)">+</button>
+</div>
+        <button class="btn-remove" onclick="removeProduct('productItem1')">SUPPRIMER</button>
+        <button class="btn-save" data-name="Baskets Geobasket" onclick="addToFavorites('Baskets Geobasket')"> ENREGISTRER</button>
+
+
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="product-item" id="productItem2">
+    <div class="product-image" style="background: #eee;"></div>
+    <div class="product-info">
+      
+      <div class="product-lines">
+        <div class="product-name">Bottines Island Dunk</div>
+        <div class="product-meta">Taille 43 – Beige</div>
+        <div class="product-price" data-price="520">€520</div>
+      </div>
+      <div class="product-actions">
+        <div class="quantity-controls">
+  <button onclick="updateQty('productItem2', -1)">−</button>
+  <span id="qty-productItem2">1</span>
+  <button onclick="updateQty('productItem2', 1)">+</button>
+</div>
+
+        <button class="btn-remove" onclick="removeProduct('productItem2')">SUPPRIMER</button>
+        <button class="btn-save" onclick="addToFavorites('Baskets Geobasket')"> ENREGISTRER</button>
+        </span>
+      </div>
+    </div>
+  </div>
+
+<div class="product-item" id="productItem3">
+    <div class="product-image" style="background: #eee;"></div>
+    <div class="product-info">
+      
+      <div class="product-lines">
+        <div class="product-name">Bottines Island Dunk</div>
+        <div class="product-meta">Taille 44 – Beige</div>
+        <div class="product-price" data-price="520">€520</div>
+      </div>
+      <div class="product-actions">
+        <div class="quantity-controls">
+  <button onclick="updateQty('productItem3', -1)">−</button>
+  <span id="qty-productItem3">1</span>
+  <button onclick="updateQty('productItem3', 1)">+</button>
+</div>
+
+        <button class="btn-remove" onclick="removeProduct('productItem3')">SUPPRIMER</button>
+        <button class="btn-save" onclick="addToFavorites('Baskets Geobasket')"> ENREGISTRER</button></span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="alert" id="alertBox">Ajouté aux favoris</div>
+
+
+<div class="cart-footer">
+  <div class="cart-footer-left">
+    <button class="continue-button" onclick="openCheckout()" >CONTINUER</button>
+  </div>
+  <div class="cart-footer-right">
+    <div class="cart-total"> €0</div>
+    <div class="cart-note">* Taxes comprises</div>
+  </div>
+</div>
+
+  
+<!-- Checkout Page  -->
+<div id="checkout-page" style="display: none;">
+  <div class="header" style="display: flex; position:relative;
+  justify-content: flex-start; align-items: center; padding:  22px 28px; border-top: 2px; margin-bottom: 15px;">
+    <button class="btn-retourccp"  onclick="backToCart()">RETOUR</button>
+  </div>
+  <div style="padding: 2px 16px; "> 
+    <p id="checkout-date" style="margin-bottom: 12px;  font-size: 12px;"></p>
+    <p id="checkout-article-count"> Articles dans le panier : <span id="checkout-count"></span></p>
+  </div>
+
+  <div class="carousel" id="checkout-carousel" style="display: flex; overflow-x: auto; gap: 12px; padding: 16px;"></div>
+
+<div class="address-header" onclick="openAddressPage()">
+  <span class="address-title">LIVRAISON</span>
+  <span class="address-arrow">›</span>
+</div>
+
+
+<div id="address-summary" style="display: none; margin-top: 2px; padding: 16px; border-top: none;">
+  <h3 style="font-size: 12px; font-weight: 300; margin-bottom: 2px;"></h3>
+
+  <p id="displayed-address" class="displayed-address"></p>
+</div>
+
+
+
+<div id="payment-header" class="payment-header" onclick="goToPaymentPage()" >
+  <span class="payment-title">PAIEMENT</span>
+  <span class="payment-arrow">›</span>
+</div>
+
+<div id="payment-summary" style=" padding: 16px; border-top: none; display: none;"></div>
+
+  
+  <p id="payment-method-selected" style="font-size: 12px; font-weight: 300; margin: -28px 16px -16px 16px; border: none;"></p>
+
+<!-- Shipping Header bouton -->
+<div class="shipping-header" onclick="openShippingPage()" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; margin-top: 22px; border: none; border-radius: 12px; background: none; color: black; cursor: pointer; margin-bottom: -14px;">
+  <span style="font-size: 12px; font-weight: 300;">EXPÉDITION</span>
+  <span style="font-size: 18px;">›</span>
+</div>
+
+<!-- Résumé expédition -->
+  <div id="shipping-summary" style="display: none; margin: 0 16px 16px 16px;">
+    
+  <p id="selected-shipping" style="font-size: 12px; margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 300; margin-bottom: 160px;"></p>
+</div>
+
+<div class="cart-footer" id="checkout-footer" style="position: sticky; bottom: 0; background: white; z-index: 10; padding: 16px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; margin-top: 26px;">
+  <div class="cart-footer-left">
+    <button class="continue-button" onclick="finalizeOrder()">COMMANDER</button>
+  </div>
+  <div class="cart-footer-right">
+    <div class="cart-total" id="checkout-total" data-original-total="0">€0</div>
+    <div class="cart-note">* Taxes comprises</div>
+  </div>
+</div>
+<!-- Loader TOKOMI -->
+<div id="loading-screen" style="
+  position: fixed;
+  inset: 0;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: white;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+">
+  <img src="./tokomi-loader.gif" alt="Chargement..." style="width: 120px; height: auto; animation: spin 2s linear infinite;" />
+</div>
+</div>
+
+<!-- FIN checkout-page -->
+
+
+
+<!-- Payment Page  -->
+<div id="payment-page" style="display: none;">
+  <div class="payment-header-section">
+    <button class="btn-retourpcp" onclick="backToCheckout()">RETOUR</button>
+    <h2 class="payment-heading">CHOISIR SA MÉTHODE DE PAIEMENT</h2>
+    </div>
+    
+  
+<div class="payment-grid">
+
+<!-- VISA -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="VISA">
+      <div class="payment-logo">
+        <img src="./Visa_Brandmark_Blue_RGB_2021.png" class="visa-logo" />
+      </div>
+      VISA
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+
+
+<!-- MASTERCARD -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="MASTERCARD">
+      <div class="payment-logo">
+        <img src="./ma_symbol_opt_63_3x.png" class="mastercard-logo" />
+      </div>
+      MASTERCARD
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+
+<!-- PAYPAL -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="PAYPAL">
+      <div class="payment-logo">
+        <img src="./paypal-seeklogo.png" class="paypal-logo" />
+      </div>
+      PAYPAL
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+
+<!-- AMERICAN EXPRESS -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="AMERICAN EXPRESS">
+      <div class="payment-logo">
+        <img src="./AmericanXP_BlueBoxLogo_Alternate_SMALLscale_RGB_DIGITAL_80x80.png" class="americanexpress-logo" />
+      </div>
+      AMERICAN EXPRESS
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+
+<!-- APPLE PAY -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="APPLE PAY">
+      <div class="payment-logo">
+        <img src="./Apple_Pay_Mark_RGB_041619.svg" class="applepay-logo" />
+      </div>
+      APPLE PAY
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+
+<!-- TAPTAPSEND -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="TAPTAPSEND">
+      <div class="payment-logo">
+        <img src="./idHwWumpqs_1748820255658.jpeg" class="taptapsend-logo" />
+      </div>
+      TAPTAPSEND
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+
+<!-- M-PESA -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="M-PESA">
+      <div class="payment-logo">
+        <img src="./m-pesa logo.jpeg" class="mpesa-logo" />
+      </div>
+      M-PESA
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+
+<!-- ILLICOCASH -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="ILLICOCASH">
+      <div class="payment-logo">
+        <img src="./illicocash-logo.jpeg" class="illicocash-logo" />
+      </div>
+      ILLICOCASH
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+
+<!-- ORANGE MONEY -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="ORANGE MONEY">
+      <div class="payment-logo">
+        <img src="./orange-money-seeklogo.png" class="orangemoney-logo" />
+      </div>
+      ORANGE MONEY
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+
+<!-- AIRTEL MONEY -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="AIRTEL MONEY">
+      <div class="payment-logo">
+        <img src="./airtel-money-uganda-seeklogo.png" class="airtelmoney-logo" />
+      </div>
+      AIRTEL MONEY
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+
+<!-- AFRIMONEY -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="AFRIMONEY">
+      <div class="payment-logo">
+        <img src="./afrimoneylogo.jpeg" class="afrimoney-logo" />
+      </div>
+      AFRIMONEY
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+
+<!-- MTN MOMO -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="MTN MOMO">
+      <div class="payment-logo">
+        <img src="./mtn-momo-mobile-money-uganda-seeklogo.png" class="mtnmomo-logo" />
+      </div>
+      MTN MOMO
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+  </div>
+  </div>
+  </div>
+  
+
+
+<!-- Shipping Page  -->
+ <div id="shipping-page" style="display: none; padding: 16px;">
+  <div class="header">
+    <button class="btn-retourccp"  onclick="backToCheckout()">RETOUR</button>
+  </div>
+  
+  <h2 style="font-family: 'Space Grotesk', sans-serif; font-weight: 300; font-size: 12px; margin-top: 16px; margin-left: 5px;">
+    CHOISIR UNE OPTION D’EXPÉDITION
+  </h2>
+
+  <form id="shipping-form" style="display: flex; flex-direction: column; gap: 16px; margin-top: 24px;">
+
+    <div id="shipping-options-container">
+      <label class="shipping-option" style="display: flex; align-items: center; justify-content: space-between; font-size: 12px; border-bottom: 1px solid #eee; padding-bottom: 8px;font-family: 'Space Grotesk', sans-serif; font-weight: 300;"></label>
+      <input type="radio" name="shipping" value="STANDARD 7-10 JOURS - €9.90" />
+      <span style="flex: 1; margin-left: 12px; font-family: 'Space Grotesk', sans-serif; font-weight: 300;">STANDARD 7-10 JOURS</span>
+  <span style="font-weight: 300;">€9.90</span>
+</label>
+
+      <input type="radio" name="shipping" value="EXPRESS 3-5 JOURS - €14.90" />
+      <span style="flex: 1; margin-left: 12px; font-family: 'Space Grotesk', sans-serif; font-weight: 300;">EXPRESS 3-5 JOURS - €14.90</span>
+  <span style="font-weight: 300;">€9.90</span>
+</label>
+      <input type="radio" name="shipping" value="EN 1 JOUR - €24.90" />
+      <span style="flex: 1; margin-left: 12px; font-family: 'Space Grotesk', sans-serif; font-weight: 300;">EN 1 JOUR - €24.90</span>
+  <span style="font-weight: 300;">€9.90</span>
+</label>
+
+    </div>
+
+    
+
+    <button type="submit"
+            style="margin-top: 16px; padding: 10px 16px; background: black; font-family: 'Space Grotesk', sans-serif; font-weight: 300; font-size: 12px; color: white; border: none; font-size: 12px; cursor: pointer;"onclick="backToCheckout()">
+      VALIDER L’EXPÉDITION</button>
+  </form>
+</div>
+</div>
+
+
+
+
+
+<!-- Address Page  -->
+<div id="address-page" style="display: none;">
+  <div class="header">
+    
+    
+  <button class="btn-retouracp"  onclick="backToCheckout()">RETOUR</button>
+  <h2 style="font-family: 'Space Grotesk', sans-serif; font-weight: 300; font-size: 12px; margin-top: 12px;margin-left: 1px;">VOTRE ADRESSE DE LIVRAISON</h2>
+<form id="address-form" style="display: flex; flex-direction: column; font-size: 10px; gap: 12px; margin-top: 24px; padding-right: 24px; margin-left: 1px;">
+  <input type="text" placeholder="PRÉNOM" required class="address-input" />
+  <input type="text" placeholder="NOM DE FAMILLE" required class="address-input" />
+  <input type="text" placeholder="ADRESSE" required class="address-input" />
+  <input type="text" placeholder="VILLE" required class="address-input" />
+  <input type="text" placeholder="CODE POSTAL" required class="address-input" />
+  <div class="autocomplete-wrapper">
+  <label for="countryInput" style="font-size: 10px; margin-bottom: 4px;"></label>
+  <input
+    type="text"
+    id="countryInput"
+    class="address-input"
+    placeholder="pays"
+    autocomplete="off"
+    required
+  />
+  <ul id="countryList" class="autocomplete-list"></ul>
+</div>
+
+  <input type="text" placeholder="NUMÉRO DE TÉLÉPHONE" required class="address-input" />
+
+  <button type="submit" class="submit-address-btn">ENREGISTRER</button>
+</form>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  <script>
+  let favoritesCount = 0;
+  
+// Exemple de total actuel
+let cartTotal = 100; // Tu peux récupérer ce chiffre dynamiquement depuis ton panier
+let shippingCost = 0;
+   // Fonction pour ouvrir la page shipping
+
+  const quantities = {
+    productItem1: 1,
+    productItem2: 1,
+    productItem3: 1,
+  };
+
+function calculateTotal() {
+    let total = 0;
+    Object.keys(quantities).forEach(id => {
+      const priceElement = document.querySelector(`#${id} .product-price`);
+      if (priceElement) {
+        const price = parseFloat(priceElement.dataset.price);
+        total += price * quantities[id];
+      }
+    });
+    cartTotal = total;
+    document.querySelector('.cart-total').textContent = `Total : €${total.toFixed(2)}`;
+    updateCheckoutTotal(); // <- mise à jour de la page checkout
+  }
+
+function updateCheckoutTotal() {
+  const checkoutTotalEl = document.getElementById("checkout-total");
+  if (checkoutTotalEl) {
+    const total = cartTotal + shippingCost;
+    checkoutTotalEl.textContent = `€${total.toFixed(2)}`;
+  }
+}
+
+function finalizeOrder() {// Affiche l'animatique de chargement
+ const loader = document.getElementById("loading-screen");
+
+  loader.style.display = "flex";
+
+  // Forcer le navigateur à "repeindre" l’écran avant le délai
+    setTimeout(() => {
+
+      const success = Math.random() > 0.3;
+      if (success) {
+        window.location.href = "confirmation.html";
+      } else {
+        window.location.href = "echec.html";
+      }
+    }, 2000);
+  
+}
+
+
+    function redirectToConfirmation() {
+  const orderNumber = "#" + Math.floor(100000 + Math.random() * 900000); // ex: #123456
+  const estimatedDate = document.getElementById('checkout-date')?.textContent.toUpperCase() || "PROCHAINE LIVRAISON";
+  const address = localStorage.getItem('tokomi_address') || "Aucune adresse";
+  const subtotal = cartTotal.toFixed(2);
+  const shipping = shippingCost.toFixed(2);
+  const total = (cartTotal + shippingCost).toFixed(2);
+
+  // Stocker dans localStorage
+  localStorage.setItem('tokomi_order_number', orderNumber);
+  localStorage.setItem('tokomi_estimated_date', estimatedDate);
+  localStorage.setItem('tokomi_summary_address', address);
+  localStorage.setItem('tokomi_subtotal', subtotal);
+  localStorage.setItem('tokomi_shipping', shipping);
+  localStorage.setItem('tokomi_total', total);
+
+  // Redirection
+  window.location.href = "confirmation.html";
+}
+
+
+    
+
+
+
+
+
+  function selectTab(tab) {
+    document.getElementById('cart-tab').classList.remove('active');
+    document.getElementById('favorites-tab').classList.remove('active');
+    if (tab === 'cart') {
+      document.getElementById('cart-tab').classList.add('active');
+    } else {
+      document.getElementById('favorites-tab').classList.add('active');
+    }
+  }
+
+  function updateCartCount() {
+    let totalItems = 0;
+    for (const qty of Object.values(quantities)) {
+      totalItems += qty;
+    }
+    document.getElementById('cartCount').textContent = `${totalItems}`;
+  }
+
+  function updateFavoritesCount(count) {
+    favoritesCount = count;
+    document.getElementById('favoritesCount').textContent = `${favoritesCount}`;
+  }
+
+
+    function updateQty(productId, change) {
+    if (quantities[productId] + change >= 1) {
+      quantities[productId] += change;
+      document.querySelector(`#${productId} .quantity-number`).textContent = quantities[productId];
+      calculateTotal();
+      updateCheckoutTotal();
+    }
+  }
+
+
+  function removeProduct(id) {
+    const product = document.getElementById(id);
+    if (product) {
+      product.remove();
+      delete quantities[id];
+      updateCartCount();
+      calculateTotal();
+      updateCheckoutTotal();
+    }
+  }
+
+  function addToFavorites(productName) {
+    favoritesCount++;
+    updateFavoritesCount(favoritesCount);
+    const alertBox = document.getElementById('alertBox');
+    alertBox.textContent = `${productName} ajouté aux favoris`;
+    alertBox.style.display = 'block';
+    setTimeout(() => {
+      alertBox.style.display = 'none';
+    }, 2000);
+  }
+
+  function updateQty(id, delta) {
+    if (!(id in quantities)) return;
+    quantities[id] = Math.max(1, quantities[id] + delta);
+    document.getElementById(`qty-${id}`).textContent = quantities[id];
+    updateCartCount();
+    calculateTotal();
+    updateCheckoutTotal();
+  }
+
+  
+
+
+  // Initial setup
+  updateCartCount();
+  calculateTotal();
+
+function openCheckout() {
+  document.getElementById('main-cart').style.display = 'none';
+  document.getElementById('checkout-page').style.display = 'block';
+  updateCheckoutDate();
+  updateCheckoutCount();
+
+// Carrousel
+  const carousel = document.getElementById('checkout-carousel');
+  carousel.innerHTML = '';
+  document.querySelectorAll('.product-item').forEach(item => {
+    const img = item.querySelector('.product-image');
+    const id = item.id;
+    const quantity = quantities[id] || 1;
+
+  for (let i = 0; i < quantity; i++) {
+    const clone = img.cloneNode(true);
+    clone.classList.add('carousel-item'); // ✅ applique le style
+    carousel.appendChild(clone);
+
+// Affiche l’adresse si elle existe
+  const addr = document.getElementById('displayed-address').textContent.trim();
+  document.getElementById('address-summary').style.display = addr ? 'block' : 'none';
+
+  }
+  });
+}
+
+function backToCart() {
+  document.getElementById('checkout-page').style.display = 'none';
+  document.getElementById('main-cart').style.display = 'block';
+}
+
+function updateCheckoutCount() {
+  let totalItems = 0;
+  for (const qty of Object.values(quantities)) {
+    totalItems += qty;
+  }
+  console.log("Articles à passer au checkout :", totalItems);
+  document.getElementById('checkout-count').textContent = totalItems;
+}
+
+function goToCheckout() {
+  document.getElementById('main-cart').style.display = 'none';
+  document.getElementById('checkout-page').style.display = 'block';
+  updateCheckoutCount(); // 👈 met à jour le nombre
+  updateCheckoutDate();
+}
+
+function updateCheckoutDate() {
+  const dateEl = document.getElementById('checkout-date');
+  const now = new Date();
+
+  const jours = ["DIMANCHE", "LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI"];
+  const mois = [
+    "JANVIER", "FÉVRIER", "MARS", "AVRIL", "MAI", "JUIN",
+    "JUILLET", "AOÛT", "SEPTEMBRE", "OCTOBRE", "NOVEMBRE", "DÉCEMBRE"
+  ];
+
+  const jourSemaine = jours[now.getDay()];
+  const jour = now.getDate();
+  const moisNom = mois[now.getMonth()];
+
+  const formatted = `${jourSemaine} ${jour} ${moisNom}`;
+
+  dateEl.textContent = formatted;
+}
+
+function openAddressPage() {
+  console.log("✅ Clic détecté sur Adresse de livraison");
+  document.getElementById('checkout-page').style.display = 'none';
+  document.getElementById('address-page').style.display = 'block';
+
+ // Masquer le résumé s’il était visible
+  const summary = document.getElementById('address-summary');
+  if (summary) summary.style.display = 'none';
+
+  // Afficher directement le formulaire
+  const form = document.getElementById('address-form');
+  if (form) form.style.display = 'flex';
+
+  document.getElementById('address-summary').style.display = 'none';
+  setTimeout(() => {
+    document.getElementById('address-form').scrollIntoView({ behavior: 'smooth' });
+  }, 100);
+}
+
+
+
+
+
+document.getElementById('address-form').addEventListener('submit', function(event) {
+  event.preventDefault(); // Empêche l’envoi classique du formulaire
+
+  const inputs = document.querySelectorAll('#address-form .address-input');
+  const [
+  prenom,
+  nom,
+  adresse,
+  ville,
+  codePostal,
+  pays,
+  telephone
+]  = Array.from(inputs).map(input => input.value.trim());
+
+  const formattedAddress =
+  `${prenom.toUpperCase()} ${nom.toUpperCase()}\n` +
+  `${adresse.toUpperCase()}\n` +
+  `${ville.toUpperCase()} ${codePostal}\n` +
+  `${pays.toUpperCase()}\n` +
+  `${telephone}`;
+
+    // ✅ Stocker dans localStorage pour la page confirmation
+  localStorage.setItem('tokomi_summary_address', formattedAddress);
+
+
+  // Affichage sur checkout-page
+  const displayTarget = document.getElementById("displayed-address");
+  if (displayTarget) {
+    displayTarget.textContent = formattedAddress;
+    displayTarget.classList.add("visible");
+  }
+
+
+   // Afficher résumé adresse
+  const addressSummary = document.getElementById("address-summary");
+  if (addressSummary) {
+    addressSummary.style.display = "block";
+  }
+
+
+
+  document.getElementById('displayed-address').textContent = formattedAddress;
+  document.getElementById('address-summary').style.display = 'block';
+  document.getElementById('address-page').style.display = 'none';
+  document.getElementById('checkout-page').style.display = 'block';
+// Sauvegarde dans localStorage
+  localStorage.setItem('tokomi_address', addressText);
+
+  document.getElementById('address-summary').style.display = 'block';
+  
+  document.getElementById('payment-header').style.display = 'flex';
+  document.getElementById('payment-header').classList.remove('hidden');
+
+alert('Adresse enregistrée avec succès !');
+  
+const paymentHeader = document.getElementById('payment-header');
+if (paymentHeader) {
+  paymentHeader.classList.remove('hidden');
+  paymentHeader.style.display = 'flex'; // ← obligatoire si display était "none"
+}
+
+  
+
+  let totalItems = 0;
+for (const qty of Object.values(quantities)) {
+  totalItems += qty;
+}
+  localStorage.setItem('tokomi_cart_count', totalItems);
+
+
+ 
+  
+
+  // Affiche le bouton PAIEMENT
+ 
+
+  alert('Adresse enregistrée avec succès !');
+  backToCheckout();
+});
+
+window.addEventListener('load', () => {
+  const savedAddress = localStorage.getItem('tokomi_address');
+  if (savedAddress) {
+    document.getElementById('displayed-address').textContent = savedAddress;
+    document.getElementById('address-summary').style.display = 'block';
+    document.getElementById('payment-header').style.display = 'flex';
+  } else {
+    document.getElementById('address-summary').style.display = 'none';
+
+ }
+});
+
+
+function goToPaymentPage() {
+  console.log("✅ goToPaymentPage appelé");
+
+  // Cacher toutes les autres pages
+  const pagesToHide = ['checkout-page', 'address-page', 'shipping-page'];
+  pagesToHide.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+
+   // Affiche la page de paiement
+  const payment = document.getElementById('payment-page');
+  if (payment) {
+    payment.style.display = 'block';
+    console.log("✅ payment-page affichée");
+  } else {
+    console.error("❌ payment-page introuvable");
+  }
+
+}
+
+
+
+    function showSelectedPayment() {
+      
+      const summary = document.getElementById("payment-summary");
+
+      if (selected) {
+        summary.textContent = `Moyen de paiement sélectionné : ${selected}`;
+        summary.classList.add("visible");
+      } else {
+        summary.classList.remove("visible");
+      }
+    }
+
+const paymentFields = {
+  VISA: [
+    { type: "text", placeholder: "TITULAIRE DE LA CARTE" },
+    { type: "text", placeholder: "NUMÉRO DE CARTE" },
+    { type: "text", placeholder: "DATE D'EXPIRATION (MM/AA)" },
+    { type: "text", placeholder: "CODE CVC" },
+  ],
+   PAYPAL: [
+    { type: "email", placeholder: "ADRESSE EMAIL PAYPAL" },
+  ],
+ "APPLE PAY": [
+    { type: "text", placeholder: "IDENTIFIANT APPLE" },
+  ],
+  "M-PESA": [
+    { type: "tel", placeholder: "NUMÉRO M-PESA" },
+  ],
+  ILLICOCASH: [
+    { type: "tel", placeholder: "NUMÉRO ILLICOCASH" },
+  ],
+    "ORANGE MONEY": [
+    { type: "tel", placeholder: "NUMÉRO ORANGE MONEY" },
+  ],
+ "AIRTEL MONEY": [
+    { type: "tel", placeholder: "NUMÉRO AIRTEL MONEY" },
+  ],
+    "AFRIMONEY": [
+    { type: "tel", placeholder: "NUMÉRO AFRIMONEY" },
+  ],
+ "MTN MOMO": [
+    { type: "tel", placeholder: "NUMÉRO MTN MOMO" },
+  ],
+  "TAPTAPSEND": [
+    { type: "tel", placeholder: "NUMÉRO TAPTAPSEND" },
+    { type: "text", placeholder: "TITULAIRE DU NUMÉRO" },
+  ],
+   "AMERICAN EXPRESS": [
+    { type: "text", placeholder: "TITULAIRE DE LA CARTE" },
+    { type: "text", placeholder: "NUMÉRO DE CARTE" },
+    { type: "text", placeholder: "DATE D'EXPIRATION (MM/AA)" },
+    { type: "text", placeholder: "CODE CVC" },
+  ],
+  MASTERCARD: [
+    { type: "text", placeholder: "TITULAIRE DE LA CARTE" },
+    { type: "text", placeholder: "NUMÉRO DE CARTE" },
+    { type: "text", placeholder: "DATE D'EXPIRATION (MM/AA)" },
+    { type: "text", placeholder: "CODE CVC" },
+  ],
+};
+
+document.querySelectorAll(".payment-button").forEach((button) => {
+
+  button.addEventListener("click", () => {
+    const method = button.dataset.method;
+    const wrapper = button.closest(".payment-option-wrapper");
+    const dropdown = wrapper.querySelector(".payment-dropdown");
+    
+
+    document.querySelectorAll(".payment-dropdown").forEach(d =>{
+        if (d !== dropdown) {
+        d.classList.remove("show");
+        d.innerHTML = "";
+     } 
+  });
+
+  // 🔁 Si déjà ouvert : on le referme
+    if (dropdown.classList.contains("show")) {
+      dropdown.classList.remove("show");
+      dropdown.innerHTML = "";
+      return;
+    }
+
+   // Créer le formulaire dynamiquement
+    const fields = paymentFields[method] || [];
+     fields.forEach(f => {
+      const input = document.createElement("input");
+      input.type = f.type;
+      input.placeholder = f.placeholder;
+      input.className = "address-input";
+      dropdown.appendChild(input);
+    });
+
+    const submit = document.createElement("button");
+    submit.textContent = "VALIDER ";
+    submit.className = "submit-address-btn";
+   
+    submit.addEventListener("click", function (e) {
+  e.preventDefault();
+  document.getElementById("payment-page").style.display = "none";
+  document.getElementById("checkout-page").style.display = "block";
+});
+
+    
+
+    // ✅ Met à jour le résumé du paiement sélectionné
+    const summary = document.getElementById('payment-summary');
+    const summaryText = document.getElementById('payment-method-selected');
+    summaryText.textContent = method;
+    summary.style.display = 'block';
+    
+
+    dropdown.appendChild(submit);
+    // ✅ ✅ ✅ C’EST ICI QUE LA CLASSE .show EST AJOUTÉE :
+    dropdown.classList.add("show");
+
+
+ // ✅ Mise à jour du résumé affiché
+    document.getElementById("shipping-summary").style.display = "block";
+    document.getElementById("selected-shipping").innerHTML = `
+  <span class="shipping-label">${label}</span>
+  <span class="shipping-line">–</span>
+  <span class="shipping-price">${price}</span>
+  `;
+
+  });
+
+  
+});
+   
+function openShippingPage() {
+  const checkoutPage = document.getElementById("checkout-page");
+  const paymentPage = document.getElementById("payment-page");
+  const addressPage = document.getElementById("address-page");
+  const shippingPage = document.getElementById("shipping-page");
+
+  if (!shippingPage) {
+    console.error("❌ shipping-page introuvable.");
+    return;
+  }
+
+  // ✅ Masquer les autres pages
+  if (checkoutPage) checkoutPage.style.display = "none";
+  if (paymentPage) paymentPage.style.display = "none";
+  if (addressPage) addressPage.style.display = "none";
+
+  // ✅ Afficher la page shipping
+  shippingPage.style.display = "block";
+
+  renderShippingOptionsInContainer();
+}
+
+// Revenir à checkout
+function backToCheckout() {
+  console.log("↩️ backToCheckout appelé");
+
+    const pagesToHide = ['payment-page', 'address-page', 'shipping-page'];
+    pagesToHide.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
+
+    const checkout = document.getElementById('checkout-page');
+    if (checkout) {
+    checkout.style.display = 'block';
+    console.log("✅ checkout-page affichée");
+    } else {
+    console.error("❌ checkout-page introuvable.");
+}
+}
+document.addEventListener("DOMContentLoaded", function () {
+  const shippingForm = document.getElementById("shipping-form");
+
+  document.querySelectorAll('input[name="shipping"]').forEach((radio) => {
+    radio.addEventListener("change", function () {
+      const selectedValue = this.value;
+      const summaryText = document.getElementById("selected-shipping");
+      const summaryBox = document.getElementById("shipping-summary");
+
+      summaryText.textContent = selectedValue;
+      summaryBox.style.display = "block";
+    });
+  });
+
+  // Soumission du formulaire
+  if (shippingForm) {
+    shippingForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const selectedOption = document.querySelector('input[name="shipping"]:checked');
+
+  if (selectedOption) {
+      const optionContainer = selectedOption.closest('.shipping-option');
+      const dateSpan = optionContainer.querySelector('span');
+      const estimatedDate = dateSpan ? dateSpan.textContent.trim().toUpperCase(): "PRODCHAINE LIVRAISON";// La date à gauche
+      localStorage.setItem('tokomi_estimated_date', dateText.toUpperCase()); // 🟩 Sauvegarde
+     
+    document.getElementById("shipping-page").style.display = "none";
+    document.getElementById("checkout-page").style.display = "block";
+
+    
+     const optionText = optionContainer ? optionContainer.innerText.trim() : selectedOption.value;
+     // 🔥 AJOUTE OU REMPLACE PAR CECI :
+    const shippingDate = selectedOption.nextElementSibling?.textContent.trim().toUpperCase(); // LUNDI 16 JUIN
+    localStorage.setItem('tokomi_estimated_date', shippingDate);
+    document.getElementById("selected-shipping").textContent = optionText;
+    // Extraire le prix
+    const match = optionText.match(/€([0-9.,]+)/);
+    shippingCost = match ? parseFloat(match[1].replace(",", ".")) : 0;
+    
+    document.getElementById("selected-shipping").textContent = optionText;
+    document.getElementById("shipping-summary").style.display = "block";
+    updateCheckoutTotal();  
+  // ✅ Mise à jour du total panier
+   // ✅ Retour à la checkout-page
+   
+
+   
+  }
+});
+}
+});
+
+const countries = [
+  "Afghanistan", "Afrique du Sud", "Albanie", "Algérie", "Allemagne", "Andorre", "Angola", "Argentine",
+  "Arménie", "Australie", "Autriche", "Azerbaïdjan", "Belgique", "Bénin", "Botswana", "Brésil", "Burkina Faso",
+  "Burundi", "Cameroun", "Canada", "Chili", "Chine", "Colombie", "Comores", "Congo", "Croatie", "Danemark",
+  "Djibouti", "Égypte", "Espagne", "États-Unis", "Éthiopie", "Finlande", "France", "Gabon", "Ghana", "Grèce",
+  "Guinée", "Haïti", "Inde", "Indonésie", "Irlande", "Islande", "Italie", "Japon", "Kenya", "Liban",
+  "Luxembourg", "Madagascar", "Malawi", "Mali", "Maroc", "Maurice", "Mexique", "Monaco", "Mozambique",
+  "Namibie", "Niger", "Nigéria", "Norvège", "Nouvelle-Zélande", "Ouganda", "Pakistan", "Pays-Bas", "Pérou",
+  "Philippines", "Pologne", "Portugal", "Qatar", "République Démocratique du Congo", "Roumanie", "Rwanda",
+  "Sénégal", "Serbie", "Singapour", "Slovaquie", "Slovénie", "Somalie", "Suède", "Suisse", "Tanzanie",
+  "Tchad", "Thaïlande", "Togo", "Tunisie", "Turquie", "Ukraine", "Uruguay", "Venezuela", "Vietnam", "Zambie", "Zimbabwe"
+];
+
+const input = document.getElementById('countryInput');
+const list = document.getElementById('countryList');
+
+input.addEventListener('input', function () {
+  const query = this.value.toLowerCase();
+  list.innerHTML = '';
+  if (!query) {
+    list.style.display = 'none';
+    return;
+  }
+
+  const matches = countries.filter(country => country.toLowerCase().includes(query));
+  matches.forEach(country => {
+    const li = document.createElement('li');
+    li.textContent = country;
+    li.addEventListener('click', () => {
+      input.value = country;
+      list.innerHTML = '';
+      list.style.display = 'none';
+    });
+    list.appendChild(li);
+  });
+
+  list.style.display = matches.length ? 'block' : 'none';
+});
+
+document.addEventListener('click', function (e) {
+  if (!document.querySelector('.autocomplete-wrapper').contains(e.target)) {
+    list.style.display = 'none';
+  }
+});
+
+</script>
+<script>
+
+
+function updateShippingOptions() {
+  const countryInput = document.querySelector("#countryInput");
+  const shippingForm = document.querySelector("#shipping-form");
+
+  if (!countryInput || !shippingForm) return;
+
+  const country = countryInput.value.trim().toUpperCase();
+  const options = shippingOptionsByCountry[country] || shippingOptionsByCountry.default;
+
+  // Supprimer les anciennes options
+  const oldLabels = shippingForm.querySelectorAll(".shipping-option");
+  oldLabels.forEach(label => label.remove());
+
+  // Injecter dynamiquement les nouvelles
+  options.forEach(opt => {
+    const label = document.createElement("label");
+    label.className = "shipping-option";
+    label.style.cssText = "display: flex; align-items: center; justify-content: space-between; font-size: 12px; border-bottom: 1px solid #eee; padding-bottom: 8px;";
+
+    label.innerHTML = `
+      <input type="radio" name="shipping" value="${opt.date} - ${opt.price}" />
+      <span style="flex: 1; margin-left: 12px;">${opt.date}</span>
+      <span style="font-weight: 300;">${opt.price}</span>
+    `;
+    shippingForm.insertBefore(label, shippingForm.querySelector("button"));
+  });
+}
+
+
+// ✅ INSERT THIS BLOCK BELOW:
+document.getElementById("shipping-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const selected = document.querySelector('input[name="shipping"]:checked');
+  if (!selected) return;
+
+  const summaryBox = document.getElementById("shipping-summary");
+  const summaryText = document.getElementById("selected-shipping");
+
+  // Séparer la date et le prix
+  const [dateText, priceText] = selected.value.split(" - ");
+
+  // Affiche le résumé formaté
+  summaryText.textContent = `${dateText.toUpperCase()} - ${priceText}`;
+  summaryBox.style.display = "block";
+
+  // Stocker dans localStorage pour la page confirmation
+  localStorage.setItem("tokomi_shipping_date", dateText.toUpperCase());
+  localStorage.setItem("tokomi_shipping_price", priceText);
+
+  // Calcul
+  const parsedPrice = parseFloat(priceText.replace("€", "").replace(",", ".").trim()) || 0;
+  shippingCost = parsedPrice;
+  updateCheckoutTotal(); // ✅ met à jour le total
+
+  // Retour à la page checkout
+  document.getElementById("shipping-page").style.display = "none";
+  document.getElementById("checkout-page").style.display = "block";
+});
+
+
+
+// Mise à jour automatique à chaque fois qu'on quitte le champ pays
+document.addEventListener("DOMContentLoaded", () => {
+  const countryField = document.querySelector("#countryInput");
+  if (countryField) {
+    countryField.addEventListener("blur", updateShippingOptions);
+    countryField.addEventListener("change", updateShippingOptions);
+  }
+});
+function renderShippingOptionsInContainer() {
+  const container = document.getElementById("shipping-options-container");
+  if (!container) return;
+
+  const options = [
+    { date: "STANDARD 7-10 JOURS", price: 9.90 },
+    { date: "EXPRESS 3-5 JOURS", price: 14.90 },
+    { date: "EN 1 JOUR", price: 24.90 },
+  ];
+
+  container.innerHTML = ""; // vide le container
+
+  options.forEach(option => {
+    const div = document.createElement("div");
+    div.className = "shipping-option";
+    div.style.cssText = `
+      font-size: 12px;
+      padding: 10px 14px;
+      border-bottom: 1px solid #eee;
+      border-top: none;
+      border-left: none;
+      border-right:none;
+      border-radius: 0;
+      margin-bottom: 8px;
+      margin-left: -7px;
+      cursor: pointer;
+    `;
+    div.textContent = `${option.date} – €${option.price.toFixed(2)}`;
+
+    div.onclick = () => selectShipping(option.date, option.price); // ✅ appel
+
+    container.appendChild(div);
+  });
+  document.querySelectorAll('input[name="shipping"]').forEach(input => {
+  input.addEventListener("change", function () {
+    // Supprime la classe sélectionnée sur toutes
+    document.querySelectorAll(".shipping-option").forEach(opt => {
+      opt.classList.remove("selected-shipping");
+    });
+
+    // Ajoute la classe à celle cliquée
+    const selectedContainer = this.closest(".shipping-option");
+    selectedContainer.classList.add("selected-shipping");
+
+    // ✅ Récupère les infos sélectionnées
+    const label = selectedContainer.querySelector("span")?.textContent.trim() || this.value;
+    const priceText = selectedContainer.querySelector("span:last-child")?.textContent.trim() || "€0";
+    const price = parseFloat(priceText.replace("€", "").replace(",", "."));
+
+    // ✅ Affiche dans le résumé
+    const summary = document.getElementById("shipping-summary");
+    const summaryText = document.getElementById("selected-shipping");
+    summaryText.textContent = `${label} – ${priceText}`;
+    summary.style.display = "block";
+
+    // ✅ Met à jour le prix
+    shippingCost = price;
+    updateCheckoutTotal();
+
+    // ✅ Masquer la shipping-page et afficher checkout
+    document.getElementById("shipping-page").style.display = "none";
+    document.getElementById("checkout-page").style.display = "block";
+
+    // ✅ Stockage éventuel
+    localStorage.setItem("tokomi_shipping_price", price.toFixed(2));
+    localStorage.setItem("tokomi_shipping_date", label.toUpperCase());
+
+  });
+});
+
+}
+</script>
+
+
+<script>
+function selectShipping(optionLabel, shippingPrice) {
+  // Affiche l'option sélectionnée
+  const shippingSummary = document.getElementById("shipping-summary");
+  const selectedShipping = document.getElementById("selected-shipping");
+  shippingSummary.style.display = "block";
+  selectedShipping.textContent = `${optionLabel} – €${shippingPrice.toFixed(2)}`;
+
+  // Met à jour le total
+  const totalEl = document.getElementById("checkout-total");
+  
+    const originalTotal = parseFloat(totalEl.dataset.originalTotal || totalEl.textContent.replace(/[^\d.]/g, '') || "0");
+    const previousShipping = parseFloat(totalEl.dataset.shippingPrice || "0");
+
+  // Met à jour le total
+    const newTotal = originalTotal - previousShipping + shippingPrice;
+    totalEl.textContent = `€${newTotal.toFixed(2)}`;
+    totalEl.dataset.originalTotal = originalTotal;
+    totalEl.dataset.shippingPrice = shippingPrice;
+
+    // Mise à jour globale
+  shippingCost = shippingPrice;
+  updateCheckoutTotal();
+
+    // Optionnel : retour automatique vers checkout
+    showPage('checkout-page');
+  
+}
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("shipping-form");
+
+    if (!form) {
+      console.error("❌ shipping-form introuvable.");
+      return;
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const selected = document.querySelector('input[name="shipping"]:checked');
+      if (!selected) {
+      
+        return;
+      }
+
+      // ✅ Afficher le résumé sélectionné
+      const summaryBox = document.getElementById("shipping-summary");
+      const summaryText = document.getElementById("selected-shipping");
+
+      const [dateText, priceText] = selected.value.split(" - ");
+      summaryText.textContent = `${dateText.toUpperCase()} – ${priceText}`;
+      summaryBox.style.display = "block";
+
+      // ✅ Mettre à jour le total
+      shippingCost = parseFloat(priceText.replace("€", "").replace(",", ".")) || 0;
+      updateCheckoutTotal();
+
+      // ✅ Revenir à la page checkout
+      document.getElementById("shipping-page").style.display = "none";
+      document.getElementById("checkout-page").style.display = "block";
+    });
+  });
+
+  // Initialiser la liste des favoris depuis le localStorage (ou tableau vide)
+let favorisList = JSON.parse(localStorage.getItem('tokomi_favoris')) || [];
+
+function addToFavorites(button) {
+  const productItem = button.closest('.product-item');
+    const name = productItem.querySelector('.product-name').textContent.trim();
+    const meta = productItem.querySelector('.product-meta').textContent.trim();
+    const price = productItem.querySelector('.product-price').textContent.trim();
+    const image = productItem.querySelector('.product-image').style.backgroundImage || '';
+
+    const product = { name, meta, price, image };
+
+    // Vérifie doublon par nom + meta
+    const exists = favorisList.some(p => p.name === name && p.meta === meta);
+    if (exists) return;
+
+  favorisList.push(product);
+  localStorage.setItem('tokomi_favoris', JSON.stringify(favorisList));
+
+  // Mise à jour compteur
+  const counter = document.getElementById('favorites-count');
+    if (counter) {
+      counter.textContent = favorisList.length;
+  updateFavoritesCount(favoritesCount);
+}
+  // Affiche la confirmation
+  const alertBox = document.getElementById('alertBox');
+  alertBox.textContent = `${name} ajouté aux favoris`;
+  alertBox.style.display = 'block';
+  setTimeout(() => {
+    alertBox.style.display = 'none';
+  }, 2000);
+
+  // Désactive tous les boutons avec ce nom produit
+  document.querySelectorAll('.btn-save').forEach(btn => {
+    if (btn.dataset.name === productName) {
+      button.disabled = true;
+      button.textContent = ' ENREGISTRÉ';
+    }
+  });
+}
+
+// Lors du chargement de la page, désactive les boutons déjà enregistrés
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.btn-save').forEach(btn => {
+    const productName = btn.dataset.name;
+    if (favorisList.includes(productName)) {
+      btn.disabled = true;
+      btn.textContent = 'ENREGISTRÉ';
+    }
+  });
+});
+</script>
+
+<!-- Loader TOKOMI -->
+<div id="loading-screen" style="
+  position: fixed;
+  inset: 0;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: white;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+">
+  <img src="./tokomi-loader.gif" alt="Chargement..." style="width: 120px; height: auto; animation: spin 2s linear infinite;" />
+</div>
+
+</body>
+</html>

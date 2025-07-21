@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Listes – Tokomi</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;     /* ✅ Largeur maximale souhaitée */
+  margin: 0 auto;        /* ✅ Espacement sur les bords */
+  box-sizing: border-box;
+    }
+
+    .header {
+      display: flex;
+      position: relative;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+    }
+    
+    .btn-cancel  {
+      position: absolute;
+      margin-top: 92px;
+      font-size: 12px;
+      font-weight: 300;
+      cursor: pointer;
+       }
+
+    
+
+    .tabs {
+      display: flex;
+      justify-content: flex-start;
+      gap: 41px;
+      font-size: 12px;
+      margin-top: 58px;
+      margin-bottom: 26px;
+      padding-left: 16px;
+    }
+
+    .tabs span {
+      font-weight: 300;
+      cursor: pointer;
+    }
+    .tabs a.tab-link {
+  text-decoration: none;
+  color: black;
+  font-weight: 300;
+}
+
+.tabs a.tab-link:hover {
+  opacity: 0.6;
+}
+    .tabs .active {
+      font-weight: 600;
+    }
+
+    .list-container {
+      padding: 0 16px 80px 13px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      position: relative;
+      max-width: 360px; 
+      max-height: 60px !important;
+      margin-right: 10px;
+      margin-bottom: 24px;
+    }
+    .list-selection-radio {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  display: none;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.list-selection-radio input {
+  display: none;
+}
+
+.list-selection-radio .custom-check {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: inset 0 0 0 2px #c4c4c4, 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.list-selection-radio input:checked + .custom-check {
+  background: radial-gradient(circle at center, white 30%, #007AFF 31%, #007AFF 100%);
+  box-shadow: 0 0 3px rgba(0, 122, 255, 0.4);
+}
+    .list-card {
+       position: relative;
+      border: 1px solid black;
+      border-radius: none;
+      border-color: white;
+      padding: 2px;
+      font-size: 12px;
+      font-weight: 300;
+      background-color:white;
+      display: flex;
+      flex-direction: column;
+      gap:6px;
+      max-width: 268px;
+      width: 100%;
+      box-sizing: border-box;
+      height: 282px;
+    }
+
+    .list-select-box {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  display: none; /* caché par défaut */
+  z-index: 10;
+}
+.custom-check-wrapper {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.custom-check-wrapper input[type="checkbox"] {
+  display: none;
+}
+
+.custom-check {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: inset 0 0 0 2px #c4c4c4;
+  transition: background 0.2s ease;
+}
+
+.custom-check-wrapper input[type="checkbox"]:checked + .custom-check {
+  background: radial-gradient(circle at center, white 30%, #007AFF 31%, #007AFF 100%);
+  box-shadow: 0 0 3px rgba(0, 122, 255, 0.4);
+}
+.list-checkbox {
+  width: 18px;
+  height: 18px;
+}
+    .list-content {
+      padding: 6px;
+      gap: 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .delete-btn {
+      align-self: flex-end;
+      background: transparent;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      color: #888;
+      margin-bottom: 4px;
+    }
+
+    .delete-btn:hover {
+      color: black;
+    }
+    .empty-message {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 300;
+      color: #999;
+      margin-top: 32px;
+    }
+
+    .create-list-button {
+      margin: -32px auto 80px;
+      padding: 10px 20px;
+      font-size: 12px;
+      font-weight: 300;
+      background-color: black;
+      color: white;
+      border: none;
+      border-radius: 0;
+      cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: background 0.2s ease;
+    }
+
+    .create-list-button:hover {
+      background-color: #333;
+    }
+
+    .modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6); /* voile sombre */
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal.show {
+  display: flex !important;
+}
+.create-list-form-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  padding: 24px;
+  width: 80%;
+  align-items: center;
+  justify-content: center;
+  max-width: 320px;
+  border-radius: 0;
+}
+    .create-list-form {
+      display: flex;
+      border-top:none;
+      padding: 32px 16px;
+      margin-bottom: 32px;
+      flex-direction: column;
+      
+    }
+
+    .create-list-form input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 300;
+      border: 1px solid #ccc;
+      border-radius: 0;
+      text-transform: uppercase;
+      border: none !important;
+  border-bottom: 1px solid #eee !important;
+  outline: none;
+  background:transparent;
+  text-transform: uppercase;
+    }
+
+    .create-list-form button {
+      padding: 10px 20px;
+      font-size: 12px;
+      font-weight: 300;
+      background-color: black;
+      color: white;
+      border: none;
+      border-radius: 0;
+      cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .album-page {
+      display: none;
+      padding: 16px;
+
+    }
+    .album-page.active {
+      display: block;
+    }
+    .album-item {
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .sticky-footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      border-top: 1px solid #ccc;
+      z-index: 1000;
+    }
+
+    .menu-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      color: #666;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .menu-item:hover,
+    .menu-item.active {
+      color: #000;
+      font-weight: 600;
+    }
+
+    .list-options {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      background: transparent;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      color: #888;
+    }
+
+    .list-options:hover {
+      color: black;
+    }
+    
+    .list-menu-wrapper {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+    }
+
+    .list-options {
+      background: transparent;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      color: #888;
+    }
+
+    .list-options:hover {
+      color: black;
+    }
+
+    .context-menu {
+  position: absolute;
+  top: 40px;
+  right: 16px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  font-size: 10px;
+  display: none;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.context-menu div {
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: 300;
+  transition: background 0.2s ease;
+}
+
+
+ .selection-actions {
+      position: fixed;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  z-index: 1000;
+  font-weight: 300;
+    }
+
+ .selection-actions button {
+      background-color: black;
+  border: 1px solid #ccc;
+  padding: 12px 20px;
+  min-width: 200px;
+  font-size: 12px;
+  font-weight: 300;
+  color: white;
+  text-decoration: none;
+  border-radius: 0;
+  cursor: pointer;
+  text-align: center;
+  height: 40px;
+      
+    }
+
+.list-covers-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr) !important;
+  gap: 2px;
+  width: 100%;
+  height: 340px;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  border: white;
+}
+
+.list-covers-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: white;
+}
+
+
+.menu-icon {
+  margin-top: 49px;
+  position: absolute;
+  border-radius: 0;
+  font-size: 12px;
+  font-weight: 300;
+  cursor: pointer;
+  right: 4px;
+  top: 50%;
+  padding: 6px 12px ;
+  transform: translateY(-50%);
+}
+
+.menuToggle {
+  border-radius: 0;
+  font-size: 12px;
+}
+
+#menuToggle.selection-active {
+  margin-top: 41px;
+  font-weight: 300; /* ou 400, 500, selon ton besoin */
+  font-size: 12px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #888;
+  font-weight: 300;
+}
+
+.modal-close:hover {
+  color: black;
+}
+
+  </style>
+</head>
+<body>
+
+  
+<div class="header">
+  <span id="btnCancel" class="btn-cancel" onclick="exitSelectionMode()" style="display: none;">ANNULER</span>
+  <div class="menu-wrapper">
+    <span id="menuToggle" class="menu-icon" onclick="toggleContextMenu(event)">PLUS</span>
+    <div class="context-menu" id="menu">
+  <div onclick="toggleForm()">CRÉER UNE NOUVELLE LISTE</div>
+  <div onclick="enterListSelectionMode()">SÉLECTIONNER</div>
+  
+  </div>
+  </div>
+</div>
+
+  <div class="tabs">
+    <a href="panier-favoris.html" class="tab-link">PANIER <strong></strong></a>
+    <a href="favoris.html" class="tab-link">FAVORIS <strong></strong></a>
+    <span class="active">LISTES <span id="list-count">0</span></span>
+  </div>
+
+
+  <div id="listContainer" class="list-container"></div>
+  <!-- ✅ Nouveau conteneur pour listes et leurs articles -->
+
+
+
+  <label class="list-selection-radio">
+    <input type="checkbox" />
+    <span class="custom-check"></span>
+  </label>
+</div>
+
+  <p id="emptyMessage" class="empty-message"></p>
+
+
+  <div id="createListModal" class="modal">
+  <div class="create-list-form-wrapper" style="position: relative;">
+  <button onclick="closeCreateListModal()" style="position: absolute; top: 9px; right: 8px; background: none; border: none;font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 300; cursor: pointer;">FERMER</button>
+  <div class="create-list-form" id="createListForm">
+    <input type="text" id="listName" placeholder="NOM DE LA LISTE" />
+    <button onclick="createList()">CRÉER</button>
+  </div>
+  </div>
+  </div>
+
+  
+
+  
+
+  <footer class="sticky-footer">
+    <a href="accueil.html" class="menu-item active">
+      <span>ACCUEIL</span>
+    </a>
+    <a href="explorer.html" class="menu-item"> 
+      <span>EXPLORER</span>
+    </a>
+    <a href="profil.html" class="menu-item">
+      <span>PROFIL</span>
+    </a>
+  </footer>
+
+  <script>
+    const listContainer = document.getElementById('listContainer');
+    const emptyMessage = document.getElementById('emptyMessage');
+    
+    const listNameInput = document.getElementById('listName');
+    const albumPage = document.getElementById('albumPage');
+    const albumTitle = document.getElementById('albumTitle');
+    const albumContent = document.getElementById('albumContent');
+    const addItemForm = document.getElementById('addItemForm');
+    
+    let currentAlbum = null;
+
+
+function toggleContextMenu(e) {
+  e.stopPropagation();
+  const menu = document.getElementById('menu');
+  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
+
+
+    function toggleForm() {
+      
+      const modal = document.getElementById('createListModal');
+      modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+       
+    }
+
+    function closeCreateListModal() {
+       document.getElementById('createListModal').style.display = 'none';
+}
+
+// Fermer le modal quand on clique en dehors de son contenu
+window.addEventListener('click', function(event) {
+  const modal = document.getElementById('createListModal');
+  if (event.target === modal) {
+    closeCreateListModal();
+  }
+});
+
+    document.addEventListener('click', function (e) {
+  const menu = document.getElementById('menu');
+  const modal = document.getElementById('createListModal');
+  const formWrapper = document.querySelector('.create-list-form-wrapper');
+
+ // Clic hors menu
+      if (menu && !menu.contains(e.target) && !document.getElementById('menuToggle').contains(e.target)) {
+        menu.style.display = 'none';
+      }
+
+  
+  if (modal && modal.classList.contains('show') && !formWrapper.contains(e.target)) {
+    closeCreateListModal();
+  }    
+});
+
+    function createList() {
+      const name = listNameInput.value.trim();
+      if (name === '') return;
+      
+const covers = [
+    "https://via.placeholder.com/300x120?text=1",
+    "https://via.placeholder.com/300x120?text=2",
+    "https://via.placeholder.com/300x120?text=3",
+    "https://via.placeholder.com/300x120?text=4"
+  ];
+      
+      const coversHTML = covers.map(src => `<img src="${src}" />`).join('');
+       const card = document.createElement('div');
+       card.className = 'list-card';
+      card.innerHTML = `
+    <div class="list-covers-grid">
+    ${coversHTML}
+  </div>
+    <div class="list-content">
+      <strong>${name}</strong>
+      <span>0 article</span>
+      </div>
+      
+    <div class="list-select-box">
+  <label class="custom-check-wrapper">
+    <input type="checkbox" class="list-checkbox" />
+    <span class="custom-check"></span>
+  </label>
+</div>
+
+
+    `;
+      card.addEventListener('click', function (e) {
+  // Ne pas déclencher si on clique directement sur la checkbox elle-même
+  if (e.target.classList.contains('list-checkbox') || e.target.classList.contains('custom-check')) {
+    return;
+  }
+
+  if (card.classList.contains('selectable')) {
+    const checkbox = card.querySelector('.list-checkbox');
+    if (checkbox) {
+      checkbox.checked = !checkbox.checked;
+      updateListSelectionUI();
+    }
+  } else {
+    const listTitle = card.querySelector('strong')?.textContent;
+    if (listTitle) {
+      localStorage.setItem('tokomiCurrentList', listTitle);
+      window.location.href = 'liste-detail.html'; // navigation
+    }
+    openAlbum(name); // ou item.title selon le contexte
+  }
+});
+
+      card.querySelector('.list-checkbox').addEventListener('change', updateListSelectionUI);
+      listContainer.appendChild(card);
+      listNameInput.value = '';
+      closeCreateListModal();
+      
+      
+      saveToLocalStorage();
+      updateEmptyMessage();
+      updateListCount();
+      listContainer.scrollIntoView({ behavior: 'smooth' });
+
+        // Redirection ou actualisation de la page si besoin :
+      location.href = 'listes.html'; // ou location.reload();
+    }
+
+      function openAlbum(name) {
+      albumTitle.textContent = name;
+      albumPage.classList.add('active');
+      addItemForm.style.display = 'block';
+      currentAlbum = name;
+      renderAlbumContent(name);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+
+function toggleMenu(button) {
+  const menu = button.nextElementSibling;
+  document.querySelectorAll('.context-menu').forEach(m => m.style.display = 'none');
+  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
+function renameList(item) {
+  const card = item.closest('.list-card');
+  const oldTitle = card.querySelector('strong').textContent;
+  const newTitle = prompt("Nouveau nom de la liste :", oldTitle);
+  if (!newTitle || newTitle === oldTitle) return;
+  card.querySelector('strong').textContent = newTitle;
+  const lists = JSON.parse(localStorage.getItem('tokomiLists') || '[]');
+  const updated = lists.map(entry => entry.title === oldTitle ? { ...entry, title: newTitle } : entry);
+  localStorage.setItem('tokomiLists', JSON.stringify(updated));
+  const albumItems = JSON.parse(localStorage.getItem('tokomiAlbumItems') || '{}');
+  albumItems[newTitle] = albumItems[oldTitle];
+  delete albumItems[oldTitle];
+  localStorage.setItem('tokomiAlbumItems', JSON.stringify(albumItems));
+}
+
+function deleteList(item) {
+  if (!confirm("Supprimer cette liste ?")) return;
+  const card = item.closest('.list-card');
+  const title = card.querySelector('strong').textContent;
+  card.remove();
+  const saved = JSON.parse(localStorage.getItem('tokomiLists') || '[]');
+  const updated = saved.filter(entry => entry.title !== title);
+  localStorage.setItem('tokomiLists', JSON.stringify(updated));
+  const albumItems = JSON.parse(localStorage.getItem('tokomiAlbumItems') || '{}');
+  delete albumItems[title];
+  localStorage.setItem('tokomiAlbumItems', JSON.stringify(albumItems));
+  updateEmptyMessage();
+  updateListCount();
+}
+
+
+    function updateEmptyMessage() {
+      emptyMessage.style.display = listContainer.children.length === 0 ? 'block' : 'none';
+    }
+    // Sauvegarde dans localStorage après création
+    function saveToLocalStorage() {
+      const lists = [];
+      for (const card of listContainer.children) {
+        const title = card.querySelector('strong').textContent;
+        const covers = Array.from(card.querySelectorAll('img')).map(img => img.src);
+        const count = card.querySelector('span').textContent;
+        lists.push({ title, covers, count });
+      }
+      localStorage.setItem('tokomiLists', JSON.stringify(lists));
+    }
+
+function loadFromLocalStorage() {
+      const saved = localStorage.getItem('tokomiLists');
+      if (!saved) return;
+      const lists = JSON.parse(saved);
+      for (const item of lists) {
+        const card = document.createElement('div');
+        card.className = 'list-card';
+        const coversHTML = (item.covers || []).slice(0, 4).map(src => `<img src="${src}" />`).join('');
+
+        card.innerHTML = `
+          <div class="list-covers-grid">
+    ${coversHTML}
+  </div>
+
+          <div class="list-content">
+            <strong>${item.title}</strong>
+            <span>${(item.count || '').toUpperCase()}</span>
+            </div>
+            
+          <div class="list-select-box">
+  <label class="custom-check-wrapper">
+    <input type="checkbox" class="list-checkbox" />
+    <span class="custom-check"></span>
+  </label>
+</div>
+
+`;
+        card.addEventListener('click', function (e) {
+  // Ne pas déclencher si on clique directement sur la checkbox elle-même
+  if (e.target.classList.contains('list-checkbox') || e.target.classList.contains('custom-check')) {
+    return;
+  }
+
+  if (card.classList.contains('selectable')) {
+    const checkbox = card.querySelector('.list-checkbox');
+    if (checkbox) {
+      checkbox.checked = !checkbox.checked;
+      updateListSelectionUI();
+    }
+  } else {
+    const listTitle = card.querySelector('strong')?.textContent;
+    if (listTitle) {
+      localStorage.setItem('tokomiCurrentList', listTitle);
+      window.location.href = 'liste-detail.html'; // navigation
+    }
+    openAlbum(name); // ou item.title selon le contexte
+  }
+});
+
+        card.querySelector('.list-checkbox').addEventListener('change', updateListSelectionUI);
+        listContainer.appendChild(card);
+      }
+    }
+
+function updateListCount() {
+  const count = document.getElementById('listContainer').children.length;
+  document.getElementById('list-count').textContent = count;
+}
+    
+function updateListSelectionUI() {
+    const checkboxes = document.querySelectorAll('.list-card.selectable .list-checkbox');
+  const checkedBoxes = document.querySelectorAll('.list-card.selectable .list-checkbox:checked');
+  const actions = document.getElementById('selectionActions');
+  const toggle = document.getElementById('menuToggle');
+
+  actions.style.display = checkedBoxes.length > 0 ? 'flex' : 'none';
+
+  if (toggle.classList.contains('selection-active')) {
+    if (checkedBoxes.length === checkboxes.length && checkboxes.length > 0) {
+      toggle.textContent = `TOUT DÉSÉLECTIONNER (${checkedBoxes.length})`;
+    } else {
+      toggle.textContent = `TOUT SÉLECTIONNER (${checkedBoxes.length})`;
+}
+}
+}
+
+// Ces fonctions ciblent la dernière liste (exemple simple à ajuster selon ton besoin)
+function triggerRenameLast() {
+  const lastCard = document.querySelector('.list-card:last-child');
+  if (!lastCard) return alert("Aucune liste à renommer.");
+  const item = lastCard.querySelector('.context-menu div'); // simulate a context click
+  renameList(item);
+}
+
+function triggerDeleteLast() {
+  const lastCard = document.querySelector('.list-card:last-child');
+  if (!lastCard) return alert("Aucune liste à supprimer.");
+  const item = lastCard.querySelector('.context-menu div'); // simulate a context click
+  deleteList(item);
+}
+function enterListSelectionMode() {
+  document.getElementById('menu').style.display = 'none';
+
+  const cards = document.querySelectorAll('.list-card');
+  cards.forEach(card => {
+    card.classList.add('selectable');
+    const box = card.querySelector('.list-select-box');
+    if (box) {
+      box.style.display = 'block';
+      box.querySelector('input').checked = false;
+    }
+  });
+  // Mise à jour du bouton "⋮"
+  const toggle = document.getElementById('menuToggle');
+  toggle.classList.add('selection-active');
+  toggle.textContent = 'TOUT SÉLECTIONNER (0)';
+  toggle.onclick = toggleAllSelection;
+
+  document.getElementById('btnCancel').style.display = 'inline';
+
+}
+
+function toggleAllSelection() {
+  const checkboxes = document.querySelectorAll('.list-card.selectable .list-checkbox');
+  const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+
+  checkboxes.forEach(cb => {
+    cb.checked = !allChecked;
+  });
+
+  updateListSelectionUI();
+}
+
+function enableListSelectionMode() {
+  document.getElementById('menu').style.display = 'none'; // Ferme le menu immédiatement
+
+  const cards = document.querySelectorAll('.list-card');
+  cards.forEach(card => {
+    card.classList.add('selectable');
+    const box = card.querySelector('.list-select-box');
+    if (box) {
+      box.style.display = 'block';
+      box.querySelector('input').checked = false;
+    }
+  });
+ // Met à jour le bouton "⋮" en mode sélection simple
+  const toggle = document.getElementById('menuToggle');
+  toggle.classList.add('selection-active');
+  toggle.textContent = 'TOUT SÉLECTIONNER (0)';
+  toggle.onclick = toggleAllSelection;
+
+
+      document.getElementById('btnCancel').style.display = 'inline';
+  }
+    
+
+function exitSelectionMode() {
+  
+  const cards = document.querySelectorAll('.list-card');
+  cards.forEach(card => {
+    card.classList.remove('selectable');
+    const box = card.querySelector('.list-select-box');
+    if (box) {
+      box.style.display = 'none';
+      const input = box.querySelector('input');
+      if (input) input.checked = false;
+    }
+  });
+
+  // 2. Masque le context menu si ouvert
+  const menu = document.getElementById('menu');
+  if (menu) menu.style.display = 'none';
+
+
+  // 3. Masque la barre d'actions
+  const selectionBar = document.getElementById('selectionActions');
+  if (selectionBar) selectionBar.style.display = 'none';
+
+    // 4. Masque le bouton ANNULER
+  const btnCancel = document.getElementById('btnCancel');
+  if (btnCancel) btnCancel.style.display = 'none';
+
+  const toggle = document.getElementById('menuToggle');
+   if (toggle) {
+  toggle.classList.remove('selection-active');
+  toggle.textContent = 'PLUS';
+  toggle.onclick = toggleContextMenu;
+}
+}
+
+ 
+
+
+
+function renameSelectedList() {
+  const checked = document.querySelector('.list-checkbox:checked');
+  if (!checked) return;
+
+  const card = checked.closest('.list-card');
+  const titleElement = card.querySelector('strong');
+  const oldTitle = titleElement.textContent;
+  const newTitle = prompt("Nouveau nom de la liste :", oldTitle);
+  if (newTitle && newTitle !== oldTitle) {
+    titleElement.textContent = newTitle;
+    saveToLocalStorage();
+  }
+
+  updateListSelectionUI();
+}
+
+function deleteSelectedLists() {
+  const checked = document.querySelectorAll('.list-checkbox:checked');
+  if (checked.length === 0) return;
+
+  if (!confirm("Supprimer les listes sélectionnées ?")) return;
+
+  checked.forEach(cb => {
+    const card = cb.closest('.list-card');
+    const title = card.querySelector('strong').textContent;
+    card.remove();
+
+    // Supprimer du localStorage
+    const lists = JSON.parse(localStorage.getItem('tokomiLists') || '[]');
+    const updated = lists.filter(entry => entry.title !== title);
+    localStorage.setItem('tokomiLists', JSON.stringify(updated));
+  });
+
+  updateEmptyMessage();
+  updateListCount();
+  updateListSelectionUI();
+}
+
+     window.onload = function () {
+      loadFromLocalStorage();
+      updateEmptyMessage();
+      updateListCount();
+    }
+function displayLists() {
+  const raw = localStorage.getItem("tokomiLists");
+  if (!raw) return;
+
+  const lists = JSON.parse(raw);
+  const wrapper = document.getElementById("listsWrapper");
+  wrapper.innerHTML = "";
+
+  lists.forEach(list => {
+    const container = document.createElement("div");
+    container.className = "list-container";
+
+    const title = document.createElement("h3");
+    title.textContent = list.title.toUpperCase();
+    container.appendChild(title);
+
+    if (list.products && list.products.length > 0) {
+      list.products.forEach(product => {
+        const p = document.createElement("div");
+        p.className = "product";
+        p.textContent = `${product.brand} – ${product.name} – €${product.price}`;
+        container.appendChild(p);
+      });
+    } else {
+      const empty = document.createElement("div");
+      empty.textContent = "(Aucun article)";
+      empty.style.fontSize = "12px";
+      container.appendChild(empty);
+    }
+
+    wrapper.appendChild(container);
+  });
+}
+
+// Exécute au chargement de la page
+window.addEventListener("DOMContentLoaded", displayLists);
+
+  </script>
+<div class="selection-actions" id="selectionActions" style="display: none;">
+  <button onclick="renameSelectedList()">RENOMMER</button>
+  <button onclick="deleteSelectedLists()">SUPPRIMER</button>
+</div>
+</body>
+</html>

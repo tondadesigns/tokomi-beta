@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Langue – Tokomi</title>
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+    }
+
+    .btn-retour {
+      position: absolute;
+      left: 10px;
+      top: 54px;
+      background: none;
+      border: none;
+      font-size: 12px;
+      font-weight: 300;
+      cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .title {
+      text-align: center;
+      margin-top: 120px;
+      font-size: 16px;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    .container {
+      margin-top: 38px;
+      padding: 40px 24px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .langue-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+    }
+
+    .langue-label {
+      font-size: 12px;
+      font-weight: 300;
+      color: #333;
+      text-transform: uppercase;
+    }
+
+    input[type="radio"] {
+      display: none;
+    }
+
+    .custom-radio {
+      width: 12px;
+      height: 12px;
+      border: 1px solid #333;
+      border-radius: 50%;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .custom-radio::after {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background-color: #000;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.2s ease;
+    }
+
+    input[type="radio"]:checked + .custom-radio::after {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  </style>
+</head>
+<body>
+
+  <button class="btn-retour" onclick="location.href='profil.html'">RETOUR</button>
+
+  <div class="title">Langue</div>
+
+  <div class="container">
+    <label class="langue-option">
+      <span class="langue-label">Français</span>
+      <input type="radio" name="langue" id="fr">
+      <span class="custom-radio" onclick="selectLangue('fr')"></span>
+    </label>
+    <label class="langue-option">
+      <span class="langue-label">Anglais</span>
+      <input type="radio" name="langue" id="en">
+      <span class="custom-radio" onclick="selectLangue('en')"></span>
+    </label>
+    <label class="langue-option">
+      <span class="langue-label">中文</span>
+      <input type="radio" name="langue" id="zh">
+      <span class="custom-radio" onclick="selectLangue('zh')"></span>
+    </label>
+    <label class="langue-option">
+      <span class="langue-label">Espagnol</span>
+      <input type="radio" name="langue" id="es">
+      <span class="custom-radio" onclick="selectLangue('es')"></span>
+    </label>
+  </div>
+
+  <script>
+    function selectLangue(id) {
+      document.getElementById(id).checked = true;
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Adhésion – Tokomi</title>
+  <style>
+
+    html, body {
+  min-height: 100vh;          /* garantit que la page prend toute la hauteur de l'écran */
+}
+
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      margin: 0;
+      padding-bottom: 120px;
+      background-color: #fff;
+      text-transform: uppercase;
+      width: 100vw;              /* force la largeur à celle de l'écran */
+      overflow-x: hidden;        /* empêche le scroll horizontal */
+      box-sizing: border-box;
+    }
+
+    header {
+      text-align: center;
+      padding: 24px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: 'Space Grotesk', sans-serif;
+      
+      margin-top: 82px;
+    }
+    .btn-retour {
+  position: absolute;
+  left: 10px;
+  top: 54px;
+  background: none;
+  border: none;
+  font-size: 12px;
+  font-weight: 300;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+}
+    .membership-image {
+      width: calc(100% - 32px);
+      height: 240px;
+      object-fit: cover;
+      background-color: #ccc;
+      display: block;
+      margin: 0 16px;
+      margin-top: -16px;
+      margin-bottom: -26px;
+    }
+
+    .section {
+      padding: 24px 16px 10px;
+    }
+
+    .section h2 {
+      font-size: 12px;
+      font-weight: 500;
+      margin-top: 8px;
+      margin-bottom: -8px;
+    }
+
+    .section h3 {
+      font-size: 12px;
+      font-weight: 500;
+      margin-top: -26px;
+      margin-left: 15px;
+      margin-bottom: -8px;
+    }
+.section h4 {
+      font-size: 12px;
+      font-weight: 500;
+      margin-top: -8px;
+      margin-left: 0px;
+      margin-bottom: 2px;
+    }
+    .section p {
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 1.6;
+      text-transform: none;
+      margin-top: 2px;
+    }
+
+  .rewards-carousel {
+    
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  height: 360px;
+  margin-top: 12px;
+  margin-bottom: 100px;
+  
+  box-sizing: border-box;
+}
+
+.carousel-track {
+  display: flex;
+  
+  transition: transform 0.6s ease-in-out;
+}
+
+.reward-image {
+  width: calc(100% - 32px);
+  height: 240px;
+  object-fit: cover;
+  margin: 6px 16px;
+  border-radius: 0;
+  border: 1px solid black;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+
+
+@keyframes scrollCarousel {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+.rewards-section {
+  margin-left: -12px;
+  width: 95%;
+  margin-bottom: -88px; /* ou une autre valeur selon ton design */
+}
+
+/* Style du modal */
+.reward-modal {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 1000;
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.reward-modal.show {
+  transform: scaleY(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.reward-modal-content {
+  padding: 20px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+}
+
+.close-button {
+  float: right;
+  font-size: 20px;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+.modal-title {
+  font-weight: 300;
+}
+
+#modal-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+#reward-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+#reward-list li {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.7;
+  padding: 2px 0;
+}
+
+
+  </style>
+</head>
+<body>
+
+  <header>
+  <button class="btn-retour" onclick="location.href='profil.html'">RETOUR</button>
+  Adhésion</header>
+
+  <img src="https://via.placeholder.com/800x240" alt="Adhésion" class="membership-image" />
+
+  <div class="section">
+    <h2>Débloquer les récompenses réservées aux membres</h2>
+  </div>
+
+  <div class="section">
+    <h4>Comment ça marche ?</h4>
+    <p>
+      Dès la création de votre compte, vous devenez membre.<br>
+      Votre niveau est déterminé par le montant total de vos achats. L’année de fidélité se renouvelle tous les 12 mois, mais vous pouvez à tout moment débloquer de nouveaux avantages et en profiter pleinement.<br>
+      Pour des accès à des ventes privées, remises exclusives, livraison offerte et accompagnement personnalisé par un(e) styliste dédié(e) : entrez dans l'univers dès aujourd’hui.
+    </p>
+  </div>
+
+  <!-- NOUVELLE SECTION : VOS RÉCOMPENSES -->
+<div class="section rewards-section">
+  <h3>Vos récompenses</h3>
+  <div class="rewards-carousel" id="carousel">
+    <div class="carousel-track" id="carousel-track">
+      <img src="bronze.jpg" alt="Bronze" class="reward-image" data-level="bronze" />
+      <img src="argent.jpg" alt="Argent" class="reward-image" data-level="argent" />
+      <img src="or.jpg" alt="Or" class="reward-image" data-level="or" />
+      <img src="platine.jpg" alt="Platine" class="reward-image" data-level="platine" />
+      <img src="client-prive.jpg" alt="Client privé" class="reward-image" data-level="client-prive" />
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Récompenses -->
+<div id="reward-modal" class="reward-modal">
+  <div class="reward-modal-content">
+    <span class="close-button" onclick="closeModal()">-</span>
+    <h2 id="modal-title"></h2>
+    <ul id="reward-list"></ul>
+  </div>
+</div>
+
+<script>
+  const rewardsData = {
+    bronze: [
+      "Ventes de membres privés",
+      "Récompense d'anniversaire"
+    ],
+    argent: [
+      "Déverrouillage à partir de 1200$",
+      "Récompense de bienvenue",
+      "Ventes de membres privés",
+      "Récompense d'anniversaire",
+      "Livraison gratuite (2 commandes)",
+      "Réductions exclusives"
+    ],
+    or: [
+      "Déverrouillage à partir de 2400$",
+      "Récompense de bienvenue",
+      "Ventes de membres privés",
+      "Récompense d'anniversaire",
+      "Livraison gratuite (4 commandes)",
+      "Réductions exclusives",
+      "Concepteurs exclusifs"
+    ],
+    platine: [
+      "Déverrouillage à partir de 6000$",
+      "Récompense de bienvenue",
+      "Accès anticipé à la vente",
+      "Récompense d'anniversaire",
+      "Livraison gratuite (1 an)",
+      "Réductions exclusives",
+      "Concepteurs exclusifs",
+      "Service client prioritaire"
+    ],
+    "client-prive": [
+      "Déverrouillage à partir de 12000$",
+      "Récompense de bienvenue",
+      "Accès anticipé à la vente",
+      "Récompense d'anniversaire",
+      "Livraison gratuite (1 an)",
+      "Réductions exclusives",
+      "Concepteurs exclusifs",
+      "Service client prioritaire",
+      "Style personnel",
+      "Conciergerie de mode"
+    ]
+  };
+
+  const modal = document.getElementById("reward-modal");
+  const track = document.getElementById('carousel-track');
+  const images = document.querySelectorAll('.reward-image');
+  const total = images.length;
+  let index = 0;
+  let carouselInterval;
+
+
+  // Fonction pour démarrer ou redémarrer le scroll automatique
+  function startCarousel() {
+    carouselInterval = setInterval(() => {
+        index = (index + 1) % total;
+        track.style.transform = `translateX(-${index * (images[0].offsetWidth + 32)}px)`;
+      
+    }, 3000);
+  }
+
+  // Fonction pour arrêter le scroll auto
+  function stopCarousel() {
+    clearInterval(carouselInterval);
+  }
+  // Lancer dès le départ
+  startCarousel();
+
+// Click sur image = stop scroll + afficher modal
+  images.forEach(image => {
+    image.addEventListener('click', function () {
+      const level = this.dataset.level;
+      const rewards = rewardsData[level] || [];
+      // Injection du contenu
+      document.getElementById("modal-title").textContent = this.alt.toUpperCase();
+      document.getElementById("reward-list").innerHTML = rewards.map(item => `<li>${item}</li>`).join("");
+
+      // Positionnement juste sous l’image
+      const rect = this.getBoundingClientRect();
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+      modal.style.top = `${rect.bottom + scrollY}px`;
+
+      // Affichage du modal
+      modal.classList.add("show");
+      stopCarousel(); // ❗ stop auto-scroll
+      document.getElementById("carousel").style.overflow = "hidden";
+    });
+  });
+
+  function closeModal() {
+    modal.classList.remove("show");
+    document.getElementById("carousel").style.overflow = "auto"; 
+    startCarousel(); // ❗ restart auto-scroll
+  }
+</script>
+</body>
+</html>
