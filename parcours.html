@@ -6,6 +6,337 @@
   <title>Tokomi – Parcourir</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="./shopping bag icon.png" type="image/png" />
+  <style>
+
+body {
+  margin: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  background-color: #fff;
+  color: #111;
+}
+
+.top-nav {
+  margin-top: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid white;
+}
+
+.category-nav {
+  position: absolute;
+  top: 53.5px;
+  left: 10px;
+  gap: 12px;
+  margin-top: 0;
+}
+
+.cat-link {
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+  font-size: 12px;
+  font-weight: 300;
+  position: relative;
+  padding: 4px 6px;
+}
+
+.cat-link.active {
+  
+  text-underline-offset: 4px;
+  font-weight: 600;
+}
+
+.cart-icon img {
+  width: 24px;
+  height: 24px;
+}
+
+.search-bar {
+  margin-top: 28px !important;
+  padding: 10px !important;
+  outline: none;
+  border-bottom: 1px solid white !important;
+  height: 64px; 
+  transition: none !important;
+}
+
+.search-bar input {
+  width: 90%;
+  height: 48px;
+  padding: 0 16px;
+  font-size: 12px;
+  font-weight: 300;
+  text-transform: uppercase;
+  border: none;
+  border-bottom: none;  /* ✅ maintenant blanche (invisible) */
+  border-radius: 0;
+  outline: none;
+  background-color: white;
+  text-align: center;
+  display: block;
+  margin: 0 auto;  
+  transition: none !important;
+  box-sizing: border-box;
+}
+
+.sticky-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  background-color: white;
+  border-top: 1px solid #ccc;
+  padding: 10px 0;
+  z-index: 1000;
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+  color: #666;
+  text-decoration: none;
+}
+
+.menu-item.active {
+  color: #000;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
+}
+
+.category-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 16px;
+  margin-top: 2px;
+  border-bottom: 1px solid white;
+  margin-bottom: -16px;
+}
+
+.category-title {
+  text-decoration: none;
+  color: #111;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 0px !important;
+
+}
+
+.category-list {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 16px;
+  margin-top: 0px !important;
+
+  
+}
+
+.category-item {
+  display: block;
+  padding: 2px 0;
+  /* border-bottom: 1px solid #eee; */  /* ❌ Supprimé */
+  color: #111;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 300;
+  transition: color 0.2s ease;
+  margin-bottom: 2px !important;
+}
+
+.category-item:hover {
+  color: #000;
+}
+
+
+.arrow {
+  text-decoration: none;
+  font-size: 18px;
+  color: #999;
+  font-weight: bold;
+}
+
+
+.product-carousel-section {
+  padding: 20px 0;
+  margin-bottom: -30px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px 12px;
+  margin-top: -10px;
+}
+
+.section-title {
+  margin-left: 1px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: #111;
+  text-decoration: none;
+}
+
+.carousel {
+  display: flex;
+  gap: 16px;
+  margin-left: 2px;
+  overflow-x: auto;
+  padding: 0 16px;
+  padding-bottom: 10px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+
+.karavel-carousel .section-title {
+  color:#000; /* rouge par exemple */
+}
+
+@media (max-width: 600px) {
+  .product-card {
+    width: 160px;
+    aspect-ratio: 3 / 4;
+    padding: 4px;
+  }
+
+  .product-card img {
+    border-radius: 5px;
+  }
+}
+
+.product-card {
+  flex: 0 0 auto;
+  width: 200px;
+  max-width: 220px;
+  aspect-ratio: 3 / 4;
+  max-width: 220px;
+  border: none;
+  border-radius: 0;
+  background: #fff;
+  padding: 6px;
+}
+
+.product-card img {
+  width: 100%;
+  height: auto;
+  border:none;
+  border-radius: 0;
+  background: transparent;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.product-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 8px;
+  padding: 0 2px;
+}
+.product-brand {
+  margin-left: 2px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  color: black;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.product-name {
+ font-family: 'Space Grotesk', sans-serif;
+  color: black;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 300;
+  margin-top: 6px;
+}
+
+.product-price {
+  font-size: 13px;
+  font-weight: 400;
+  color: black;
+  margin-top: 4px;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.cancel-search {
+  font-size: 12px;
+  font-weight: 500;
+  color: #000;
+  padding: 8px 16px 0;
+  margin-left: 0;
+  display: none; /* caché par défaut */
+  text-decoration: none;
+}
+
+.cancel-search.hidden {
+  display: none;
+}
+.cancel-search.visible {
+  position: absolute;
+  margin-top: 18px;
+  margin-bottom: -10px;
+  font-size: 12px;
+  font-weight: 300;
+  display: block;
+  left: 0;
+}
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  background-color: #fff;
+  color: #111;
+  overflow-x: hidden;
+  max-width: 100%;
+  }
+  .sticky-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  border-top: 1px solid #ccc;
+  z-index: 1000;
+}
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  color: #666;
+  text-decoration: none;
+  transition: color 0.2 ease;
+}
+
+.menu-item:hover,
+.menu-item.active {
+  color: #000;
+  font-weight: 600;
+}
+    
+  </style>
 </head>
 
 <body class="page-parcours">
