@@ -245,6 +245,12 @@
   font-size: 12px;
   color: #444;
 }
+.composition-list {
+  padding-left: 24px; /* ← décalage vers la droite */
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 300;
+}
 
 .dropdown.open .dropdown-content {
   display: block;
@@ -521,10 +527,11 @@
         <span class="dropdown-toggle">+</span>
       </div>
       <div class="dropdown-content">
-        <p>Ce produit est composé de matériaux durables :
+        <p>Ce produit est composé de matériaux durables :</p>
+          <ul class="composition-list">
           <li>coton (70%)</li> 
           <li>laine (14%)</li>
-        </p>
+          </ul>
       </div>
     </div>
     <div class="dropdown" onclick="toggleDropdown(this)">
