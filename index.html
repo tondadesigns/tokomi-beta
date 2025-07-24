@@ -942,5 +942,26 @@ margin-bottom: -48px;
   </footer>
 
   <script src="app.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Redirection sur clic sur .product-card
+    document.querySelectorAll('.product-card').forEach(card => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => {
+        window.location.href = 'produit-tokomi.html';
+      });
+    });
+
+    // Redirection indépendante si on clique sur brand ou product-name
+    document.querySelectorAll('.brand, .product-name').forEach(el => {
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', (e) => {
+        e.stopPropagation(); // empêche le double déclenchement
+        window.location.href = 'produit-tokomi.html';
+      });
+    });
+  });
+</script>
+
 </body>
 </html>
