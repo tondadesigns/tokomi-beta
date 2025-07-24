@@ -141,7 +141,14 @@
   cursor: pointer;
   scroll-snap-align: start;
 }
-
+.thumb-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 4px; /* espace entre l’image et le label */
+}
 .selected-color-label {
   font-size: 8px;
   color: #000;
@@ -150,7 +157,7 @@
   text-align: center;
   min-height: 16px;
   line-height: 1;
-  opacity: 0;
+  opacity: 0.7;
   transform: translateY(-5px);
   transition: all 0.3s ease;
 }
@@ -158,6 +165,8 @@
 .selected-color-label.active {
   opacity: 1;
   transform: translateY(25px);
+  font-weight: 500;
+
 }
 
 .product-details {
