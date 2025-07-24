@@ -962,6 +962,27 @@ margin-bottom: -48px;
     });
   });
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const hero = document.querySelector(".hero");
+    const heroTitle = document.querySelector(".hero-title");
+
+    if (hero) {
+      hero.style.cursor = "pointer";
+      hero.addEventListener("click", () => {
+        window.location.href = "résultats.html";
+      });
+    }
+
+    if (heroTitle) {
+      heroTitle.style.cursor = "pointer";
+      heroTitle.addEventListener("click", (e) => {
+        e.stopPropagation(); // évite double déclenchement si imbriqué
+        window.location.href = "résultats.html";
+      });
+    }
+  });
+</script>
 
 </body>
 </html>
