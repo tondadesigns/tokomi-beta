@@ -92,7 +92,42 @@
       margin: 0 0 8px 0;
       background: none;
     }
+  /* FOOTER  */
+.sticky-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  border-top: 1px solid #ccc;
+  z-index: 1000;
+}
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  color: #666;
+  text-decoration: none;
+  transition: color 0.2 ease;
+}
 
+.menu-item:hover,
+.menu-item.active {
+  color: #000;
+  font-weight: 600;
+}
+
+/* ICONES DU MENU */
+.icon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
+  filter: invert(0%) grayscale(100%); /* pour un style premium noir */
+}
     .footer {
       position: fixed;
       bottom: 0;
@@ -180,21 +215,24 @@
 
   <button class="btn" style="margin-top: -40px;margin-bottom: 42px; margin-left: -202px;">Déconnexion</button>
 
+<footer class="sticky-footer">
+    <a href="accueil.html" class="menu-item active">
+      
+      <span>ACCUEIL</span>
+    </a>
 
-  <div class="footer">
-    <div class="footer-item">
-      <div></div>
-      <span>Accueil</span>
-    </div>
-    <div class="footer-item">
-      <div></div>
-      <span>Explorer</span>
-    </div>
-    <div class="footer-item">
-      <div></div>
-      <span>Profil</span>
-    </div>
-  </div>
+    <a href="explorer.html" class="menu-item"> 
+      
+      <span>EXPLORER</span>
+    </a>
+    
+    
+    <a href="profil.html"class="menu-item">
+      
+      <span>PROFIL</span>
+    </a>
+  </footer>
+
 
   <script>
     const userName = localStorage.getItem('tokomiUserName') || 'Utilisateur';
