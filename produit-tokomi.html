@@ -820,6 +820,19 @@ function scrollToImage(imageId) {
   <div id="cartMessage" class="confirmation-message"></div>
 
   <div id="favMessage" class="confirmation-message">Ajouté aux favoris</div>
+    
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Appliquer le style curseur main à tous
+    document.querySelectorAll('.product-card, .brand-name, .product-name').forEach(el => {
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', (e) => {
+        e.stopPropagation(); // évite double clic
+        window.location.href = 'produit-tokomi.html';
+      });
+    });
+  });
+</script>
 
 </body>
 </html>
