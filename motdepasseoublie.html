@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mot de passe oublié – Tokomi</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: #fff;
+      color: #111;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .btn-retour {
+      position: absolute;
+      left: 44px;
+      top: 104px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      font-weight: 300;
+      color: black;
+      cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .forgot-container {
+      width: 100%;
+      max-width: 360px;
+      padding: 32px;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 22px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+
+    p {
+      font-size: 14px;
+      margin-bottom: 24px;
+      font-weight: 300;
+    }
+
+    input[type="email"] {
+      width: 100%;
+      padding: 14px 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 0;
+      font-family: 'Space Grotesk', sans-serif;
+      margin-bottom: 16px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background-color: black;
+      color: white;
+      border: none;
+      font-size: 14px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .submit-btn:hover {
+      background-color: #222;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="btn-retour" onclick="goBack()">←</button>
+
+  <div class="forgot-container">
+    <h2>Réinitialiser votre mot de passe</h2>
+    <p>Entrez votre adresse email. Un lien de réinitialisation vous sera envoyé.</p>
+    <input type="email" id="email" placeholder="Votre adresse email" />
+    <button class="submit-btn" onclick="submitEmail()">Envoyer</button>
+  </div>
+
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+
+    function submitEmail() {
+      const email = document.getElementById('email').value;
+      if (!email) {
+        alert("Veuillez entrer votre email.");
+        return;
+      }
+      alert("Si cette adresse existe, un lien de réinitialisation a été envoyé.");
+      window.location.href = "connexion.html";
+    }
+  </script>
+
+</body>
+</html>
