@@ -79,7 +79,7 @@
 
   <div class="content">
     <button onclick="continueAsGuest()">Poursuivre en tant qu’invité</button>
-   
+   <button onclick="redirectToLogin()">Connexion</button>
     <button onclick="redirectToSignUp()">Créer un compte</button>
   </div>
 
@@ -88,7 +88,9 @@
       window.location.href = 'accueil.html';
     }
 
-   
+   function redirectToLogin() {
+      window.location.href = 'connexion.html';
+    }
       
     function redirectToSignUp() {
       window.location.href = 'signup.html';
