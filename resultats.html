@@ -1043,6 +1043,26 @@ function closeSortModal() {
     <div class="sort-title">TRIER PAR</div>
   </div>
 </div>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Redirection globale sur la carte
+    document.querySelectorAll('.product-card').forEach(card => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => {
+        window.location.href = 'produit-tokomi.html';
+      });
+    });
+
+    // Redirection spécifique sur certains éléments
+    document.querySelectorAll('.brand, .product-name, .price').forEach(el => {
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', (e) => {
+        e.stopPropagation(); // empêche double déclenchement
+        window.location.href = 'produit-tokomi.html';
+      });
+    });
+  });
+</script>
 
 </body>
 </html>
