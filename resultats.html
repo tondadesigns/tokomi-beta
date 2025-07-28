@@ -489,7 +489,7 @@ color: #111;
       align-items: center;
       justify-content: space-between;
       padding: 0 16px;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid white;
     }
     .filter-tags {
       display: flex;
@@ -909,8 +909,8 @@ if (!items) return;
   function addTagToBar(name) {
   const tagBar = document.getElementById('filter-tags');
   
-   if (selectedTags.size >= 20) {
-    alert("Vous ne pouvez sélectionner que 20 filtres maximum.");
+   if (selectedTags.size >= 10) {
+    alert("Vous ne pouvez sélectionner que 10 filtres maximum.");
     return;
   }
   selectedTags.add(name);
