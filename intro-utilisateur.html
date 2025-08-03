@@ -12,7 +12,23 @@
       overflow: hidden;
       background-color:#000;
     }
+    
+    .language-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  font-family: 'Space Grotesk', sans-serif;
+}
 
+.language-toggle select {
+  padding: 4px 8px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+}
+    
     .background {
       position: absolute;
       color: #000;
@@ -73,7 +89,13 @@
   </style>
 </head>
 <body>
-
+  <div class="language-toggle">
+  <select id="languageSelect" onchange="changeLanguage()">
+    <option value="fr">FR</option>
+    <option value="en">EN</option>
+  </select>
+</div>
+  
   <div class="background"></div>
   <div class="overlay"></div>
 
