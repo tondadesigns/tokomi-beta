@@ -14,7 +14,19 @@
       border-bottom: 1px solid white;
       
     }
+    
+    html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
 
+.page-content {
+  padding-bottom: 100px; /* pour ne pas masquer le contenu sous le footer sticky */
+}
+    
+    
     .header {
       margin-top: 37px;
       padding: 16px;
@@ -1082,6 +1094,10 @@ font-weight: 300;
 
   <div class="alert" id="alertBox">Ajouté aux favoris</div>
 
+<body style="margin:0; padding:0;">
+  <div class="page-content">
+    <!-- contenu scrollable ici (produits, etc.) -->
+  </div>
 
 <div class="cart-footer">
   <div class="cart-footer-left">
