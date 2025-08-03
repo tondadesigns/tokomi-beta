@@ -106,6 +106,23 @@
   </div>
 
   <script>
+  
+  function changeLanguage() {
+    const selectedLang = document.getElementById('languageSelect').value;
+    localStorage.setItem('selectedLang', selectedLang);
+    // Recharge ou redirige si besoin
+    alert("Langue changée : " + selectedLang);
+    // Tu peux ici ajouter une vraie logique de traduction
+  }
+
+  // Charger la langue sauvegardée
+  window.onload = function () {
+    const savedLang = localStorage.getItem('selectedLang');
+    if (savedLang) {
+      document.getElementById('languageSelect').value = savedLang;
+    }
+  };
+  
     function continueAsGuest() {
       window.location.href = 'accueil.html';
     }
@@ -119,5 +136,8 @@
     }
     
   </script>
+
+  
+
 </body>
 </html>
