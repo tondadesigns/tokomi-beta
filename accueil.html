@@ -417,7 +417,7 @@ margin-bottom: -48px;
     </section>
 
     <section class="category-section" id="category-list">
-      <!-- PREMIERE CATEGORIE CARROUSEL #921 CHAUSSURES D'ÉTÉ: NOUVEL ARRIVAGE -->
+      <!-- PREMIERE CATEGORIE CARROUSEL CHAUSSURES D'ÉTÉ: NOUVEL ARRIVAGE -->
     <div class="category-line">
     <span class="category-title">CHAUSSURES D'ÉTÉ: NOUVEL ARRIVAGE</span>
     <span class="arrow"></span> <!-- icône à droite -->
@@ -981,6 +981,14 @@ margin-bottom: -48px;
         window.location.href = "resultats.html";
       });
     }
+  });
+</script>
+<script>
+  document.querySelectorAll('.category-title').forEach(el => {
+    el.style.cursor = 'pointer'; // rendre cliquable visuellement
+    el.addEventListener('click', () => {
+      window.location.href = 'resultats.html';
+    });
   });
 </script>
 
