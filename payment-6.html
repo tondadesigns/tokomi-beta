@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paiement – Tokomi</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* CSS inclus tel que fourni */
+
+</style>
+</head>
+<body>
+
+<!-- Payment Page -->
+<div class="payment-header-section">
+  <button class="btn-retourpcp" onclick="window.location.href='checkout.html'">RETOUR</button>
+  <h2 class="payment-heading">CHOISIR SA MÉTHODE DE PAIEMENT</h2>
+</div>
+
+<div class="payment-grid">
+
+<!-- VISA -->
+    <div class="payment-row">
+      <div class="payment-option-wrapper">
+        <button class="payment-button" data-method="VISA">
+          <div class="payment-logo">
+            <img src="./Visa_Brandmark_Blue_RGB_2021.png" class="visa-logo" />
+          </div>
+          VISA
+        </button>
+        <div class="payment-dropdown elegant-dropdown"></div>
+      </div>
+    </div>
+<!-- MASTERCARD -->
+    <div class="payment-row">
+      <div class="payment-option-wrapper">
+        <button class="payment-button" data-method="MASTERCARD">
+          <div class="payment-logo">
+            <img src="./ma_symbol_opt_63_3x.png" class="mastercard-logo" />
+          </div>
+          MASTERCARD
+        </button>
+        <div class="payment-dropdown elegant-dropdown"></div>
+      </div>
+    </div>
+<!-- PAYPAL -->
+    <div class="payment-row">
+      <div class="payment-option-wrapper">
+        <button class="payment-button" data-method="PAYPAL">
+          <div class="payment-logo">
+            <img src="./paypal-seeklogo.png" class="paypal-logo" />
+          </div>
+          PAYPAL
+        </button>
+        <div class="payment-dropdown elegant-dropdown"></div>
+      </div>
+    </div>
+<!-- AMERICAN EXPRESS -->
+    <div class="payment-row">
+      <div class="payment-option-wrapper">
+        <button class="payment-button" data-method="AMERICAN EXPRESS">
+          <div class="payment-logo">
+            <img src="./AmericanXP_BlueBoxLogo_Alternate_SMALLscale_RGB_DIGITAL_80x80.png" class="americanexpress-logo" />
+          </div>
+          AMERICAN EXPRESS
+        </button>
+        <div class="payment-dropdown elegant-dropdown"></div>
+      </div>
+    </div>
+<!-- APPLE PAY -->
+    <div class="payment-row">
+      <div class="payment-option-wrapper">
+        <button class="payment-button" data-method="APPLE PAY">
+          <div class="payment-logo">
+            <img src="./Apple_Pay_Mark_RGB_041619.svg" class="applepay-logo" />
+          </div>
+          APPLE PAY
+        </button>
+        <div class="payment-dropdown elegant-dropdown"></div>
+      </div>
+    </div>
+<!-- TAPTAPSEND -->
+    <div class="payment-row">
+      <div class="payment-option-wrapper">
+        <button class="payment-button" data-method="TAPTAPSEND">
+          <div class="payment-logo">
+            <img src="./idHwWumpqs_1748820255658.jpeg" class="taptapsend-logo" />
+          </div>
+          TAPTAPSEND
+        </button>
+        <div class="payment-dropdown elegant-dropdown"></div>
+      </div>
+    </div>
+<!-- M-PESA -->
+    <div class="payment-row">
+      <div class="payment-option-wrapper">
+        <button class="payment-button" data-method="M-PESA">
+          <div class="payment-logo">
+            <img src="./m-pesa logo.jpeg" class="mpesa-logo" />
+          </div>
+          M-PESA
+        </button>
+        <div class="payment-dropdown elegant-dropdown"></div>
+      </div>
+    </div>
+<!-- ILLICOCASH -->
+    <div class="payment-row">
+      <div class="payment-option-wrapper">
+        <button class="payment-button" data-method="ILLICOCASH">
+          <div class="payment-logo">
+            <img src="./illicocash-logo.jpeg" class="illicocash-logo" />
+          </div>
+          ILLICOCASH
+        </button>
+        <div class="payment-dropdown elegant-dropdown"></div>
+      </div>
+    </div>
+<!-- ORANGE MONEY -->
+    <div class="payment-row">
+      <div class="payment-option-wrapper">
+        <button class="payment-button" data-method="ORANGE MONEY">
+          <div class="payment-logo">
+            <img src="./orange-money-seeklogo.png" class="orangemoney-logo" />
+          </div>
+          ORANGE MONEY
+        </button>
+        <div class="payment-dropdown elegant-dropdown"></div>
+      </div>
+    </div>
+<!-- AIRTEL MONEY -->
+    <div class="payment-row">
+      <div class="payment-option-wrapper">
+        <button class="payment-button" data-method="AIRTEL MONEY">
+          <div class="payment-logo">
+            <img src="./airtel-money-uganda-seeklogo.png" class="airtelmoney-logo" />
+          </div>
+          AIRTEL MONEY
+        </button>
+        <div class="payment-dropdown elegant-dropdown"></div>
+      </div>
+    </div>
+<!-- AFRIMONEY -->
+    <div class="payment-row">
+      <div class="payment-option-wrapper">
+        <button class="payment-button" data-method="AFRIMONEY">
+          <div class="payment-logo">
+            <img src="./afrimoneylogo.jpeg" class="afrimoney-logo" />
+          </div>
+          AFRIMONEY
+        </button>
+        <div class="payment-dropdown elegant-dropdown"></div>
+      </div>
+    </div>
+<!-- MTN MOMO -->
+    <div class="payment-row">
+      <div class="payment-option-wrapper">
+        <button class="payment-button" data-method="MTN MOMO">
+          <div class="payment-logo">
+            <img src="./mtn-momo-mobile-money-uganda-seeklogo.png" class="mtnmomo-logo" />
+          </div>
+          MTN MOMO
+        </button>
+        <div class="payment-dropdown elegant-dropdown"></div>
+      </div>
+    </div>
+</div>
+
+<script>
+  const paymentFields = {
+    VISA: [
+      { type: "text", placeholder: "TITULAIRE DE LA CARTE" },
+      { type: "text", placeholder: "NUMÉRO DE CARTE" },
+      { type: "text", placeholder: "DATE D'EXPIRATION (MM/AA)" },
+      { type: "text", placeholder: "CODE CVC" },
+    ],
+    PAYPAL: [{ type: "email", placeholder: "ADRESSE EMAIL PAYPAL" }],
+    "APPLE PAY": [{ type: "text", placeholder: "IDENTIFIANT APPLE" }],
+    "M-PESA": [{ type: "tel", placeholder: "NUMÉRO M-PESA" }],
+    ILLICOCASH: [{ type: "tel", placeholder: "NUMÉRO ILLICOCASH" }],
+    "ORANGE MONEY": [{ type: "tel", placeholder: "NUMÉRO ORANGE MONEY" }],
+    "AIRTEL MONEY": [{ type: "tel", placeholder: "NUMÉRO AIRTEL MONEY" }],
+    AFRIMONEY: [{ type: "tel", placeholder: "NUMÉRO AFRIMONEY" }],
+    "MTN MOMO": [{ type: "tel", placeholder: "NUMÉRO MTN MOMO" }],
+    TAPTAPSEND: [
+      { type: "tel", placeholder: "NUMÉRO TAPTAPSEND" },
+      { type: "text", placeholder: "TITULAIRE DU NUMÉRO" },
+    ],
+    "AMERICAN EXPRESS": [
+      { type: "text", placeholder: "TITULAIRE DE LA CARTE" },
+      { type: "text", placeholder: "NUMÉRO DE CARTE" },
+      { type: "text", placeholder: "DATE D'EXPIRATION (MM/AA)" },
+      { type: "text", placeholder: "CODE CVC" },
+    ],
+    MASTERCARD: [
+      { type: "text", placeholder: "TITULAIRE DE LA CARTE" },
+      { type: "text", placeholder: "NUMÉRO DE CARTE" },
+      { type: "text", placeholder: "DATE D'EXPIRATION (MM/AA)" },
+      { type: "text", placeholder: "CODE CVC" },
+    ]
+  };
+
+  document.querySelectorAll(".payment-button").forEach((button) => {
+    button.addEventListener("click", () => {
+      const method = button.dataset.method;
+      const wrapper = button.closest(".payment-option-wrapper");
+      const dropdown = wrapper.querySelector(".payment-dropdown");
+
+      document.querySelectorAll(".payment-dropdown").forEach(d => {
+        if (d !== dropdown) {
+          d.classList.remove("show");
+          d.innerHTML = "";
+        }
+      });
+
+      if (dropdown.classList.contains("show")) {
+        dropdown.classList.remove("show");
+        dropdown.innerHTML = "";
+        return;
+      }
+
+      const fields = paymentFields[method] || [];
+      fields.forEach(f => {
+        const input = document.createElement("input");
+        input.type = f.type;
+        input.placeholder = f.placeholder;
+        input.className = "address-input";
+        dropdown.appendChild(input);
+      });
+
+      const submit = document.createElement("button");
+      submit.textContent = "VALIDER";
+      submit.className = "submit-address-btn";
+      dropdown.appendChild(submit);
+
+      dropdown.classList.add("show");
+    });
+  });
+</script>
+</body>
+</html>
