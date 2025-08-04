@@ -1798,25 +1798,8 @@ window.addEventListener('load', () => {
 
 
 function goToPaymentPage() {
-  console.log("✅ goToPaymentPage appelé");
-
-  // Cacher toutes les autres pages
-  const pagesToHide = ['checkout-page', 'address-page', 'shipping-page'];
-  pagesToHide.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.style.display = 'none';
-  });
-
-   // Affiche la page de paiement
-  const payment = document.getElementById('payment-page');
-  if (payment) {
-    payment.style.display = 'block';
-    console.log("✅ payment-page affichée");
-  } else {
-    console.error("❌ payment-page introuvable");
+  window.location.href = "payment-7.html";
   }
-
-}
 
 
 
