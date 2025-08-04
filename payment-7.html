@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Choisir Paiement – Tokomi</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: white;
+      padding: 16px;
+    }
+
+    .payment-header-section {
+      margin-bottom: 24px;
+    }
+
+    .btn-retourpcp {
+      font-size: 12px;
+      font-weight: 300;
+      text-transform: uppercase;
+      background: none;
+      border: none;
+      color: sienna;
+      cursor: pointer;
+      margin-bottom: 12px;
+    }
+
+    .payment-heading {
+      font-size: 12px;
+      font-weight: 300;
+      margin-left: 8px;
+    }
+
+    .payment-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 700px;
+      margin: 32px auto;
+    }
+
+    .payment-row {
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid #eee;
+    }
+
+    .payment-button {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: white;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    .payment-logo {
+      width: 40px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .payment-logo img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .payment-dropdown {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px;
+      background: white;
+    }
+
+    .payment-dropdown.show {
+      display: flex;
+    }
+
+    .payment-input {
+      width: 100%;
+      padding: 12px 0;
+      border: none;
+      border-bottom: 1px solid #eee;
+      font-size: 13px;
+      font-weight: 300;
+      outline: none;
+      text-transform: uppercase;
+    }
+
+    .validate-button {
+      width: 100%;
+      padding: 16px;
+      background: black;
+      color: white;
+      border: none;
+      font-size: 13px;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="payment-header-section">
+    <button class="btn-retourpcp" onclick="window.location.href='checkout-4.html'">RETOUR</button>
+    <h2 class="payment-heading">CHOISIR SA MÉTHODE DE PAIEMENT</h2>
+  </div>
+
+  <div class="payment-grid">
+    <div class="payment-row">
+      <div class="payment-option-wrapper">
+        <button class="payment-button" data-method="APPLE PAY">
+          <div class="payment-logo">
+            <img src="./Apple_Pay_Mark_RGB_041619.svg" class="applepay-logo" />
+          </div>
+          APPLE PAY
+        </button>
+        <div class="payment-dropdown elegant-dropdown"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const paymentFields = {
+      "APPLE PAY": [
+        { type: "text", placeholder: "IDENTIFIANT APPLE" }
+      ]
+    };
+
+    document.querySelectorAll(".payment-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        const method = button.dataset.method;
+        const wrapper = button.closest(".payment-option-wrapper");
+        const dropdown = wrapper.querySelector(".payment-dropdown");
+
+        // Fermer les autres dropdowns
+        document.querySelectorAll(".payment-dropdown").forEach(d => {
+          d.classList.remove("show");
+          d.innerHTML = "";
+        });
+
+        // Si déjà ouvert
+        if (dropdown.classList.contains("show")) {
+          dropdown.classList.remove("show");
+          return;
+        }
+
+        const fields = paymentFields[method] || [];
+        fields.forEach(f => {
+          const input = document.createElement("input");
+          input.type = f.type;
+          input.placeholder = f.placeholder;
+          input.className = "payment-input";
+          dropdown.appendChild(input);
+        });
+
+        const submit = document.createElement("button");
+        submit.textContent = "VALIDER";
+        submit.className = "validate-button";
+        dropdown.appendChild(submit);
+
+        dropdown.classList.add("show");
+      });
+    });
+  </script>
+
+</body>
+</html>
