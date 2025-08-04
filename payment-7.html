@@ -122,6 +122,60 @@
   </div>
 
   <div class="payment-grid">
+    
+<!-- VISA -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="VISA">
+      <div class="payment-logo">
+        <img src="./Visa_Brandmark_Blue_RGB_2021.png" class="visa-logo" />
+      </div>
+      VISA
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+
+
+<!-- MASTERCARD -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="MASTERCARD">
+      <div class="payment-logo">
+        <img src="./ma_symbol_opt_63_3x.png" class="mastercard-logo" />
+      </div>
+      MASTERCARD
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+
+<!-- PAYPAL -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="PAYPAL">
+      <div class="payment-logo">
+        <img src="./paypal-seeklogo.png" class="paypal-logo" />
+      </div>
+      PAYPAL
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+
+<!-- AMERICAN EXPRESS -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="AMERICAN EXPRESS">
+      <div class="payment-logo">
+        <img src="./AmericanXP_BlueBoxLogo_Alternate_SMALLscale_RGB_DIGITAL_80x80.png" class="americanexpress-logo" />
+      </div>
+      AMERICAN EXPRESS
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+    <!-- APPLE PAY -->
     <div class="payment-row">
       <div class="payment-option-wrapper">
         <button class="payment-button" data-method="APPLE PAY">
@@ -133,13 +187,149 @@
         <div class="payment-dropdown elegant-dropdown"></div>
       </div>
     </div>
+    <!-- TAPTAPSEND -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="TAPTAPSEND">
+      <div class="payment-logo">
+        <img src="./idHwWumpqs_1748820255658.jpeg" class="taptapsend-logo" />
+      </div>
+      TAPTAPSEND
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+
+<!-- M-PESA -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="M-PESA">
+      <div class="payment-logo">
+        <img src="./m-pesa logo.jpeg" class="mpesa-logo" />
+      </div>
+      M-PESA
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+
+<!-- ILLICOCASH -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="ILLICOCASH">
+      <div class="payment-logo">
+        <img src="./illicocash-logo.jpeg" class="illicocash-logo" />
+      </div>
+      ILLICOCASH
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+
+<!-- ORANGE MONEY -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="ORANGE MONEY">
+      <div class="payment-logo">
+        <img src="./orange-money-seeklogo.png" class="orangemoney-logo" />
+      </div>
+      ORANGE MONEY
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+
+<!-- AIRTEL MONEY -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="AIRTEL MONEY">
+      <div class="payment-logo">
+        <img src="./airtel-money-uganda-seeklogo.png" class="airtelmoney-logo" />
+      </div>
+      AIRTEL MONEY
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+
+<!-- AFRIMONEY -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="AFRIMONEY">
+      <div class="payment-logo">
+        <img src="./afrimoneylogo.jpeg" class="afrimoney-logo" />
+      </div>
+      AFRIMONEY
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+</div>
+
+<!-- MTN MOMO -->
+<div class="payment-row">
+  <div class="payment-option-wrapper">
+    <button class="payment-button" data-method="MTN MOMO">
+      <div class="payment-logo">
+        <img src="./mtn-momo-mobile-money-uganda-seeklogo.png" class="mtnmomo-logo" />
+      </div>
+      MTN MOMO
+    </button>
+    <div class="payment-dropdown elegant-dropdown"></div>
+  </div>
+  </div>
+  </div>
+  </div>
+
   </div>
 
   <script>
     const paymentFields = {
+      VISA: [
+    { type: "text", placeholder: "TITULAIRE DE LA CARTE" },
+    { type: "text", placeholder: "NUMÉRO DE CARTE" },
+    { type: "text", placeholder: "DATE D'EXPIRATION (MM/AA)" },
+    { type: "text", placeholder: "CODE CVC" },
+  ],
+   PAYPAL: [
+    { type: "email", placeholder: "ADRESSE EMAIL PAYPAL" },
+  ],
       "APPLE PAY": [
         { type: "text", placeholder: "IDENTIFIANT APPLE" }
-      ]
+      ],
+    "M-PESA": [
+    { type: "tel", placeholder: "NUMÉRO M-PESA" },
+  ],
+  ILLICOCASH: [
+    { type: "tel", placeholder: "NUMÉRO ILLICOCASH" },
+  ],
+    "ORANGE MONEY": [
+    { type: "tel", placeholder: "NUMÉRO ORANGE MONEY" },
+  ],
+ "AIRTEL MONEY": [
+    { type: "tel", placeholder: "NUMÉRO AIRTEL MONEY" },
+  ],
+    "AFRIMONEY": [
+    { type: "tel", placeholder: "NUMÉRO AFRIMONEY" },
+  ],
+ "MTN MOMO": [
+    { type: "tel", placeholder: "NUMÉRO MTN MOMO" },
+  ],
+  "TAPTAPSEND": [
+    { type: "tel", placeholder: "NUMÉRO TAPTAPSEND" },
+    { type: "text", placeholder: "TITULAIRE DU NUMÉRO" },
+  ],
+   "AMERICAN EXPRESS": [
+    { type: "text", placeholder: "TITULAIRE DE LA CARTE" },
+    { type: "text", placeholder: "NUMÉRO DE CARTE" },
+    { type: "text", placeholder: "DATE D'EXPIRATION (MM/AA)" },
+    { type: "text", placeholder: "CODE CVC" },
+  ],
+  MASTERCARD: [
+    { type: "text", placeholder: "TITULAIRE DE LA CARTE" },
+    { type: "text", placeholder: "NUMÉRO DE CARTE" },
+    { type: "text", placeholder: "DATE D'EXPIRATION (MM/AA)" },
+    { type: "text", placeholder: "CODE CVC" },
+  ],
     };
 
     document.querySelectorAll(".payment-button").forEach((button) => {
