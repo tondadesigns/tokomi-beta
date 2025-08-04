@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Adresse Livraison – Tokomi</title>
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: white;
+    }
+
+    .btn-retouracp {
+      margin-top: 57px;
+      margin-left: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: red;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    #address-form {
+      display: flex !important;
+      flex-direction: column;
+      font-size: 10px;
+      gap: 12px;
+      margin: 24px 16px 230px 16px;
+    }
+
+    .address-input {
+      width: 100%;
+      padding: 8px 0;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      border: none !important;
+      border-bottom: 1px solid #eee !important;
+      outline: none;
+      background: white;
+      text-transform: uppercase;
+      margin-bottom: 1px;
+    }
+
+    .submit-address-btn {
+      width: 100%;
+      margin-top: 16px;
+      background: black;
+      color: white;
+      border: none;
+      font-size: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 300;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      margin-bottom: 24px;
+      padding: 10px;
+    }
+
+    .submit-address-btn:hover {
+      background: #222;
+    }
+
+    .autocomplete-wrapper {
+      position: relative;
+    }
+
+    .autocomplete-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid #ccc;
+      max-height: 180px;
+      overflow-y: auto;
+      z-index: 1000;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: none;
+    }
+
+    .autocomplete-list li {
+      padding: 8px 12px;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    .autocomplete-list li:hover {
+      background-color: #f0f0f0;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="address-page">
+    <div class="header">
+      <button class="btn-retouracp" onclick="backToCheckout()">RETOUR</button>
+      <h2 style="font-family: 'Space Grotesk', sans-serif; font-weight: 300; font-size: 12px; margin-top: 12px;margin-left: 16px;">VOTRE ADRESSE DE LIVRAISON</h2>
+      <form id="address-form">
+        <input type="text" placeholder="PRÉNOM" required class="address-input" />
+        <input type="text" placeholder="NOM DE FAMILLE" required class="address-input" />
+        <input type="text" placeholder="ADRESSE" required class="address-input" />
+        <input type="text" placeholder="VILLE" required class="address-input" />
+        <input type="text" placeholder="CODE POSTAL" required class="address-input" />
+        <div class="autocomplete-wrapper">
+          <label for="countryInput" style="font-size: 10px; margin-bottom: 4px;"></label>
+          <input type="text" id="countryInput" class="address-input" placeholder="pays" autocomplete="off" required />
+          <ul id="countryList" class="autocomplete-list"></ul>
+        </div>
+        <input type="text" placeholder="NUMÉRO DE TÉLÉPHONE" required class="address-input" />
+        <button type="submit" class="submit-address-btn">ENREGISTRER</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
