@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Expédition – Tokomi</title>
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      margin: 0;
+      padding: 16px;
+      background-color: #fff;
+      color: #111;
+    }
+
+    .btn-retourccp {
+      margin: -32px -12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: blue;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .shipping-options-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #eee;
+      padding: 8px 12px 0;
+      cursor: pointer;
+      font-weight: 300;
+      color: blueviolet;
+    }
+
+    .shipping-options-container input[type="radio"] {
+      margin-right: 12px;
+      font-weight: 300;
+    }
+
+    .shipping-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 300;
+    }
+
+    .shipping-label {
+      font-weight: 300;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .shipping-separator {
+      margin: 0 4px;
+    }
+
+    .shipping-line {
+      flex-grow: 1;
+      height: 1px;
+      background-color: #ccc;
+      margin: 0 8px;
+    }
+
+    .shipping-price {
+      white-space: nowrap;
+      font-weight: 300;
+      align-items: end;
+    }
+
+    button[type="submit"] {
+      margin-top: 16px;
+      padding: 10px 16px;
+      background: black;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 300;
+      font-size: 12px;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="shipping-page">
+    <div class="header">
+      <button class="btn-retourccp" onclick="backToCheckout()">RETOUR</button>
+    </div>
+
+    <h2 style="font-weight: 300; font-size: 12px; margin-top: 16px; margin-left: 5px;">
+      CHOISIR UNE OPTION D’EXPÉDITION
+    </h2>
+
+    <form id="shipping-form" style="display: flex; flex-direction: column; gap: 16px; margin-top: 24px;">
+      <label class="shipping-option">
+        <input type="radio" name="shipping" value="STANDARD 7-10 JOURS - €9.90" />
+        <span style="flex: 1; margin-left: 12px;">STANDARD 7-10 JOURS</span>
+        <span>€9.90</span>
+      </label>
+
+      <label class="shipping-option">
+        <input type="radio" name="shipping" value="EXPRESS 3-5 JOURS - €14.90" />
+        <span style="flex: 1; margin-left: 12px;">EXPRESS 3-5 JOURS</span>
+        <span>€14.90</span>
+      </label>
+
+      <label class="shipping-option">
+        <input type="radio" name="shipping" value="EN 1 JOUR - €24.90" />
+        <span style="flex: 1; margin-left: 12px;">EN 1 JOUR</span>
+        <span>€24.90</span>
+      </label>
+
+      <button type="submit" onclick="backToCheckout()">VALIDER L’EXPÉDITION</button>
+    </form>
+  </div>
+
+  <script>
+    function backToCheckout() {
+      window.location.href = "checkout.html";
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const shippingForm = document.getElementById("shipping-form");
+
+      document.querySelectorAll('input[name="shipping"]').forEach((radio) => {
+        radio.addEventListener("change", function () {
+          const selectedValue = this.value;
+          localStorage.setItem('selectedShipping', selectedValue);
+        });
+      });
+
+      shippingForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const selected = document.querySelector('input[name="shipping"]:checked');
+        if (selected) {
+          localStorage.setItem("shippingOption", selected.value);
+          backToCheckout();
+        } else {
+          alert("Veuillez choisir une option d’expédition.");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
