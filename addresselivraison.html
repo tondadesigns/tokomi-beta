@@ -124,5 +124,53 @@
       </form>
     </div>
   </div>
+<script>
+const countries = [
+  "Afghanistan", "Afrique du Sud", "Albanie", "Algérie", "Allemagne", "Andorre", "Angola", "Argentine",
+  "Arménie", "Australie", "Autriche", "Azerbaïdjan", "Belgique", "Bénin", "Botswana", "Brésil", "Burkina Faso",
+  "Burundi", "Cameroun", "Canada", "Chili", "Chine", "Colombie", "Comores", "Congo", "Croatie", "Danemark",
+  "Djibouti", "Égypte", "Espagne", "États-Unis", "Éthiopie", "Finlande", "France", "Gabon", "Ghana", "Grèce",
+  "Guinée", "Haïti", "Inde", "Indonésie", "Irlande", "Islande", "Italie", "Japon", "Kenya", "Liban",
+  "Luxembourg", "Madagascar", "Malawi", "Mali", "Maroc", "Maurice", "Mexique", "Monaco", "Mozambique",
+  "Namibie", "Niger", "Nigéria", "Norvège", "Nouvelle-Zélande", "Ouganda", "Pakistan", "Pays-Bas", "Pérou",
+  "Philippines", "Pologne", "Portugal", "Qatar", "République Démocratique du Congo", "Roumanie", "Rwanda",
+  "Sénégal", "Serbie", "Singapour", "Slovaquie", "Slovénie", "Somalie", "Suède", "Suisse", "Tanzanie",
+  "Tchad", "Thaïlande", "Togo", "Tunisie", "Turquie", "Ukraine", "Uruguay", "Venezuela", "Vietnam", "Zambie", "Zimbabwe"
+];
+
+const input = document.getElementById('countryInput');
+const list = document.getElementById('countryList');
+
+input.addEventListener('input', function () {
+  const query = this.value.toLowerCase();
+  list.innerHTML = '';
+  if (!query) {
+    list.style.display = 'none';
+    return;
+  }
+
+  const matches = countries.filter(country => country.toLowerCase().includes(query));
+  matches.forEach(country => {
+    const li = document.createElement('li');
+    li.textContent = country;
+    li.addEventListener('click', () => {
+      input.value = country;
+      list.innerHTML = '';
+      list.style.display = 'none';
+    });
+    list.appendChild(li);
+  });
+
+  list.style.display = matches.length ? 'block' : 'none';
+});
+
+document.addEventListener('click', function (e) {
+  if (!document.querySelector('.autocomplete-wrapper').contains(e.target)) {
+    list.style.display = 'none';
+  }
+});
+
+</script>
+
 </body>
 </html>
