@@ -138,9 +138,32 @@ const countries = [
   "Tchad", "Thaïlande", "Togo", "Tunisie", "Turquie", "Ukraine", "Uruguay", "Venezuela", "Vietnam", "Zambie", "Zimbabwe"
 ];
 
+const countryDialCodes = {
+  "Afghanistan": "+93", "Afrique du Sud": "+27", "Albanie": "+355", "Algérie": "+213", "Allemagne": "+49",
+  "Andorre": "+376", "Angola": "+244", "Argentine": "+54", "Arménie": "+374", "Australie": "+61",
+  "Autriche": "+43", "Azerbaïdjan": "+994", "Belgique": "+32", "Bénin": "+229", "Botswana": "+267",
+  "Brésil": "+55", "Burkina Faso": "+226", "Burundi": "+257", "Cameroun": "+237", "Canada": "+1",
+  "Chili": "+56", "Chine": "+86", "Colombie": "+57", "Comores": "+269", "Congo": "+242",
+  "Croatie": "+385", "Danemark": "+45", "Djibouti": "+253", "Égypte": "+20", "Espagne": "+34",
+  "États-Unis": "+1", "Éthiopie": "+251", "Finlande": "+358", "France": "+33", "Gabon": "+241",
+  "Ghana": "+233", "Grèce": "+30", "Guinée": "+224", "Haïti": "+509", "Inde": "+91",
+  "Indonésie": "+62", "Irlande": "+353", "Islande": "+354", "Italie": "+39", "Japon": "+81",
+  "Kenya": "+254", "Liban": "+961", "Luxembourg": "+352", "Madagascar": "+261", "Malawi": "+265",
+  "Mali": "+223", "Maroc": "+212", "Maurice": "+230", "Mexique": "+52", "Monaco": "+377",
+  "Mozambique": "+258", "Namibie": "+264", "Niger": "+227", "Nigéria": "+234", "Norvège": "+47",
+  "Nouvelle-Zélande": "+64", "Ouganda": "+256", "Pakistan": "+92", "Pays-Bas": "+31", "Pérou": "+51",
+  "Philippines": "+63", "Pologne": "+48", "Portugal": "+351", "Qatar": "+974",
+  "République Démocratique du Congo": "+243", "Roumanie": "+40", "Rwanda": "+250", "Sénégal": "+221",
+  "Serbie": "+381", "Singapour": "+65", "Slovaquie": "+421", "Slovénie": "+386", "Somalie": "+252",
+  "Suède": "+46", "Suisse": "+41", "Tanzanie": "+255", "Tchad": "+235", "Thaïlande": "+66",
+  "Togo": "+228", "Tunisie": "+216", "Turquie": "+90", "Ukraine": "+380", "Uruguay": "+598",
+  "Venezuela": "+58", "Vietnam": "+84", "Zambie": "+260", "Zimbabwe": "+263"
+};
+  
 const input = document.getElementById('countryInput');
 const list = document.getElementById('countryList');
-
+const phoneInput = document.querySelector('input[placeholder="NUMÉRO DE TÉLÉPHONE"]');
+  
 input.addEventListener('input', function () {
   const query = this.value.toLowerCase();
   list.innerHTML = '';
@@ -157,7 +180,13 @@ input.addEventListener('input', function () {
       input.value = country;
       list.innerHTML = '';
       list.style.display = 'none';
-    });
+
+      const dialCode = countryDialCodes[country] || "";
+  const phoneInput = document.querySelector('input[placeholder="NUMÉRO DE TÉLÉPHONE"]');
+  if (phoneInput) {
+    phoneInput.placeholder = dialCode ? `${dialCode} NUMÉRO DE TÉLÉPHONE` : "NUMÉRO DE TÉLÉPHONE";
+  }
+});
     list.appendChild(li);
   });
 
