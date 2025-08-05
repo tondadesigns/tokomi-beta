@@ -184,7 +184,10 @@ input.addEventListener('input', function () {
       const dialCode = countryDialCodes[country] || "";
   const phoneInput = document.querySelector('input[placeholder="NUMÉRO DE TÉLÉPHONE"]');
   if (phoneInput) {
-    phoneInput.placeholder = dialCode ? `${dialCode} NUMÉRO DE TÉLÉPHONE` : "NUMÉRO DE TÉLÉPHONE";
+    phoneInput.value = dialCode + " ";
+  phoneInput.focus();
+  // Positionner le curseur à la fin
+  phoneInput.setSelectionRange(phoneInput.value.length, phoneInput.value.length);
   }
 });
     list.appendChild(li);
