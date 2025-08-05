@@ -52,7 +52,7 @@
     .payment-row {
       display: flex;
       flex-direction: column;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid white;
     }
 
     .payment-button {
@@ -414,6 +414,14 @@
         const wrapper = button.closest(".payment-option-wrapper");
         const dropdown = wrapper.querySelector(".payment-dropdown");
 
+    // Si le dropdown est déjà ouvert, on le referme
+      if (dropdown.classList.contains("show")) {
+        dropdown.classList.remove("show");
+        dropdown.innerHTML = "";
+        return;
+      }
+
+        
         // Fermer les autres dropdowns
         document.querySelectorAll(".payment-dropdown").forEach(d => {
           d.classList.remove("show");
