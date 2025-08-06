@@ -213,10 +213,12 @@ function saveAddress(e) {
   const pays = document.getElementById("countryInput").value.trim();
   const telephone = document.querySelector('input[placeholder*="TÉLÉPHONE"]').value.trim();
 
-  const formattedAddress = `${prenom} ${nom}
-${adresse}
-${ville}, ${codePostal}, ${pays}
-${telephone}`;
+  const ligne1 = `${prenom} ${nom}`;
+  const ligne2 = adresse;
+  const ligne3 = `${codePostal}, ${ville}, ${pays}`;
+  const ligne4 = telephone;
+
+  const formattedAddress = `${ligne1}\n${ligne2}\n${ligne3}\n${ligne4}`;
 
   localStorage.setItem("tokomi_address", formattedAddress);
 
