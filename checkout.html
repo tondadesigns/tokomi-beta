@@ -216,8 +216,12 @@ document.addEventListener("DOMContentLoaded", function () {
     if (shippingOption) {
       const container = document.getElementById("shipping-summary");
       const text = document.getElementById("selected-shipping");
+      if (container && text) {
       text.textContent = shippingOption.toUpperCase();
       container.style.display = "block";
+      } else {
+        console.error("❌ Élément introuvable : shipping-summary ou selected-shipping.");
+      }
     }
   });
   
