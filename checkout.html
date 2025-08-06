@@ -192,7 +192,7 @@
   
   
   
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
   const address = localStorage.getItem("tokomi_address");
 
   if (address) {
@@ -202,9 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
       display.textContent = address;
       summary.style.display = "block";
   }
-});
 
-document.addEventListener("DOMContentLoaded", function () {
     const paymentMethod = localStorage.getItem("tokomi_payment_method");
 
     if (paymentMethod) {
@@ -213,9 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
       text.textContent = paymentMethod.toUpperCase();
       container.style.display = "block";
     }
-  });
   
-document.addEventListener("DOMContentLoaded", function () {
     const shippingOption = localStorage.getItem("tokomi_shipping_option");
 
     if (shippingOption) {
@@ -225,7 +221,6 @@ document.addEventListener("DOMContentLoaded", function () {
       if (container && text) {
         text.textContent = shippingOption.toUpperCase();
         container.style.display = "block";
-      }
     }
   });
   
