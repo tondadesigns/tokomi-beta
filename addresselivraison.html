@@ -213,12 +213,12 @@ function saveAddress(e) {
   const pays = document.getElementById("countryInput").value.trim();
   const telephone = document.querySelector('input[placeholder*="TÉLÉPHONE"]').value.trim();
 
-  const fullAddress = `${prenom} ${nom}
+  const formattedAddress = `${prenom} ${nom}
 ${adresse}
 ${ville}, ${codePostal}, ${pays}
 ${telephone}`;
 
-  localStorage.setItem("tokomi_address", fullAddress);
+  localStorage.setItem("tokomi_address", formattedAddress);
 
   // Rediriger vers checkout.html
   window.location.href = "checkout.html";
