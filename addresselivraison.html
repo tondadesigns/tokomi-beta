@@ -202,6 +202,25 @@ document.addEventListener('click', function (e) {
   }
 });
 
+  function saveAddress() {
+    const addressData = {
+      prenom: document.getElementById("prenom").value,
+      nom: document.getElementById("nom").value,
+      adresse: document.getElementById("adresse").value,
+      ville: document.getElementById("ville").value,
+      codePostal: document.getElementById("codePostal").value,
+      pays: document.getElementById("pays").value,
+    };
+
+    // Enregistre dans localStorage
+    localStorage.setItem("tokomiAdresse", JSON.stringify(addressData));
+
+    // Redirige vers la page de checkout
+    window.location.href = "checkout.html";
+  }
+
+
+
 </script>
 
 </body>
