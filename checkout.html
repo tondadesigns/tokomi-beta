@@ -196,8 +196,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const address = localStorage.getItem("tokomi_address");
 
   if (address) {
-    document.getElementById("displayed-address").textContent = address;
-    document.getElementById("address-summary").style.display = "block";
+    const display = document.getElementById("displayed-address");
+      const summary = document.getElementById("address-summary");
+
+      display.textContent = address;
+      summary.style.display = "block";
   }
 });
 
