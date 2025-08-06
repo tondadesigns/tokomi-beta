@@ -108,7 +108,7 @@
       <button class="btn-retouracp" onclick="window.location.href='checkout.html'">RETOUR</button>
 
       <h2 style="font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 12px; margin-top: 12px;margin-left: 16px;">VOTRE ADRESSE DE LIVRAISON</h2>
-      <form id="address-form">
+      <form id="address-form" onsubmit="saveAddress(event)">
         <input type="text" placeholder="PRÉNOM" required class="address-input" />
         <input type="text" placeholder="NOM DE FAMILLE" required class="address-input" />
         <input type="text" placeholder="ADRESSE" required class="address-input" />
@@ -202,22 +202,27 @@ document.addEventListener('click', function (e) {
   }
 });
 
-  function saveAddress() {
-    const addressData = {
-      prenom: document.getElementById("prenom").value,
-      nom: document.getElementById("nom").value,
-      adresse: document.getElementById("adresse").value,
-      ville: document.getElementById("ville").value,
-      codePostal: document.getElementById("codePostal").value,
-      pays: document.getElementById("pays").value,
-    };
+function saveAddress(e) {
+  e.preventDefault();
 
-    // Enregistre dans localStorage
-    localStorage.setItem("tokomiAdresse", JSON.stringify(addressData));
+  const prenom = document.querySelector('input[placeholder="PRÉNOM"]').value.trim();
+  const nom = document.querySelector('input[placeholder="NOM DE FAMILLE"]').value.trim();
+  const adresse = document.querySelector('input[placeholder="ADRESSE"]').value.trim();
+  const ville = document.querySelector('input[placeholder="VILLE"]').value.trim();
+  const codePostal = document.querySelector('input[placeholder="CODE POSTAL"]').value.trim();
+  const pays = document.getElementById("countryInput").value.trim();
+  const telephone = document.querySelector('input[placeholder*="TÉLÉPHONE"]').value.trim();
 
-    // Redirige vers la page de checkout
-    window.location.href = "checkout.html";
-  }
+  const fullAddress = `${prenom} ${nom}
+${adresse}
+${ville}, ${codePostal}, ${pays}
+${telephone}`;
+
+  localStorage.setItem("tokomi_address", fullAddress);
+
+  // Rediriger vers checkout.html
+  window.location.href = "checkout.html";
+}
 
 
 
