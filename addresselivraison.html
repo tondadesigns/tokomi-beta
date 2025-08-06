@@ -202,33 +202,29 @@ document.addEventListener('click', function (e) {
   }
 });
 
-function saveAddress(e) {
-  e.preventDefault();
+  document.getElementById("address-form").addEventListener("submit", function (e) {
+    e.preventDefault();
 
-  const inputs = document.querySelectorAll('#address-form .address-input');
-  const [
-  prenom,
-  nom,
-  adresse,
-  ville,
-  codePostal,
-  pays,
-  telephone
-]  = Array.from(inputs).map(input => input.value.trim());
+    const prenom = document.querySelector('input[placeholder="PRÉNOM"]').value.trim();
+    const nom = document.querySelector('input[placeholder="NOM DE FAMILLE"]').value.trim();
+    const adresse = document.querySelector('input[placeholder="ADRESSE"]').value.trim();
+    const ville = document.querySelector('input[placeholder="VILLE"]').value.trim();
+    const codePostal = document.querySelector('input[placeholder="CODE POSTAL"]').value.trim();
+    const pays = document.getElementById("countryInput").value.trim();
+    const telephone = document.querySelector('input[placeholder*="TÉLÉPHONE"]').value.trim();
 
-  const formattedAddress =
-  `${prenom.toUpperCase()} ${nom.toUpperCase()}\n` +
-  `${adresse.toUpperCase()}\n` +
-  `${ville.toUpperCase()} ${codePostal}\n` +
-  `${pays.toUpperCase()}\n` +
-  `${telephone}`;
+    const ligne1 = `${prenom} ${nom}`;
+    const ligne2 = `${adresse}`;
+    const ligne3 = `${codePostal}, ${ville}, ${pays}`;
+    const ligne4 = `${telephone}`;
 
+    const fullAddress = `${ligne1}\n${ligne2}\n${ligne3}\n${ligne4}`;
 
-  localStorage.setItem("tokomi_address", formattedAddress);
+    localStorage.setItem("tokomi_address", fullAddress);
 
-  // Rediriger vers checkout.html
-  window.location.href = "checkout.html";
-}
+    window.location.href = "checkout.html";
+  });
+
 
 
 
