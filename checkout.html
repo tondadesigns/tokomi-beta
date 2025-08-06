@@ -191,21 +191,17 @@
   }
   
   
-  window.addEventListener("DOMContentLoaded", function () {
-    const raw = localStorage.getItem("tokomiAdresse");
-    if (raw) {
-      const adresse = JSON.parse(raw);
-      const displayed = document.getElementById("displayed-address");
-      const summary = document.getElementById("address-summary");
+  
+document.addEventListener("DOMContentLoaded", () => {
+  const address = localStorage.getItem("tokomi_address");
 
-      displayed.textContent = `${adresse.prenom} ${adresse.nom}
-${adresse.adresse}
-${adresse.ville}, ${adresse.codePostal}
-${adresse.pays}`;
+  if (address) {
+    document.getElementById("displayed-address").textContent = address;
+    document.getElementById("address-summary").style.display = "block";
+  }
+});
 
-      summary.style.display = "block";
-    }
-  });
+
 
   
 </script>
