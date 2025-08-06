@@ -420,6 +420,12 @@
         const method = button.dataset.method;
         const wrapper = button.closest(".payment-option-wrapper");
         const dropdown = wrapper.querySelector(".payment-dropdown");
+        
+// Fermer les autres dropdowns
+        document.querySelectorAll(".payment-dropdown").forEach(d => {
+          d.classList.remove("show");
+          d.innerHTML = "";
+        });
 
     // Si le dropdown est déjà ouvert, on le referme
       if (dropdown.classList.contains("show")) {
@@ -427,20 +433,6 @@
         dropdown.innerHTML = "";
         return;
       }
-
-        
-        // Fermer les autres dropdowns
-        document.querySelectorAll(".payment-dropdown").forEach(d => {
-          d.classList.remove("show");
-          d.innerHTML = "";
-        });
-
-        // Si déjà ouvert
-        if (dropdown.classList.contains("show")) {
-          dropdown.classList.remove("show");
-          return;
-        }
-
         const fields = paymentFields[method] || [];
         fields.forEach(f => {
           const input = document.createElement("input");
@@ -459,7 +451,6 @@
       window.location.href = "checkout.html"; // Redirection
     });
         dropdown.appendChild(submit);
-
         dropdown.classList.add("show");
       });
     });
