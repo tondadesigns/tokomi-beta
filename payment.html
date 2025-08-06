@@ -453,6 +453,11 @@
         const submit = document.createElement("button");
         submit.textContent = "VALIDER";
         submit.className = "validate-button";
+
+        submit.addEventListener("click", function () {
+      localStorage.setItem("tokomi_payment_method", method); // 🟩 Sauvegarde
+      window.location.href = "checkout.html"; // Redirection
+    });
         dropdown.appendChild(submit);
 
         dropdown.classList.add("show");
