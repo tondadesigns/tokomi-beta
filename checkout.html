@@ -193,34 +193,31 @@
   
   
 document.addEventListener("DOMContentLoaded", function () {
-  const address = localStorage.getItem("tokomi_address");
-
-  if (address) {
-    const display = document.getElementById("displayed-address");
+    // Adresse
+    const address = localStorage.getItem("tokomi_address");
+    if (address) {
+      const display = document.getElementById("displayed-address");
       const summary = document.getElementById("address-summary");
-
       display.textContent = address;
       summary.style.display = "block";
-  }
+    }
 
+    // Paiement
     const paymentMethod = localStorage.getItem("tokomi_payment_method");
-
     if (paymentMethod) {
       const container = document.getElementById("payment-summary");
       const text = document.getElementById("selected-payment");
       text.textContent = paymentMethod.toUpperCase();
       container.style.display = "block";
     }
-  
-    const shippingOption = localStorage.getItem("tokomi_shipping_option");
 
+    // Expédition
+    const shippingOption = localStorage.getItem("tokomi_shipping_option");
     if (shippingOption) {
       const container = document.getElementById("shipping-summary");
       const text = document.getElementById("selected-shipping");
-
-      if (container && text) {
-        text.textContent = shippingOption.toUpperCase();
-        container.style.display = "block";
+      text.textContent = shippingOption.toUpperCase();
+      container.style.display = "block";
     }
   });
   
