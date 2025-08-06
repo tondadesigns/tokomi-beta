@@ -189,6 +189,25 @@
   function openShippingPage() {
     window.location.href = "expedition.html";
   }
+  
+  
+  window.addEventListener("DOMContentLoaded", function () {
+    const raw = localStorage.getItem("tokomiAdresse");
+    if (raw) {
+      const adresse = JSON.parse(raw);
+      const displayed = document.getElementById("displayed-address");
+      const summary = document.getElementById("address-summary");
+
+      displayed.textContent = `${adresse.prenom} ${adresse.nom}
+${adresse.adresse}
+${adresse.ville}, ${adresse.codePostal}
+${adresse.pays}`;
+
+      summary.style.display = "block";
+    }
+  });
+
+  
 </script>
 
   
