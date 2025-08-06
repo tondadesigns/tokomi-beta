@@ -150,12 +150,13 @@
 
       shippingForm.addEventListener("submit", function (e) {
         e.preventDefault();
-        const selected = document.querySelector('input[name="shipping"]:checked');
-        if (selected) {
-          localStorage.setItem("shippingOption", selected.value);
-          backToCheckout();
-        } else {
-          alert("Veuillez choisir une option d’expédition.");
+        const selectedOption = document.querySelector('input[name="shipping"]:checked');
+
+  if (selectedOption) {
+    localStorage.setItem("tokomi_shipping_option", selectedOption.value);
+    window.location.href = "checkout.html"; // ou backToCheckout()
+  } else {
+    alert("Veuillez choisir une option d’expédition.");
         }
       });
     });
