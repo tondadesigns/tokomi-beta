@@ -214,7 +214,20 @@ document.addEventListener("DOMContentLoaded", function () {
       container.style.display = "block";
     }
   });
+  
+document.addEventListener("DOMContentLoaded", function () {
+    const shippingOption = localStorage.getItem("tokomi_shipping_option");
 
+    if (shippingOption) {
+      const container = document.getElementById("shipping-summary");
+      const text = document.getElementById("selected-shipping");
+
+      if (container && text) {
+        text.textContent = shippingOption.toUpperCase();
+        container.style.display = "block";
+      }
+    }
+  });
   
 </script>
 
