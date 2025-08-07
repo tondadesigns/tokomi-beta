@@ -2411,18 +2411,6 @@ function removeItem(index) {
   location.reload();
 }
 
-const products = JSON.parse(localStorage.getItem("tokomi_cart_products")) || [];
-
-    let total = 0;
-    products.forEach(product => {
-      total += product.price * (product.quantity || 1);
-    });
-
-    const totalElement = document.querySelector(".cart-total");
-    if (totalElement) {
-      totalElement.textContent = `€${total.toFixed(2)}`;
-    }
-  });
 
 
   });
