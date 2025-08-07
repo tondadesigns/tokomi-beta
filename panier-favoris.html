@@ -1025,7 +1025,10 @@ font-weight: 300;
       LISTES
       </button>
     </div>
-  </div>
+</div>
+  
+  <div id="cart-items"></div>
+
 
   <div class="product-item" id="productItem1">
     <div class="product-image"></div>
@@ -2344,6 +2347,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const container = document.getElementById("cart-items");
+    const items = JSON.parse(localStorage.getItem('tokomi_cart_items')) || [];
+
+    container.innerHTML = "";
+
+    items.forEach((item) => {
+      const div = document.createElement("div");
+      div.className = "cart-item";
+      div.innerHTML = `
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <img src="${item.image}" style="width: 60px; height: auto;" />
+          <div>
+            <div style="font-weight: 500;">${item.brand} — ${item.name}</div>
+            <div style="font-size: 12px;">Taille : ${item.size}</div>
+            <div style="font-size: 12px;">${item.price} €</div>
+          </div>
+        </div>
+      `;
+      container.appendChild(div);
+    });
+  });
 </script>
 
 <!-- Loader TOKOMI -->
