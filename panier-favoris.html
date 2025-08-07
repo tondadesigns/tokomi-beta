@@ -2366,6 +2366,7 @@ document.addEventListener('DOMContentLoaded', () => {
     container.innerHTML = "";
 
     items.forEach((item, index) => {
+      const quantity = item.quantity || 1;
       const div = document.createElement("div");
       div.className = "cart-item";
       div.innerHTML = `
@@ -2392,7 +2393,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       container.appendChild(div);
     });
-
+  });
   function increaseQty(index) {
   const qty = document.getElementById(`qty-${index}`);
   qty.textContent = parseInt(qty.textContent) + 1;
@@ -2410,7 +2411,9 @@ function removeItem(index) {
   localStorage.setItem("tokomi_cart_items", JSON.stringify(items));
   location.reload();
 }
-
+function addToFavorites(index) {
+  alert("Fonction de favoris à implémenter.");
+  }
 });
 </script>
 
