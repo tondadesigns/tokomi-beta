@@ -2359,17 +2359,16 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-  document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
     const container = document.getElementById("cart-items");
     const items = JSON.parse(localStorage.getItem('tokomi_cart_items')) || [];
 
     container.innerHTML = "";
 
     items.forEach((item, index) => {
-      const quantity = item.quantity || 1;
       const div = document.createElement("div");
       div.className = "cart-item";
-      div.innerHTML = `
+      div.innerHTML = 
         <div class="cart-product">
         <div class="cart-image" style="background-image: url('${item.image}');"></div>
         <div class="cart-info">
@@ -2389,18 +2388,18 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       </div>
-    `;
+    ;
 
       container.appendChild(div);
     });
-  });
+
   function increaseQty(index) {
-  const qty = document.getElementById(`qty-${index}`);
+  const qty = document.getElementById(qty-${index});
   qty.textContent = parseInt(qty.textContent) + 1;
 }
 
 function decreaseQty(index) {
-  const qty = document.getElementById(`qty-${index}`);
+  const qty = document.getElementById(qty-${index});
   const current = parseInt(qty.textContent);
   if (current > 1) qty.textContent = current - 1;
 }
@@ -2411,11 +2410,8 @@ function removeItem(index) {
   localStorage.setItem("tokomi_cart_items", JSON.stringify(items));
   location.reload();
 }
-function addToFavorites(index) {
-  alert("Fonction de favoris à implémenter.");
-  }
+
 });
-  });
 </script>
 
 <!-- Loader TOKOMI -->
