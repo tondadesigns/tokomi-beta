@@ -1558,12 +1558,16 @@ function finalizeOrder() {// Affiche l'animatique de chargement
   }
 
   function updateCartCount() {
-    let totalItems = 0;
-    for (const qty of Object.values(quantities)) {
-      totalItems += qty;
-    }
-    document.getElementById('cartCount').textContent = `${totalItems}`;
-  }
+  // Sélectionne tous les produits dans le panier
+  const cartItems = document.querySelectorAll(".cart-item"); // adapte la classe à ton HTML
+  const count = cartItems.length;
+
+  // Sauvegarde le nombre d'articles
+  localStorage.setItem("tokomi_cart_count", count);
+}
+
+// Mets à jour au chargement
+document.addEventListener("DOMContentLoaded", updateCartCount);
 
   function updateFavoritesCount(count) {
     favoritesCount = count;
