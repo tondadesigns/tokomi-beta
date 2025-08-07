@@ -787,7 +787,7 @@
     }
 
     function addToCart(size) {
-      const product = { name: "Baskets Geobasket", brand: "Rick Owens", price: 400, size: size, image: "geobasket.jpg", quantity: 1, timestamp: Date.now() };
+      const product = { name: "Baskets Geobasket", brand: "Rick Owens", price: 400, size: size, image: "geobasket.jpg", timestamp: Date.now() };
       const cart = JSON.parse(localStorage.getItem("tokomi_cart_items")) || [];
       cart.push(product);
         localStorage.setItem("tokomi_cart_items", JSON.stringify(cart));
