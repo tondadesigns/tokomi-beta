@@ -787,9 +787,14 @@
     }
 
     function addToCart(size) {
-      const product = { name: "Baskets Geobasket", brand: "Rick Owens", price: 400, size: size, image: "geobasket.jpg", timestamp: Date.now() };
       const cart = JSON.parse(localStorage.getItem("tokomi_cart_items")) || [];
+      const product = { name: "Baskets Geobasket", brand: "Rick Owens", price: 400, size: size, quantity: 1, image: "geobasket.jpg", timestamp: Date.now() };
+        const existing = cart.find(p => p.name === product.name && p.size === product.size);
+        if (existing) {
+        existing.quantity += 1;
+        } else {
       cart.push(product);
+           }
         localStorage.setItem("tokomi_cart_items", JSON.stringify(cart));
         localStorage.setItem("tokomi_cart_count", cart.length);
       // Affiche le message personnalisé dans une boîte flottante
