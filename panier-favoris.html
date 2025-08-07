@@ -2360,16 +2360,18 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
     document.addEventListener("DOMContentLoaded", function () {
-    const container = document.getElementById("cart-items");
-    const items = JSON.parse(localStorage.getItem('tokomi_cart_items')) || [];
+  const container = document.getElementById("cart-items");
+  const items = JSON.parse(localStorage.getItem('tokomi_cart_items')) || [];
 
-    container.innerHTML = "";
+  container.innerHTML = "";
 
-    items.forEach((item, index) => {
-      const div = document.createElement("div");
-      div.className = "cart-item";
-      div.innerHTML = `
-        <div class="cart-product">
+  items.forEach((item, index) => {
+    const quantity = item.quantity || 1;
+
+    const div = document.createElement("div");
+    div.className = "cart-item";
+    div.innerHTML = `
+      <div class="cart-product">
         <div class="cart-image" style="background-image: url('${item.image}');"></div>
         <div class="cart-info">
           <div class="cart-title">${item.name.toUpperCase()}</div>
@@ -2378,7 +2380,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div class="quantity-controls">
             <button class="qty-btn" onclick="decreaseQty(${index})">–</button>
-            <span class="qty-value" id="qty-${index}">1</span>
+            <span class="qty-value" id="qty-${index}">${quantity}</span>
             <button class="qty-btn" onclick="increaseQty(${index})">+</button>
           </div>
 
@@ -2390,27 +2392,29 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `;
 
-      container.appendChild(div);
-    });
+    container.appendChild(div);
   });
-  function increaseQty(index) {
-  const qty = document.getElementById(qty-${index});
+});
+
+// Ces fonctions doivent être définies en global
+
+function increaseQty(index) {
+  const qty = document.getElementById(`qty-${index}`);
   qty.textContent = parseInt(qty.textContent) + 1;
 }
 
 function decreaseQty(index) {
-  const qty = document.getElementById(qty-${index});
+  const qty = document.getElementById(`qty-${index}`);
   const current = parseInt(qty.textContent);
   if (current > 1) qty.textContent = current - 1;
 }
 
-function removeItem(index) 
-    const items = JSON.parse(localStorage.getItem('tokomi_cart_items')) || [];
+function removeItem(index) {
+  const items = JSON.parse(localStorage.getItem("tokomi_cart_items")) || [];
   items.splice(index, 1);
   localStorage.setItem("tokomi_cart_items", JSON.stringify(items));
   location.reload();
 }
-});
 </script>
 
 <!-- Loader TOKOMI -->
