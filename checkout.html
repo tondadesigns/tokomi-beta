@@ -154,7 +154,7 @@
       <button class="continue-button" onclick="finalizeOrder()">COMMANDER</button>
     </div>
     <div class="cart-footer-right" style="text-align: right;">
-      <div class="cart-total" id="checkout-total" data-original-total="1440">€1440.00</div>
+      <div class="cart-total" id="checkout-total" data-original-total="1440">€0.00</div>
       <div class="cart-note">* Taxes comprises</div>
     </div>
   </div>
@@ -220,14 +220,20 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         console.error("❌ Élément introuvable : shipping-summary ou selected-shipping.");
       }
-      const cartCount = localStorage.getItem("tokomi_cart_count") || 0;
+   
 
-  const count = localStorage.getItem('tokomi_cart_count') || 0;
+  const count = parseInt(localStorage.getItem('tokomi_cart_count')) || 0;
   const products = JSON.parse(localStorage.getItem('tokomi_cart_products')) || [];
 
   // Mettre à jour le texte "ARTICLES DANS LE PANIER : X"
   const countElement = document.getElementById("checkout-article-count");
   countElement.textContent = `ARTICLES DANS LE PANIER : ${count}`;
+      
+  // Calculer le total (exemple : 480 € par produit)
+    const pricePerProduct = 480;
+    const total = count * pricePerProduct;
+    const totalElement = document.getElementById("checkout-total");
+    totalElement.textContent = `€${total.toFixed(2)}`;
 
   // Générer le carousel avec le bon nombre d’éléments
   const carousel = document.getElementById("checkout-carousel");
@@ -241,7 +247,7 @@ document.addEventListener("DOMContentLoaded", function () {
     div.style.width = "120px";
     div.style.height = "180px";
     carousel.appendChild(div);
-
+   });
   });
   
 </script>
