@@ -220,6 +220,20 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         console.error("❌ Élément introuvable : shipping-summary ou selected-shipping.");
       }
+      const cartCount = localStorage.getItem("tokomi_cart_count") || 0;
+
+  // Mettre à jour le texte
+  document.getElementById("checkout-article-count").textContent =
+    `ARTICLES DANS LE PANIER : ${cartCount}`;
+
+  // Générer le carousel avec le bon nombre d’éléments
+  const carousel = document.getElementById("checkout-carousel");
+  carousel.innerHTML = ""; // vide avant d'ajouter
+
+  for (let i = 0; i < cartCount; i++) {
+    const itemDiv = document.createElement("div");
+    itemDiv.className = "carousel-item"; // optionnel
+    carousel.appendChild(itemDiv);
     }
   });
   
