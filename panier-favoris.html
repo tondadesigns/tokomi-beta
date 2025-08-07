@@ -2410,9 +2410,33 @@ function removeItem(index) {
   localStorage.setItem("tokomi_cart_items", JSON.stringify(items));
   location.reload();
 }
+document.addEventListener("DOMContentLoaded", function () {
+    const cart = JSON.parse(localStorage.getItem("tokomi_cart_items")) || [];
+    const container = document.getElementById("cart-items");
 
+    container.innerHTML = ""; // Vide d'abord
 
+    cart.forEach((product, index) => {
+      const item = document.createElement("div");
+      item.className = "cart-item";
+      item.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" class="cart-image" />
+        <div class="cart-info">
+          <div class="cart-brand">${product.brand}</div>
+          <div class="cart-name">${product.name}</div>
+          <div class="cart-size">TAILLE ${product.size}</div>
+          <div class="cart-price">€${product.price}</div>
+        </div>
+      `;
+      container.appendChild(item);
+    });
 
+    // Total
+    const total = cart.reduce((sum, p) => sum + (p.price * (p.quantity || 1)), 0);
+    const totalElement = document.querySelector(".cart-total");
+    if (totalElement) {
+      totalElement.textContent = `€${total.toFixed(2)}`;
+    }
   });
 
 </script>
