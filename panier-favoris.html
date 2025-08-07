@@ -1566,17 +1566,8 @@ function finalizeOrder() {// Affiche l'animatique de chargement
   localStorage.setItem("tokomi_cart_count", count);
 }
 
-// Sauvegarde aussi la liste des produits si tu veux générer le carousel
-  const products = [];
-  cartItems.forEach(item => {
-    const img = item.querySelector('img').src;
-    products.push(img);
-  });
-  localStorage.setItem('tokomi_cart_products', JSON.stringify(products));
-}
-
-// Appeler updateCartCount() après chaque ajout/suppression
-updateCartCount();
+// Mets à jour au chargement
+document.addEventListener("DOMContentLoaded", updateCartCount);
 
   function updateFavoritesCount(count) {
     favoritesCount = count;
