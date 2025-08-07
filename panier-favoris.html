@@ -1108,27 +1108,7 @@ font-weight: 300;
 
 
 
-<div class="product-item" id="productItem3">
-    <div class="product-image" style="background: #eee;"></div>
-    <div class="product-info">
-      
-      <div class="product-lines">
-        <div class="product-name">Bottines Island Dunk</div>
-        <div class="product-meta">Taille 44 – Beige</div>
-        <div class="product-price" data-price="520">€520</div>
-      </div>
-      <div class="product-actions">
-        <div class="quantity-controls">
-  <button onclick="updateQty('productItem3', -1)">−</button>
-  <span id="qty-productItem3">1</span>
-  <button onclick="updateQty('productItem3', 1)">+</button>
-</div>
 
-        <button class="btn-remove" onclick="removeProduct('productItem3')">SUPPRIMER</button>
-        <button class="btn-save" onclick="addToFavorites('Baskets Geobasket')"> ENREGISTRER</button></span>
-      </div>
-    </div>
-  </div>
 
 
   <div class="alert" id="alertBox">Ajouté aux favoris</div>
@@ -2404,7 +2384,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div class="cart-actions">
             <button class="cart-action-btn" onclick="removeItem(${index})">SUPPRIMER</button>
-            <button class="cart-action-btn">ENREGISTRER</button>
+            <button class="cart-action-btn" onclick="addToFavorites(${index})">ENREGISTRER</button>
           </div>
         </div>
       </div>
