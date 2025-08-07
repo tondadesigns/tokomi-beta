@@ -2417,33 +2417,44 @@ document.addEventListener("DOMContentLoaded", function () {
 
     container.innerHTML = "";
 
+    let total = 0;
+
     items.forEach((item, index) => {
+      const quantity = item.quantity || 1;
+      total += item.price * quantity;
+
       const div = document.createElement("div");
       div.className = "cart-item";
       div.innerHTML = `
         <div class="cart-product">
-        <div class="cart-image" style="background-image: url('${item.image}');"></div>
-        <div class="cart-info">
-          <div class="cart-title">${item.name.toUpperCase()}</div>
-          <div class="cart-subtitle">TAILLE ${item.size} – NOIR</div>
-          <div class="cart-price">€${item.price}</div>
+          <div class="cart-image" style="background-image: url('${item.image}');"></div>
+          <div class="cart-info">
+            <div class="cart-title">${item.name.toUpperCase()}</div>
+            <div class="cart-subtitle">TAILLE ${item.size} – NOIR</div>
+            <div class="cart-price">€${item.price}</div>
 
-          <div class="quantity-controls">
-            <button class="qty-btn" onclick="decreaseQty(${index})">–</button>
-            <span class="qty-value" id="qty-${index}">1</span>
-            <button class="qty-btn" onclick="increaseQty(${index})">+</button>
-          </div>
+            <div class="quantity-controls">
+              <button class="qty-btn" onclick="decreaseQty(${index})">–</button>
+              <span class="qty-value" id="qty-${index}">${quantity}</span>
+              <button class="qty-btn" onclick="increaseQty(${index})">+</button>
+            </div>
 
-          <div class="cart-actions">
-            <button class="cart-action-btn" onclick="removeItem(${index})">SUPPRIMER</button>
-            <button class="cart-action-btn" onclick="addToFavorites(${index})">ENREGISTRER</button>
+            <div class="cart-actions">
+              <button class="cart-action-btn" onclick="removeItem(${index})">SUPPRIMER</button>
+              <button class="cart-action-btn" onclick="addToFavorites(${index})">ENREGISTRER</button>
+            </div>
           </div>
         </div>
-      </div>
-    `;
+      `;
 
       container.appendChild(div);
     });
+
+    const totalElement = document.querySelector(".cart-total");
+    if (totalElement) {
+      totalElement.textContent = `€${total.toFixed(2)}`;
+    }
+  });
 </script>
 
 <!-- Loader TOKOMI -->
