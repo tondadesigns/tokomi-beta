@@ -2412,6 +2412,26 @@ function removeItem(index) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+      function increaseQty(index) {
+    const cart = JSON.parse(localStorage.getItem('tokomi_cart_items')) || [];
+    if (cart[index]) {
+      cart[index].quantity = (cart[index].quantity || 1) + 1;
+      localStorage.setItem('tokomi_cart_items', JSON.stringify(cart));
+      updateCartDisplay();
+    }
+  }
+
+  function decreaseQty(index) {
+    const cart = JSON.parse(localStorage.getItem('tokomi_cart_items')) || [];
+    if (cart[index]) {
+      cart[index].quantity = (cart[index].quantity || 1) - 1;
+      if (cart[index].quantity < 1) cart[index].quantity = 1;
+      localStorage.setItem('tokomi_cart_items', JSON.stringify(cart));
+      updateCartDisplay();
+    }
+  }
+
+  function updateCartDisplay() {
     const container = document.getElementById("cart-items");
     const items = JSON.parse(localStorage.getItem('tokomi_cart_items')) || [];
 
@@ -2454,7 +2474,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (totalElement) {
       totalElement.textContent = `€${total.toFixed(2)}`;
     }
-  });
+  }
 </script>
 
 <!-- Loader TOKOMI -->
