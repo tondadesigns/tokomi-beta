@@ -366,14 +366,7 @@ html, body {
   </style>
 </head>
 <body>
-<!-- À placer UNIQUEMENT pour tester, dans un <script> au début du <body> -->
-<script>
-  // ⚠️ À utiliser uniquement pour test. À retirer en production.
-  localStorage.setItem("tokomiFavorites", JSON.stringify([
-    { id: 1, brand: "CELINE", name: "T-shirt", price: 350 },
-    { id: 2, brand: "BALENCIAGA", name: "Casquette", price: 290 }
-  ]));
-</script>
+
 
   <div class="header">
     <span id="btnCancel" class="btn-cancel" onclick="exitSelectionMode()" style="display: none; font-size: 12px; font-weight: 300; cursor: pointer; ">ANNULER</span>
@@ -395,6 +388,11 @@ html, body {
     <a href="listes.html" class="tab-link">LISTES</a>
   </div>
 
+
+  <div id="favorites-items"></div>
+
+
+  
   <div class="grid" id="favorites-grid">
     <div class="product">
       <img src="#" alt="Produit" onclick="selectProduct(this)">
@@ -404,11 +402,7 @@ html, body {
       <span class="custom-check"></span>
       </label>
 
-      <div class="product-info">
-        <div class="brand">BALENCIAGA</div>
-        <div class="product-name">BASKETS GEOBASKET</div>
-        <div class="price">€400</div>
-    </div>    
+      
     </div>
 
     <div class="product">
@@ -419,11 +413,7 @@ html, body {
       <span class="custom-check"></span>
       </label>
 
-      <div class="product-info">
-        <div class="brand">CÉLINE</div>
-        <div class="product-name">CASQUETTE</div>
-        <div class="price">€ 500</div>
-      </div>    
+     
 </div>
     <div class="product">
       <img src="#" alt="Produit" onclick="selectProduct(this)">
@@ -433,11 +423,7 @@ html, body {
       <span class="custom-check"></span>
       </label>
 
-      <div class="product-info">
-        <div class="brand">THOM BROWNE</div>
-        <div class="product-name">Nom produit</div>
-        <div class="price">€ 500</div>
-      </div>
+      
 </div>
 
     <div class="product">
@@ -448,11 +434,7 @@ html, body {
       <span class="custom-check"></span>
       </label>
 
-      <div class="product-info">
-        <div class="brand">THOM BROWNE</div>
-        <div class="product-name">Nom produit</div>
-        <div class="price">€ 500</div>
-      </div>
+      
 </div>
 
   <div class="liste-dropdown" id="listeDropdown">
