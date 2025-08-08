@@ -810,13 +810,36 @@
 
     }
     function addToFavorites() {
-  const msg = document.getElementById('favMessage');
-  msg.classList.add('show');
+  // Récupère les favoris existants
+  const favorites = JSON.parse(localStorage.getItem("tokomi_favorites")) || [];
 
-  // Disparition automatique après 2 secondes
-  setTimeout(() => {
-    msg.classList.remove('show');
-  }, 2000);
+  // Récupère les infos produit depuis la page (adapte les sélecteurs si besoin)
+  const product = {
+    id: document.querySelector("[data-product-id]")?.dataset.productId || Date.now(), // ID unique ou timestamp
+    name: document.querySelector(".product-name")?.textContent.trim() || "Produit",
+    brand: document.querySelector(".brand-name")?.textContent.trim() || "",
+    price: document.querySelector(".product-price")?.textContent.replace("€","").trim() || "0",
+    size: document.querySelector(".selected-size")?.textContent.trim() || "",
+    image: document.querySelector(".main-product-image")?.src || ""
+  };
+
+  // Empêche les doublons (même produit et même taille)
+  const key = (product.id || product.name) + "|" + product.size;
+  const exists = favorites.some(f => ((f.id || f.name) + "|" + f.size) === key);
+
+  if (!exists) {
+    favorites.push(product);
+    localStorage.setItem("tokomi_favorites", JSON.stringify(favorites));
+  }
+
+  // Affiche ton message existant
+  const msg = document.getElementById('favMessage');
+  if (msg) {
+    msg.classList.add('show');
+    setTimeout(() => {
+      msg.classList.remove('show');
+    }, 2000);
+  }
 }
 
 function openProductPage(cardElement) {
