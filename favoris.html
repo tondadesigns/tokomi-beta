@@ -625,42 +625,7 @@ function openAddFavToList(index) {
   document.getElementById('listeDropdown').classList.add('show');
 }
 
-  const grid = document.createElement("div");
-  grid.className = "grid";
-
-  favs.forEach((item, index) => {
-    const key = (item.id || item.slug || item.name || "") + "|" + (item.size || "");
-    const div = document.createElement("div");
-    div.className = "product";
-    div.dataset.index = index;   // index dans le tableau favs
-    div.dataset.key = key;       // clé d’unicité utile pour sélection/suppression
-    div.innerHTML = `
-      <img src="${item.image || '#'}" alt="${(item.name || '').toString()}" onclick="selectProduct(this)">
-
-      <label class="selection-radio">
-        <input type="checkbox"/>
-        <span class="custom-check"></span>
-      </label>
-
-      <div class="product-info">
-        <div class="brand">${(item.brand || item.name || '').toString().toUpperCase()}</div>
-        <div class="product-name">${(item.name || '').toString().toUpperCase()}</div>
-        <div class="price">€${item.price}</div>
-        <div style="margin-top:8px; display:flex; gap:8px;">
-          <button class="shopping-btn" onclick="moveFavoriteToCart(${index})">AJOUTER AU PANIER</button>
-          <button class="shopping-btn" onclick="removeFavorite(${index})">SUPPRIMER</button>
-        </div>
-      </div>
-    `;
-    grid.appendChild(div);
-  });
-
-  container.appendChild(grid);
-
-  // Après rendu, mets à jour le compteur affiché (IDs avec tirets comme dans ta page)
-  updateCounts();
-}
-
+  
 /* Déplacer un favori vers le panier */
 function moveFavoriteToCart(index) {
   const favs = getFavorites();
