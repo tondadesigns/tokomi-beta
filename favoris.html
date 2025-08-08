@@ -391,11 +391,10 @@ html, body {
 
   <div id="favorites-items"></div>
 
+  
 
   
   <div class="grid" id="favorites-grid">
-    <div class="product">
-      <img src="#" alt="Produit" onclick="selectProduct(this)">
 
       <label class="selection-radio">
       <input type="checkbox"/> 
@@ -405,8 +404,6 @@ html, body {
       
     </div>
 
-    <div class="product">
-      <img src="#" alt="Produit" onclick="selectProduct(this)">
 
       <label class="selection-radio">
       <input type="checkbox"/>
@@ -415,8 +412,6 @@ html, body {
 
      
 </div>
-    <div class="product">
-      <img src="#" alt="Produit" onclick="selectProduct(this)">
 
       <label class="selection-radio">
       <input type="checkbox"/>
@@ -426,8 +421,6 @@ html, body {
       
 </div>
 
-    <div class="product">
-      <img src="#" alt="Produit" onclick="selectProduct(this)">
 
       <label class="selection-radio">
       <input type="checkbox"/>
@@ -459,6 +452,148 @@ html, body {
     <a href="profil.html"class="menu-item"><span>PROFIL</span></a>
   </footer>
   <script>
+
+    /* ====== FAVS RENDER + COUNTS ====== */
+document.addEventListener("DOMContentLoaded", () => {
+  renderFavorites();
+  updateCounts();
+
+  // Si favoris changent depuis une autre page/onglet
+  window.addEventListener("storage", (e) => {
+    if (e.key === "tokomi_favorites") {
+      renderFavorites();
+      updateCounts();
+    }
+  });
+
+  // Délégation pour les cases à cocher rendues dynamiquement
+  document.addEventListener('change', (ev) => {
+    if (ev.target.matches('.product input[type="checkbox"]')) {
+      const product = ev.target.closest('.product');
+      if (!product) return;
+      product.classList.toggle('selected', ev.target.checked);
+      updateSelectionButtonsState(); // ta fonction existante
+    }
+  });
+});
+
+/* Helpers stockage */
+function getFavorites() {
+  return JSON.parse(localStorage.getItem("tokomi_favorites")) || [];
+}
+function setFavorites(arr) {
+  localStorage.setItem("tokomi_favorites", JSON.stringify(arr));
+}
+
+function getCart() {
+  return JSON.parse(localStorage.getItem("tokomi_cart_items")) || [];
+}
+function setCart(arr) {
+  localStorage.setItem("tokomi_cart_items", JSON.stringify(arr));
+}
+
+/* Rendu dynamique des favoris */
+function renderFavorites() {
+  const container = document.getElementById("favorites-items");
+  const favs = getFavorites();
+  container.innerHTML = "";
+
+  if (favs.length === 0) {
+    container.innerHTML = `<p style="font-size:12px; padding: 0 16px;">Aucun favori pour l’instant.</p>`;
+    // Met à jour le compteur affiché
+    updateCounts();
+    return;
+  }
+
+  const grid = document.createElement("div");
+  grid.className = "grid";
+
+  favs.forEach((item, index) => {
+    const key = (item.id || item.slug || item.name || "") + "|" + (item.size || "");
+    const div = document.createElement("div");
+    div.className = "product";
+    div.dataset.index = index;   // index dans le tableau favs
+    div.dataset.key = key;       // clé d’unicité utile pour sélection/suppression
+    div.innerHTML = `
+      <img src="${item.image || '#'}" alt="${(item.name || '').toString()}" onclick="selectProduct(this)">
+
+      <label class="selection-radio">
+        <input type="checkbox"/>
+        <span class="custom-check"></span>
+      </label>
+
+      <div class="product-info">
+        <div class="brand">${(item.brand || item.name || '').toString().toUpperCase()}</div>
+        <div class="product-name">${(item.name || '').toString().toUpperCase()}</div>
+        <div class="price">€${item.price}</div>
+        <div style="margin-top:8px; display:flex; gap:8px;">
+          <button class="shopping-btn" onclick="moveFavoriteToCart(${index})">AJOUTER AU PANIER</button>
+          <button class="shopping-btn" onclick="removeFavorite(${index})">SUPPRIMER</button>
+        </div>
+      </div>
+    `;
+    grid.appendChild(div);
+  });
+
+  container.appendChild(grid);
+
+  // Après rendu, mets à jour le compteur affiché (IDs avec tirets comme dans ta page)
+  updateCounts();
+}
+
+/* Déplacer un favori vers le panier */
+function moveFavoriteToCart(index) {
+  const favs = getFavorites();
+  const cart = getCart();
+  const item = favs[index];
+  if (!item) return;
+
+  const key = (item.id || item.slug || item.name) + "|" + (item.size || "");
+  const existing = cart.find(c => ((c.id || c.slug || c.name) + "|" + (c.size || "")) === key);
+
+  if (existing) {
+    existing.quantity = (existing.quantity || 1) + 1;
+  } else {
+    cart.push({ ...item, quantity: item.quantity || 1 });
+  }
+
+  // Retirer des favoris
+  favs.splice(index, 1);
+
+  setCart(cart);
+  setFavorites(favs);
+
+  renderFavorites();
+  updateCounts();
+}
+
+/* Supprimer un favori (bouton individuel) */
+function removeFavorite(index) {
+  const favs = getFavorites();
+  favs.splice(index, 1);
+  setFavorites(favs);
+  renderFavorites();
+  updateCounts();
+}
+
+/* Compteurs dans l’onglet (IDs avec tirets) */
+function updateCounts() {
+  const cart = getCart();
+  const favs = getFavorites();
+  const cartCount = document.getElementById("cart-count");
+  const favoritesCount = document.getElementById("favorites-count");
+
+  if (cartCount) cartCount.textContent = cart.length;
+  if (favoritesCount) favoritesCount.textContent = favs.length || 0;
+}
+
+/* Compat : ta fonction existante appelle updateFavoritesCount().
+   On la redéfinit pour s’aligner sur le stockage plutôt que compter le DOM. */
+function updateFavoritesCount() {
+  const favoritesCount = document.getElementById('favorites-count');
+  if (favoritesCount) favoritesCount.textContent = getFavorites().length;
+}
+    
     function toggleContextMenu(e) {
       e.stopPropagation();
       const menu = document.getElementById('menu');
