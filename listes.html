@@ -513,6 +513,19 @@
   </footer>
 
   <script>
+  
+    const LS_KEY = 'tokomiLists';
+
+function getLists() {
+  try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; }
+  catch { return []; }
+}
+
+function saveLists(lists) {
+  localStorage.setItem(LS_KEY, JSON.stringify(lists));
+}
+  
+  
     const listContainer = document.getElementById('listContainer');
     const emptyMessage = document.getElementById('emptyMessage');
     
@@ -918,7 +931,28 @@ function deleteSelectedLists() {
   updateListCount();
   updateListSelectionUI();
 }
+  
+    function renderLists() {
+  const container = document.getElementById('listContainer');
+  const lists = getLists();
+  container.innerHTML = '';
 
+  lists.forEach(list => {
+    const count = (list.items && Array.isArray(list.items)) ? list.items.length : 0;
+
+    const card = document.createElement('a');
+    card.className = 'list-card';
+    card.href = `listes-detail.html?id=${encodeURIComponent(list.id)}`;
+    card.innerHTML = `
+      <div class="list-card-title">${(list.title||'SANS NOM').toUpperCase()}</div>
+      <div class="list-card-count">${count} article${count>1?'s':''}</div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', renderLists);
+  
      window.onload = function () {
       loadFromLocalStorage();
       updateEmptyMessage();
