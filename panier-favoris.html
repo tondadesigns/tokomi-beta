@@ -2396,19 +2396,32 @@ document.addEventListener('DOMContentLoaded', () => {
     container.appendChild(div);
   });
       updateTotal();
+      updateCounts();
 });
+  function updateCounts() {
+  const cart = JSON.parse(localStorage.getItem("tokomi_cart_items")) || [];
+  const favs = JSON.parse(localStorage.getItem("tokomi_favorites")) || [];
+  const cartCount = document.getElementById("cartCount");
+  const favoritesCount = document.getElementById("favoritesCount");
 
+  if (cartCount) cartCount.textContent = cart.length;
+  if (favoritesCount) favoritesCount.textContent = favs.length || 0;
+}
 // Ces fonctions doivent être définies en global
 
 function increaseQty(index) {
   const qty = document.getElementById(`qty-${index}`);
   qty.textContent = parseInt(qty.textContent) + 1;
+    updateTotal();
+    updateCounts();
 }
 
 function decreaseQty(index) {
   const qty = document.getElementById(`qty-${index}`);
   const current = parseInt(qty.textContent);
   if (current > 1) qty.textContent = current - 1;
+    updateTotal();
+    updateCounts();
 }
 
 function removeItem(index) {
