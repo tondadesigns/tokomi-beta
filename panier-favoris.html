@@ -2359,9 +2359,15 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-    document.addEventListener("DOMContentLoaded", function () {
+   document.addEventListener("DOMContentLoaded", function () {
+  renderCart();      // construit la liste à partir du localStorage
+  updateTotal();     // calcule le total
+  updateCounts();    // met à jour les compteurs PANIER/FAVORIS
+});
+
+// ---- RENDER: construit #cart-items depuis localStorage
+function renderCart() {
   const container = document.getElementById("cart-items");
-  const totalDisplay = document.getElementById("cart-total");
   const items = JSON.parse(localStorage.getItem('tokomi_cart_items')) || [];
 
   container.innerHTML = "";
@@ -2375,8 +2381,8 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="cart-product">
         <div class="cart-image" style="background-image: url('${item.image}');"></div>
         <div class="cart-info">
-          <div class="cart-title">${item.name.toUpperCase()}</div>
-          <div class="cart-subtitle">TAILLE ${item.size} – NOIR</div>
+          <div class="cart-title">${(item.name || "").toUpperCase()}</div>
+          <div class="cart-subtitle">TAILLE ${item.size ?? ""} – NOIR</div>
           <div class="cart-price">€${item.price}</div>
 
           <div class="quantity-controls">
@@ -2392,13 +2398,29 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
     `;
-
     container.appendChild(div);
   });
-      updateTotal();
-      updateCounts();
-});
-  function updateCounts() {
+}
+
+// ---- TOTAL (met à jour #cart-total si présent et le footer .cart-total)
+function updateTotal() {
+  const items = JSON.parse(localStorage.getItem("tokomi_cart_items")) || [];
+  let total = 0;
+  items.forEach(item => {
+    const q = item.quantity || 1;
+    const p = parseFloat(item.price) || 0;
+    total += q * p;
+  });
+
+  const top = document.getElementById("cart-total"); // si tu l’utilises au-dessus du footer
+  if (top) top.textContent = `Total : €${total.toFixed(2)}`;
+
+  const footerTotal = document.querySelector(".cart-footer .cart-total");
+  if (footerTotal) footerTotal.textContent = `€${total.toFixed(2)}`;
+}
+
+// ---- COMPTEURS
+function updateCounts() {
   const cart = JSON.parse(localStorage.getItem("tokomi_cart_items")) || [];
   const favs = JSON.parse(localStorage.getItem("tokomi_favorites")) || [];
   const cartCount = document.getElementById("cartCount");
@@ -2407,51 +2429,55 @@ document.addEventListener('DOMContentLoaded', () => {
   if (cartCount) cartCount.textContent = cart.length;
   if (favoritesCount) favoritesCount.textContent = favs.length || 0;
 }
-// Ces fonctions doivent être définies en global
 
+// ---- ACTIONS
 function increaseQty(index) {
-  const qty = document.getElementById(`qty-${index}`);
-  qty.textContent = parseInt(qty.textContent) + 1;
-    updateTotal();
-    updateCounts();
+  const cart = JSON.parse(localStorage.getItem('tokomi_cart_items')) || [];
+  if (!cart[index]) return;
+  cart[index].quantity = (cart[index].quantity || 1) + 1;
+  localStorage.setItem('tokomi_cart_items', JSON.stringify(cart));
+
+  // UI directe (évite de re-render tout)
+  const el = document.getElementById(`qty-${index}`);
+  if (el) el.textContent = cart[index].quantity;
+
+  updateTotal();
+  updateCounts();
 }
 
 function decreaseQty(index) {
-  const qty = document.getElementById(`qty-${index}`);
-  const current = parseInt(qty.textContent);
-  if (current > 1) qty.textContent = current - 1;
-    updateTotal();
-    updateCounts();
+  const cart = JSON.parse(localStorage.getItem('tokomi_cart_items')) || [];
+  if (!cart[index]) return;
+  cart[index].quantity = Math.max(1, (cart[index].quantity || 1) - 1);
+  localStorage.setItem('tokomi_cart_items', JSON.stringify(cart));
+
+  const el = document.getElementById(`qty-${index}`);
+  if (el) el.textContent = cart[index].quantity;
+
+  updateTotal();
+  updateCounts();
 }
 
 function removeItem(index) {
-  const items = JSON.parse(localStorage.getItem("tokomi_cart_items")) || [];
-  items.splice(index, 1);
-  localStorage.setItem("tokomi_cart_items", JSON.stringify(items));
-  location.reload();
-}
-function updateTotal() {
-  const items = JSON.parse(localStorage.getItem("tokomi_cart_items")) || [];
-  let total = 0;
-  items.forEach(item => {
-    const quantity = item.quantity || 1;
-    const price = parseFloat(item.price) || 0;
-    total += quantity * price;
-  });
-const footerTotal = document.querySelector(".cart-footer .cart-total");
-  if (footerTotal) footerTotal.textContent = `€${total.toFixed(2)}`;
-}
-  
+  const cart = JSON.parse(localStorage.getItem("tokomi_cart_items")) || [];
+  if (!cart[index]) return;
+  cart.splice(index, 1);
+  localStorage.setItem("tokomi_cart_items", JSON.stringify(cart));
 
-// Optionnel : à implémenter si nécessaire
+  // Re-render vivant (pas de reload)
+  renderCart();
+  updateTotal();
+  updateCounts();
+}
+
 function addToFavorites(index) {
-   const cart = JSON.parse(localStorage.getItem("tokomi_cart_items")) || [];
+  const cart = JSON.parse(localStorage.getItem("tokomi_cart_items")) || [];
   const favorites = JSON.parse(localStorage.getItem("tokomi_favorites")) || [];
 
   const item = cart[index];
   if (!item) return;
 
-  // Clé d'unicité (adapte si tu as un vrai id/slug)
+  // Évite les doublons (id/slug/name + size)
   const key = (item.id || item.slug || item.name) + "|" + (item.size || "");
   const exists = favorites.some(f => ((f.id || f.slug || f.name) + "|" + (f.size || "")) === key);
   if (!exists) {
@@ -2459,21 +2485,21 @@ function addToFavorites(index) {
     localStorage.setItem("tokomi_favorites", JSON.stringify(favorites));
   }
 
-  // Retirer du panier
+  // Retire du panier
   cart.splice(index, 1);
   localStorage.setItem("tokomi_cart_items", JSON.stringify(cart));
 
-  // UI: alerte + refresh de l’affichage
+  // Feedback
   const alertBox = document.getElementById("alertBox");
   if (alertBox) {
     alertBox.textContent = "Ajouté aux favoris";
-    alertBox.classList.add("show"); // si tu as .show en CSS
+    alertBox.classList.add("show");
     setTimeout(() => alertBox.classList.remove("show"), 1500);
   }
 
-  // Re-render simple: recharge la page ou réaffiche la liste
-  location.reload();
-  alert("Ajouté aux favoris !");
+  renderCart();
+  updateTotal();
+  updateCounts();
 }
 </script>
 
