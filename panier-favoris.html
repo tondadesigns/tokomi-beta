@@ -2432,6 +2432,34 @@ const footerTotal = document.querySelector(".cart-footer .cart-total");
 
 // Optionnel : à implémenter si nécessaire
 function addToFavorites(index) {
+   const cart = JSON.parse(localStorage.getItem("tokomi_cart_items")) || [];
+  const favorites = JSON.parse(localStorage.getItem("tokomi_favorites")) || [];
+
+  const item = cart[index];
+  if (!item) return;
+
+  // Clé d'unicité (adapte si tu as un vrai id/slug)
+  const key = (item.id || item.slug || item.name) + "|" + (item.size || "");
+  const exists = favorites.some(f => ((f.id || f.slug || f.name) + "|" + (f.size || "")) === key);
+  if (!exists) {
+    favorites.push(item);
+    localStorage.setItem("tokomi_favorites", JSON.stringify(favorites));
+  }
+
+  // Retirer du panier
+  cart.splice(index, 1);
+  localStorage.setItem("tokomi_cart_items", JSON.stringify(cart));
+
+  // UI: alerte + refresh de l’affichage
+  const alertBox = document.getElementById("alertBox");
+  if (alertBox) {
+    alertBox.textContent = "Ajouté aux favoris";
+    alertBox.classList.add("show"); // si tu as .show en CSS
+    setTimeout(() => alertBox.classList.remove("show"), 1500);
+  }
+
+  // Re-render simple: recharge la page ou réaffiche la liste
+  location.reload();
   alert("Ajouté aux favoris !");
 }
 </script>
