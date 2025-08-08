@@ -2425,7 +2425,9 @@ function updateTotal() {
     const price = parseFloat(item.price) || 0;
     total += quantity * price;
   });
-
+const footerTotal = document.querySelector(".cart-footer .cart-total");
+  if (footerTotal) footerTotal.textContent = `€${total.toFixed(2)}`;
+}
   const totalDisplay = document.getElementById("cart-total");
   if (totalDisplay) {
     totalDisplay.textContent = `Total : €${total.toFixed(2)}`;
