@@ -597,7 +597,7 @@ function renderFavorites() {
         <div class="product-name">${(item.name || '').toString().toUpperCase()}</div>
         <div class="price">€${item.price}</div>
 
-        <div class="shopping-bin">
+        <div class="shopping-btn">
           <button class="shopping-btn" onclick="moveFavoriteToCart(${index})">AJOUTER AU PANIER</button>
           <button class="shopping-btn" onclick="openAddFavToList(${index})">AJOUTER À LA LISTE</button>
           <button class="shopping-btn" onclick="removeFavorite(${index})">SUPPRIMER</button>
