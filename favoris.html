@@ -371,6 +371,34 @@ html, body {
   padding: 16px;
   border-bottom: 1px solid #eee;
 }
+/* Assure une ligne malgré la règle .product */
+.fav-row.product {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  gap: 24px;
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Empêche .product img par défaut d'étirer la largeur si tu utilises <img> ailleurs */
+.fav-row .fav-image {
+  flex: 0 0 320px;
+  width: 320px;
+  aspect-ratio: 4/5;
+  background-size: cover;
+  background-position: center;
+  background-color: #ddd;
+  border: 1px solid #aaa;
+}
+
+.fav-row .fav-info {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-transform: uppercase;
+}
 
 /* Image large à gauche */
 .fav-image {
@@ -410,7 +438,7 @@ html, body {
 }
 
 /* “Shopping btn” (les actions) */
-.shopping-btn {
+.shopping-bin {
   margin-top: 16px;
   display: flex;
   gap: 12px;
@@ -597,7 +625,7 @@ function renderFavorites() {
         <div class="product-name">${(item.name || '').toString().toUpperCase()}</div>
         <div class="price">€${item.price}</div>
 
-        <div class="shopping-btn">
+        <div class="shopping-bin">
           <button class="shopping-btn" onclick="moveFavoriteToCart(${index})">AJOUTER AU PANIER</button>
           <button class="shopping-btn" onclick="openAddFavToList(${index})">AJOUTER À LA LISTE</button>
           <button class="shopping-btn" onclick="removeFavorite(${index})">SUPPRIMER</button>
