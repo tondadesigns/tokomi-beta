@@ -999,6 +999,9 @@ function renderListsInModal() {
   lists.forEach(list => {
     const div = document.createElement('div');
     div.className = 'list-card-item';
+    div.style.display = 'flex';
+    div.style.justifyContent = 'space-between';
+    div.style.alignItems = 'center';
     div.innerHTML = `
       <div>
         <div>${(list.title || 'Sans nom').toUpperCase()}</div>
@@ -1024,18 +1027,7 @@ function renderListsInModal() {
      <button class="shopping-btn" onclick="openAddFavToList( INDEX )">AJOUTER À LA LISTE</button>
    </div>
 */
-function getFavoriteByIndex_DOM(index) {
-  const cards = document.querySelectorAll('.fav-card');
-  const el = cards[index];
-  if (!el) return null;
-  return {
-    id: el.dataset.id || String(Date.now()),
-    title: el.dataset.title || 'PRODUIT',
-    price: Number(el.dataset.price || 0),
-    image: el.dataset.image || '',
-    url: el.dataset.url || ''
-  };
-}
+
 
 /* B) Exemple via localStorage (si tu stockes déjà tes favoris) :
    Remplace 'tokomi_favorites' par ta clé réelle.
@@ -1047,7 +1039,7 @@ return arr[index] || null;
 
 function addSelectedFavoriteToList(listId) {
   // Récupère le produit courant (décommente la source que tu utilises)
-  const product = getFavoriteByIndex_DOM(currentFavIndex);
+  const product = getFavoriteByIndex_LS(currentFavIndex);
   // const product = getFavoriteByIndex_LS(currentFavIndex);
 
   if (!product) {
@@ -1056,7 +1048,7 @@ function addSelectedFavoriteToList(listId) {
   }
 
   const lists = getLists();
-  const target = lists.find(l => l.id === listId);
+  const target = lists.find(l => String(l.id) === String(listId));
   if (!target) { alert("Liste introuvable."); return;
   }
   target.items = Array.isArray(target.items) ? target.items : [];
@@ -1064,15 +1056,13 @@ function addSelectedFavoriteToList(listId) {
   // évite les doublons sur la base de id + title
   
   const pKey = (product.id || product.slug || product.name || '') + '|' + (product.size || '');
-  const exists = (target.items || []).some(it => it.id === product.id && it.title === product.title);
+  const exists = target.items.some(it => ((it.id || it.slug || it.name || '') + '|' + (it.size || '')) === pKey);
   if (!exists) {
     target.items.push({...product, addedAt: new Date().toISOString()
     });
     saveLists(lists);
     }
-    localStorage.setItem(LS_LISTS_KEY, JSON.stringify(lists));
-  }
-
+   
   closeListeDropdown();
   // Feedback rapide
   alert(`Ajouté à « ${target.title || 'Sans nom'} ».`);
