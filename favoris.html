@@ -999,6 +999,24 @@ function closeModal() {
   }
 </script>
 
+<!-- MODAL : AJOUTER À -->
+<div class="liste-dropdown" id="listeDropdown" aria-hidden="true">
+  <div class="liste-backdrop" onclick="closeListeDropdown()"></div>
+
+  <div class="liste-dropdown-content" id="listeDropdownContent" role="dialog" aria-modal="true">
+    <div class="liste-header">
+      <h4>AJOUTER À</h4>
+      <button class="liste-close" onclick="closeListeDropdown()" aria-label="Fermer">✕</button>
+    </div>
+
+    <!-- Listes vont être injectées ici -->
+    <div id="listeItems" class="liste-items"></div>
+
+    <div class="liste-footer">
+      <a href="listes.html" class="liste-manage">Gérer les listes</a>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
