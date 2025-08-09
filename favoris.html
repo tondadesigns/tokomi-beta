@@ -524,6 +524,66 @@ html, body {
   cursor: pointer;
 }
 
+  /* MODAL CRÉATION DE LISTE — même priorités que listes.html */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.modal.show { display: flex !important; }
+
+.create-list-form-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  padding: 24px;
+  width: 80%;
+  max-width: 320px;
+  border-radius: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-list-form {
+  display: flex;
+  flex-direction: column;
+  border-top: none;
+  padding: 32px 16px;
+  margin-bottom: 32px;
+}
+
+.create-list-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  font-size: 12px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300;
+  border: none !important;
+  border-bottom: 1px solid #eee !important;
+  outline: none;
+  background: transparent;
+  text-transform: uppercase;
+}
+
+.create-list-form button {
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: 300;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
 
   </style>
 </head>
@@ -1016,12 +1076,11 @@ function renderListsInModal() {
   container.innerHTML = '';
 
   const lists = getLists();
-
   if (!lists.length) {
     container.innerHTML = `
       <div style="padding:12px; font-size:13px;">
         Aucune liste trouvée.<br/>
-        <a href="listes.html" style="text-decoration:underline; color:#111;">Créer une liste</a>
+        <a href="#" onclick="openCreateListModal(event)" style="text-decoration:underline; color:#111;">Créer une liste</a>
       </div>`;
     return;
   }
@@ -1037,7 +1096,7 @@ function renderListsInModal() {
         <div>${(list.title || 'Sans nom').toUpperCase()}</div>
         <div class="list-meta">${(list.items?.length || 0)} élément(s)</div>
       </div>
-      <div>➔</div>
+      <div></div>
     `;
     div.onclick = () => addSelectedFavoriteToList(list.id);
     container.appendChild(div);
@@ -1102,7 +1161,72 @@ function addSelectedFavoriteToList(listId) {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeListeDropdown();
 });
+  /* ---------- MODAL "CRÉER UNE LISTE" ---------- */
+function openCreateListModal(ev) {
+  if (ev) ev.preventDefault();
+  const m = document.getElementById('createListModal');
+  m.classList.add('show');
+  m.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  // focus input
+  setTimeout(() => document.getElementById('listName')?.focus(), 0);
+}
+function closeCreateListModal() {
+  const m = document.getElementById('createListModal');
+  m.classList.remove('show');
+  m.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+function createList() {
+  const input = document.getElementById('listName');
+  const title = (input.value || '').trim();
+  if (!title) { input.focus(); return; }
+
+  const lists = getLists();
+  const id = Date.now().toString();
+  lists.push({ id, title, items: [] });
+  saveLists(lists);
+
+  // reset + fermer
+  input.value = '';
+  closeCreateListModal();
+
+  // Rafraîchir le modal d’ajout (si ouvert) pour voir la nouvelle liste
+  if (document.getElementById('listeDropdown')?.classList.contains('show')) {
+    renderListsInModal();
+  }
+
+  alert(`Liste « ${title} » créée.`);
+}
+
+/* Fermer la modale création avec ESC + clic hors contenu */
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeCreateListModal();
+});
+document.getElementById('createListModal')?.addEventListener('click', (e) => {
+  if (e.target.id === 'createListModal') closeCreateListModal();
+});
+
   document.addEventListener('DOMContentLoaded', ensureListsSeed);
 </script>
+
+<!-- MODAL : CRÉER UNE LISTE -->
+<div id="createListModal" class="modal" aria-hidden="true">
+  <div class="create-list-form-wrapper" style="position: relative;">
+    <button onclick="closeCreateListModal()"
+            style="position: absolute; top: 9px; right: 8px; background: none; border: none;
+                   font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 300;
+                   cursor: pointer; color: black;">
+      FERMER
+    </button>
+
+    <div class="create-list-form" id="createListForm">
+      <input type="text" id="listName" placeholder="NOM DE LA LISTE" />
+      <button onclick="createList()">CRÉER</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
