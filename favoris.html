@@ -562,10 +562,7 @@ html, body {
       
 </div>
 
-  <div class="liste-dropdown" id="listeDropdown">
-    <div class="liste-dropdown-content" id="listeDropdownContent">
-    <div class="liste-header">
-    <h4>AJOUTER À</h4>
+  
     
   </div>
     
@@ -672,14 +669,8 @@ function renderFavorites() {
 
   updateCounts();
 }
-  let _favIndexForList = null;
 
-function openAddFavToList(index) {
-  _favIndexForList = index;
-  // Ouvre ton dropdown existant sans casser ta logique
-  document.getElementById('selectionActions').style.display = 'none';
-  document.getElementById('listeDropdown').classList.add('show');
-}
+
 
   
 /* Déplacer un favori vers le panier */
@@ -821,10 +812,8 @@ function deleteSelectedProducts() {
       document.getElementById('listeDropdown').classList.add('show');
     }
 
-    document.addEventListener('click', () => {
-      document.getElementById('menu').style.display = 'none';
-      document.getElementById('listeDropdown').classList.remove('show');
-    });
+   
+  
     function selectProduct(imgElement) {
   const product = imgElement.closest('.product');
   if (!product.classList.contains('selectable')) return;
@@ -865,14 +854,7 @@ const checkbox = product.querySelector('input[type="checkbox"]');
   }
  }
 }
-document.querySelectorAll('.list-card-item').forEach(item => {
-  item.addEventListener('click', () => {
-    const listName = item.textContent.trim();
-    alert(`Ajouté à "${listName.toUpperCase()}"`);
-    // Optionnel : fermer le menu après ajout
-    document.getElementById('listeDropdown').classList.remove('show');
-  });
-});
+
 
 
 function showConfirmationModal(message, onConfirm) {
@@ -907,79 +889,6 @@ function closeModal() {
   </div>
 </div>
 
-<script>
-  // Charger dynamiquement les listes dans le dropdown
-  function loadListsInDropdown() {
-    const raw = localStorage.getItem("tokomiLists");
-    const content = document.getElementById("listeDropdownContent");
-    content.innerHTML = "";
-    if (!raw) return;
-
-    const lists = JSON.parse(raw);
-
-    lists.forEach(list => {
-      const item = document.createElement("div");
-      item.className = "list-card-item";
-      item.textContent = list.title?.toUpperCase() || "SANS NOM";
-      item.onclick = () => {
-        addSelectedProductsToList(list.id);
-        alert(`Ajouté à "${list.title}"`);
-        document.getElementById("listeDropdown").classList.remove("show");
-        // Tu peux ici appeler une fonction pour ajouter un produit à cette liste
-      };
-
-      content.appendChild(item);
-    });
-  }
-
-  function openListeDropdown() {
-      loadListsInDropdown();
-      document.getElementById("listeDropdown").classList.add("show");
-    }
-
-    function addSelectedProductsToList(listId) {
-      const checkboxes = document.querySelectorAll(".product-checkbox:checked");
-      const products = Array.from(checkboxes).map(cb => {
-        const p = cb.closest(".product");
-        return {
-          id: p.dataset.id,
-          brand: p.dataset.brand,
-          name: p.dataset.name,
-          price: p.dataset.price
-        };
-      });
-
-      const raw = localStorage.getItem("tokomiLists");
-      if (!raw) return;
-
-      const lists = JSON.parse(raw);
-      const list = lists.find(l => l.id === listId);
-      if (!list) return;
-
-      list.products = list.products || [];
-      products.forEach(p => {
-        if (!list.products.find(existing => existing.id === p.id)) {
-          list.products.push(p);
-        }
-      });
-
-      localStorage.setItem("tokomiLists", JSON.stringify(lists));
-      alert(`Ajouté à "${list.title}"`);
-    }
-
-    // Init example data if not existing
-    window.addEventListener("DOMContentLoaded", () => {
-      if (!localStorage.getItem("tokomiLists")) {
-        const example = [
-          { id: "1", title: "Préférés", products: [] },
-          { id: "2", title: "Cadeaux", products: [] }
-        ];
-        localStorage.setItem("tokomiLists", JSON.stringify(example));
-      }
-    });
-
-
-</script>
 <script>
   function updateFavoritesCount() {
    
@@ -1018,8 +927,6 @@ function closeModal() {
 
 <!-- MODAL : AJOUTER À -->
 <div class="liste-dropdown" id="listeDropdown" aria-hidden="true">
-  <div class="liste-backdrop" onclick="closeListeDropdown()"></div>
-
   <div class="liste-dropdown-content" id="listeDropdownContent" role="dialog" aria-modal="true">
     <div class="liste-header">
       <h4>AJOUTER À</h4>
@@ -1037,15 +944,24 @@ function closeModal() {
 <script>
 /* === Stockage partagé avec listes.html === */
 const LS_LISTS_KEY = 'tokomiLists';
-
+/* === Gestion modal === */
+let currentFavIndex = null; // l’index du produit cliqué dans favoris
 /** Retourne un tableau de listes: [{id, title, items:[]}, ...] */
 function getLists() {
   try { return JSON.parse(localStorage.getItem(LS_LISTS_KEY)) || []; }
   catch { return []; }
 }
-
-/* === Gestion modal === */
-let currentFavIndex = null; // l’index du produit cliqué dans favoris
+function saveLists(lists) {
+    localStorage.setItem(LS_LISTS_KEY, JSON.stringify(lists));
+  }
+  function ensureListsSeed() {
+    if (!localStorage.getItem(LS_LISTS_KEY)) {
+      saveLists([
+        { id: '1', title: 'Préférés', items: [] },
+        { id: '2', title: 'Cadeaux', items: [] }
+      ]);
+    }
+  }
 
 function openAddFavToList(index) {
   currentFavIndex = index;
@@ -1124,10 +1040,10 @@ function getFavoriteByIndex_DOM(index) {
 /* B) Exemple via localStorage (si tu stockes déjà tes favoris) :
    Remplace 'tokomi_favorites' par ta clé réelle.
 */
-// function getFavoriteByIndex_LS(index) {
-//   const arr = JSON.parse(localStorage.getItem('tokomi_favorites')) || [];
-//   return arr[index] || null;
-// }
+function getFavoriteByIndex_LS(index) {
+const arr = JSON.parse(localStorage.getItem('tokomi_favorites')) || [];
+return arr[index] || null;
+}
 
 function addSelectedFavoriteToList(listId) {
   // Récupère le produit courant (décommente la source que tu utilises)
@@ -1141,19 +1057,19 @@ function addSelectedFavoriteToList(listId) {
 
   const lists = getLists();
   const target = lists.find(l => l.id === listId);
-  if (!target) {
-    alert("Liste introuvable.");
-    return;
+  if (!target) { alert("Liste introuvable."); return;
   }
-
+  target.items = Array.isArray(target.items) ? target.items : [];
+  
   // évite les doublons sur la base de id + title
+  
+  const pKey = (product.id || product.slug || product.name || '') + '|' + (product.size || '');
   const exists = (target.items || []).some(it => it.id === product.id && it.title === product.title);
   if (!exists) {
-    target.items = Array.isArray(target.items) ? target.items : [];
-    target.items.push({
-      ...product,
-      addedAt: new Date().toISOString()
+    target.items.push({...product, addedAt: new Date().toISOString()
     });
+    saveLists(lists);
+    }
     localStorage.setItem(LS_LISTS_KEY, JSON.stringify(lists));
   }
 
@@ -1166,6 +1082,7 @@ function addSelectedFavoriteToList(listId) {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeListeDropdown();
 });
+  document.addEventListener('DOMContentLoaded', ensureListsSeed);
 </script>
 </body>
 </html>
