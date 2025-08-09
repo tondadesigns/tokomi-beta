@@ -512,11 +512,14 @@ html, body {
 }
 
 .liste-close {
+  position: absolute;
+  right: 16px;                  /* colle à droite */
+  top: 50%;                     /* centre verticalement */
+  transform: translateY(-50%);  /* ajuste le centrage vertical */
   border: none;
   background: none;
   font-size: 12px;
   font-weight: 300;
-  color: black;
   cursor: pointer;
 }
 
