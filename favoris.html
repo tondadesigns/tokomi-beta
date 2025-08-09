@@ -496,11 +496,10 @@ html, body {
 }
 
     .liste-header {
-  display: flex;
-  justify-content: space-between; /* Titre à gauche, bouton à droite */
-  align-items: center;
+  position: relative;          /* nécessaire pour positionner le bouton */
+  text-align: center;           /* centre le texte */
   margin-bottom: 20px;
-  padding: 0 16px; /* espace horizontal */
+  padding: 0 16px;
   color: grey;
 }
 
@@ -517,6 +516,7 @@ html, body {
   background: none;
   font-size: 12px;
   font-weight: 300;
+  color: black;
   cursor: pointer;
 }
 
