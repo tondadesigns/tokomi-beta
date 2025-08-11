@@ -458,7 +458,7 @@
   <div class="menu-wrapper">
     <span id="menuToggle" class="menu-icon" onclick="toggleContextMenu(event)">PLUS</span>
     <div class="context-menu" id="menu">
-  <div onclick="toggleForm()">CRÉER UNE NOUVELLE LISTE</div>
+  <div onclick="openCreateListModal(event)">CRÉER UNE NOUVELLE LISTE</div>
   <div onclick="enterListSelectionMode()">SÉLECTIONNER</div>
   
   </div>
@@ -530,12 +530,7 @@ function saveLists(lists) {
     const emptyMessage = document.getElementById('emptyMessage');
     
     const listNameInput = document.getElementById('listName');
-    const albumPage = document.getElementById('albumPage');
-    const albumTitle = document.getElementById('albumTitle');
-    const albumContent = document.getElementById('albumContent');
-    const addItemForm = document.getElementById('addItemForm');
-    
-    let currentAlbum = null;
+
 
 
 function toggleContextMenu(e) {
@@ -545,24 +540,29 @@ function toggleContextMenu(e) {
 }
 
 
-    function toggleForm() {
-      
-      const modal = document.getElementById('createListModal');
-      modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
-       
-    }
-
-    function closeCreateListModal() {
-       document.getElementById('createListModal').style.display = 'none';
+    function openCreateListModal(ev) {
+  if (ev) ev.preventDefault();
+  const m = document.getElementById('createListModal');
+  m.classList.add('show');
+  m.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('listName')?.focus(), 0);
 }
 
-// Fermer le modal quand on clique en dehors de son contenu
-window.addEventListener('click', function(event) {
-  const modal = document.getElementById('createListModal');
-  if (event.target === modal) {
-    closeCreateListModal();
-  }
+function closeCreateListModal() {
+  const m = document.getElementById('createListModal');
+  m.classList.remove('show');
+  m.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('createListModal')?.addEventListener('click', (e) => {
+  if (e.target.id === 'createListModal') closeCreateListModal();
 });
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeCreateListModal();
+});
+
 
     document.addEventListener('click', function (e) {
   const menu = document.getElementById('menu');
@@ -938,7 +938,7 @@ function deleteSelectedLists() {
   container.innerHTML = '';
 
   lists.forEach(list => {
-    const count = (list.items && Array.isArray(list.items)) ? list.items.length : 0;
+    const count = Array.isArray(list.items)) ? list.items.length : 0;
 
     const card = document.createElement('a');
     card.className = 'list-card';
@@ -950,7 +950,11 @@ function deleteSelectedLists() {
     container.appendChild(card);
   });
 }
-
+document.addEventListener('DOMContentLoaded', () => {
+  renderLists();
+  updateEmptyMessage();
+  updateListCount();
+});
 document.addEventListener('DOMContentLoaded', renderLists);
   
      window.onload = function () {
