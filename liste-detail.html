@@ -246,11 +246,7 @@
 
   <script>
     
-    const listName = localStorage.getItem('tokomiCurrentList');
-
-    const lists = JSON.parse(localStorage.getItem("tokomiLists") || "[]");
-    const list = lists.find(l => l.title === listName);
-
+    
 const LS_KEY = 'tokomiLists';
 
 function getLists() {
@@ -292,11 +288,13 @@ function renderListDetail() {
               image: src,
               href: `produit-detail.html?id=${encodeURIComponent(listName)}-${idx}`
             }))
-          : [
-              { name: "Article 1", image: "https://via.placeholder.com/100x100?text=1", href: "#" },
-              { name: "Article 2", image: "https://via.placeholder.com/100x100?text=2", href: "#" },
-              { name: "Article 3", image: "https://via.placeholder.com/100x100?text=3", href: "#" }
-            ]
+          : [];
+      
+if (items.length === 0) {
+  document.getElementById("detailCount").textContent = "0 ARTICLE";
+  container.innerHTML = "<p>Aucun article dans cette liste.</p>";
+  return;
+  }
         );
 
   // Rendu (conserve .product-link + .product-thumb pour ton mode sélection)
