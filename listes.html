@@ -525,20 +525,16 @@ function saveLists(lists) {
   localStorage.setItem(LS_KEY, JSON.stringify(lists));
 }
   
-  
     const listContainer = document.getElementById('listContainer');
     const emptyMessage = document.getElementById('emptyMessage');
     
     const listNameInput = document.getElementById('listName');
-
-
 
 function toggleContextMenu(e) {
   e.stopPropagation();
   const menu = document.getElementById('menu');
   menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 }
-
 
     function openCreateListModal(ev) {
   if (ev) ev.preventDefault();
@@ -573,90 +569,30 @@ document.addEventListener('keydown', (e) => {
       if (menu && !menu.contains(e.target) && !document.getElementById('menuToggle').contains(e.target)) {
         menu.style.display = 'none';
       }
-
-  
-  if (modal && modal.classList.contains('show') && !formWrapper.contains(e.target)) {
-    closeCreateListModal();
-  }    
 });
 
-    function createList() {
-      const name = listNameInput.value.trim();
-      if (name === '') return;
-      
-const covers = [
-    "https://via.placeholder.com/300x120?text=1",
-    "https://via.placeholder.com/300x120?text=2",
-    "https://via.placeholder.com/300x120?text=3",
-    "https://via.placeholder.com/300x120?text=4"
-  ];
-      
-      const coversHTML = covers.map(src => `<img src="${src}" />`).join('');
-       const card = document.createElement('div');
-       card.className = 'list-card';
-      card.innerHTML = `
-    <div class="list-covers-grid">
-    ${coversHTML}
-  </div>
-    <div class="list-content">
-      <strong>${name}</strong>
-      <span>0 article</span>
-      </div>
-      
-    <div class="list-select-box">
-  <label class="custom-check-wrapper">
-    <input type="checkbox" class="list-checkbox" />
-    <span class="custom-check"></span>
-  </label>
-</div>
+    function createList() {  const name = listNameInput.value.trim();
+  if (!name) { listNameInput.focus(); return; }
 
+  // 1) Lire l'état, pousser la nouvelle liste dans le schéma {id,title,items:[]}
+  const lists = getLists();
+  const id = Date.now().toString();
+  lists.push({ id, title: name, items: [] });
+  saveLists(lists);
 
-    `;
-      card.addEventListener('click', function (e) {
-  // Ne pas déclencher si on clique directement sur la checkbox elle-même
-  if (e.target.classList.contains('list-checkbox') || e.target.classList.contains('custom-check')) {
-    return;
-  }
+  // 2) UI: reset + fermer la modale
+  listNameInput.value = '';
+  closeCreateListModal();
 
-  if (card.classList.contains('selectable')) {
-    const checkbox = card.querySelector('.list-checkbox');
-    if (checkbox) {
-      checkbox.checked = !checkbox.checked;
-      updateListSelectionUI();
-    }
-  } else {
-    const listTitle = card.querySelector('strong')?.textContent;
-    if (listTitle) {
-      localStorage.setItem('tokomiCurrentList', listTitle);
-      window.location.href = 'liste-detail.html'; // navigation
-    }
-    openAlbum(name); // ou item.title selon le contexte
-  }
-});
+  // 3) Rafraîchir l’affichage et le compteur
+  renderLists();
+  updateListCount();
+  updateEmptyMessage();
 
-      card.querySelector('.list-checkbox').addEventListener('change', updateListSelectionUI);
-      listContainer.appendChild(card);
-      listNameInput.value = '';
-      closeCreateListModal();
-      
-      
-      saveToLocalStorage();
-      updateEmptyMessage();
-      updateListCount();
-      listContainer.scrollIntoView({ behavior: 'smooth' });
-
-        // Redirection ou actualisation de la page si besoin :
-      location.href = 'listes.html'; // ou location.reload();
-    }
-
-      function openAlbum(name) {
-      albumTitle.textContent = name;
-      albumPage.classList.add('active');
-      addItemForm.style.display = 'block';
-      currentAlbum = name;
-      renderAlbumContent(name);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+  // (Optionnel) Feedback
+  alert(`Liste « ${name} » créée.`);
+}
+     
 
 
 function toggleMenu(button) {
@@ -699,49 +635,8 @@ function deleteList(item) {
       emptyMessage.style.display = listContainer.children.length === 0 ? 'block' : 'none';
     }
     // Sauvegarde dans localStorage après création
-    function saveToLocalStorage() {
-      const lists = [];
-      for (const card of listContainer.children) {
-        const title = card.querySelector('strong').textContent;
-        const covers = Array.from(card.querySelectorAll('img')).map(img => img.src);
-        const count = card.querySelector('span').textContent;
-        lists.push({ title, covers, count });
-      }
-      localStorage.setItem('tokomiLists', JSON.stringify(lists));
-    }
+   
 
-function loadFromLocalStorage() {
-      const saved = localStorage.getItem('tokomiLists');
-      if (!saved) return;
-      const lists = JSON.parse(saved);
-      for (const item of lists) {
-        const card = document.createElement('div');
-        card.className = 'list-card';
-        const coversHTML = (item.covers || []).slice(0, 4).map(src => `<img src="${src}" />`).join('');
-
-        card.innerHTML = `
-          <div class="list-covers-grid">
-    ${coversHTML}
-  </div>
-
-          <div class="list-content">
-            <strong>${item.title}</strong>
-            <span>${(item.count || '').toUpperCase()}</span>
-            </div>
-            
-          <div class="list-select-box">
-  <label class="custom-check-wrapper">
-    <input type="checkbox" class="list-checkbox" />
-    <span class="custom-check"></span>
-  </label>
-</div>
-
-`;
-        card.addEventListener('click', function (e) {
-  // Ne pas déclencher si on clique directement sur la checkbox elle-même
-  if (e.target.classList.contains('list-checkbox') || e.target.classList.contains('custom-check')) {
-    return;
-  }
 
   if (card.classList.contains('selectable')) {
     const checkbox = card.querySelector('.list-checkbox');
@@ -755,7 +650,7 @@ function loadFromLocalStorage() {
       localStorage.setItem('tokomiCurrentList', listTitle);
       window.location.href = 'liste-detail.html'; // navigation
     }
-    openAlbum(name); // ou item.title selon le contexte
+     // ou item.title selon le contexte
   }
 });
 
@@ -787,19 +682,7 @@ function updateListSelectionUI() {
 }
 
 // Ces fonctions ciblent la dernière liste (exemple simple à ajuster selon ton besoin)
-function triggerRenameLast() {
-  const lastCard = document.querySelector('.list-card:last-child');
-  if (!lastCard) return alert("Aucune liste à renommer.");
-  const item = lastCard.querySelector('.context-menu div'); // simulate a context click
-  renameList(item);
-}
 
-function triggerDeleteLast() {
-  const lastCard = document.querySelector('.list-card:last-child');
-  if (!lastCard) return alert("Aucune liste à supprimer.");
-  const item = lastCard.querySelector('.context-menu div'); // simulate a context click
-  deleteList(item);
-}
 function enterListSelectionMode() {
   document.getElementById('menu').style.display = 'none';
 
@@ -890,9 +773,6 @@ function exitSelectionMode() {
 }
 }
 
- 
-
-
 
 function renameSelectedList() {
   const checked = document.querySelector('.list-checkbox:checked');
@@ -938,7 +818,7 @@ function deleteSelectedLists() {
   container.innerHTML = '';
 
   lists.forEach(list => {
-    const count = Array.isArray(list.items)) ? list.items.length : 0;
+    const count = Array.isArray(list.items) ? list.items.length : 0;
 
     const card = document.createElement('a');
     card.className = 'list-card';
@@ -955,49 +835,11 @@ document.addEventListener('DOMContentLoaded', () => {
   updateEmptyMessage();
   updateListCount();
 });
-document.addEventListener('DOMContentLoaded', renderLists);
+
   
-     window.onload = function () {
-      loadFromLocalStorage();
-      updateEmptyMessage();
-      updateListCount();
-    }
-function displayLists() {
-  const raw = localStorage.getItem("tokomiLists");
-  if (!raw) return;
-
-  const lists = JSON.parse(raw);
-  const wrapper = document.getElementById("listsWrapper");
-  wrapper.innerHTML = "";
-
-  lists.forEach(list => {
-    const container = document.createElement("div");
-    container.className = "list-container";
-
-    const title = document.createElement("h3");
-    title.textContent = list.title.toUpperCase();
-    container.appendChild(title);
-
-    if (list.products && list.products.length > 0) {
-      list.products.forEach(product => {
-        const p = document.createElement("div");
-        p.className = "product";
-        p.textContent = `${product.brand} – ${product.name} – €${product.price}`;
-        container.appendChild(p);
-      });
-    } else {
-      const empty = document.createElement("div");
-      empty.textContent = "(Aucun article)";
-      empty.style.fontSize = "12px";
-      container.appendChild(empty);
+     
     }
 
-    wrapper.appendChild(container);
-  });
-}
-
-// Exécute au chargement de la page
-window.addEventListener("DOMContentLoaded", displayLists);
 
   </script>
 <div class="selection-actions" id="selectionActions" style="display: none;">
