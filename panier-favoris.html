@@ -1601,6 +1601,7 @@ document.addEventListener("DOMContentLoaded", updateCartCount);
       document.querySelector(`#${productId} .quantity-number`).textContent = quantities[productId];
       calculateTotal();
       updateCheckoutTotal();
+      updateCartTotals();
     }
   }
 
@@ -1634,6 +1635,7 @@ document.addEventListener("DOMContentLoaded", updateCartCount);
     updateCartCount();
     calculateTotal();
     updateCheckoutTotal();
+    updateCartTotals();
   }
 
   
@@ -2231,6 +2233,7 @@ function renderShippingOptionsInContainer() {
     // ✅ Met à jour le prix
     shippingCost = price;
     updateCheckoutTotal();
+    updateCartTotals();
 
     // ✅ Masquer la shipping-page et afficher checkout
     document.getElementById("shipping-page").style.display = "none";
@@ -2369,6 +2372,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCart();      // construit la liste à partir du localStorage
   updateTotal();     // calcule le total
   updateCounts();    // met à jour les compteurs PANIER/FAVORIS
+  updateCartTotals();
 });
 
 // ---- RENDER: construit #cart-items depuis localStorage
@@ -2492,6 +2496,9 @@ function addToFavorites(index) {
   if (!exists) {
     favorites.push(item);
     localStorage.setItem("tokomi_favorites", JSON.stringify(favorites));
+    renderCart();
+  updateTotal();
+  updateCounts();
     updateCartTotals();
   }
 
