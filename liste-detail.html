@@ -223,8 +223,7 @@
   <div class="list-title" id="detailTitle">Titre de la liste</div>
   <div class="list-count" id="detailCount">0 ARTICLE</div>
 
-  <div class="product-grid" id="productGrid">
-  </div>
+<div id="listDetailContainer" class="product-grid"></div>
   
 <div class="selection-actions" id="selectionActions" style="display: none;">
   <button onclick="supprimerSelection()">SUPPRIMER</button>
@@ -252,38 +251,77 @@
     const lists = JSON.parse(localStorage.getItem("tokomiLists") || "[]");
     const list = lists.find(l => l.title === listName);
 
-   if (list) {
+const LS_KEY = 'tokomiLists';
+
+function getLists() {
+  try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; }
+  catch { return []; }
+}
+
+function renderListDetail() {
+  const container = document.getElementById("listDetailContainer");
+  container.innerHTML = "";
+
+  const lists = getLists();
+
+  // On garde ta logique existante : on identifie la liste par son titre courant
+  const listName = localStorage.getItem('tokomiCurrentList');
+  const list = lists.find(l => l?.title === listName);
+
+  if (!list) {
+    document.getElementById("detailTitle").textContent = "Liste introuvable";
+    document.getElementById("detailCount").textContent = "0 ARTICLE";
+    container.innerHTML = "<p>Aucune donnée pour cette liste.</p>";
+    return;
+  }
+
+  // Titre
   document.getElementById("detailTitle").textContent = list.title;
-  document.getElementById("detailCount").textContent = list.count.toUpperCase();
 
-  const productGrid = document.getElementById("productGrid");
+  // Source des items : d'abord list.items (format recommandé), sinon fallback sur list.covers
+  const items =
+    Array.isArray(list.items) && list.items.length
+      ? list.items.map((it, idx) => ({
+          name: it.name || `Article ${idx + 1}`,
+          image: it.image || "https://via.placeholder.com/100x100?text=?",
+          href: it.href || `produit-detail.html?id=${encodeURIComponent(listName)}-${idx}`
+        }))
+      : (Array.isArray(list.covers) && list.covers.length
+          ? list.covers.map((src, idx) => ({
+              name: `Article ${idx + 1}`,
+              image: src,
+              href: `produit-detail.html?id=${encodeURIComponent(listName)}-${idx}`
+            }))
+          : [
+              { name: "Article 1", image: "https://via.placeholder.com/100x100?text=1", href: "#" },
+              { name: "Article 2", image: "https://via.placeholder.com/100x100?text=2", href: "#" },
+              { name: "Article 3", image: "https://via.placeholder.com/100x100?text=3", href: "#" }
+            ]
+        );
 
-  const imagesToShow = (list.covers && list.covers.length > 0)
-    ? list.covers
-    : [
-        "https://via.placeholder.com/100x100?text=1",
-        "https://via.placeholder.com/100x100?text=2",
-        "https://via.placeholder.com/100x100?text=3"
-      ];
-
-  imagesToShow.forEach((src, index) => {
+  // Rendu (conserve .product-link + .product-thumb pour ton mode sélection)
+  items.forEach((item, index) => {
     const link = document.createElement("a");
-      link.href = `produit-detail.html?id=${encodeURIComponent(listName)}-${index}`;
-      link.className = "product-link";
+    link.href = item.href;
+    link.className = "product-link";
+    link.dataset.index = index; // utile si besoin
 
     const img = document.createElement("img");
-    img.src = src;
-    img.alt = "Produit";
+    img.src = item.image;
+    img.alt = item.name || "Produit";
     img.className = "product-thumb";
-    
-    link.appendChild(img);
-    productGrid.appendChild(link);
-  });
-document.getElementById("detailCount").textContent = `${imagesToShow.length} ARTICLE${imagesToShow.length > 1 ? 'S' : ''}`;
 
-} else {
-  console.warn("Liste introuvable.");
+    link.appendChild(img);
+    container.appendChild(link);
+  });
+
+  // Compteur
+  document.getElementById("detailCount").textContent =
+    `${items.length} ARTICLE${items.length > 1 ? 'S' : ''}`;
 }
+
+// Lancer le rendu au chargement
+document.addEventListener("DOMContentLoaded", renderListDetail);
 
     function toggleMenu() {
       const menu = document.getElementById("contextMenu");
