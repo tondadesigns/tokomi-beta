@@ -448,19 +448,33 @@ function updateSelectionCount() {
   function supprimerSelection() {
   const selected = document.querySelectorAll('.product-link.selected');
   if (selected.length === 0) return;
-
+  
+  const currentListName = localStorage.getItem('tokomiCurrentList');
+  const all = getLists();
+  const idx = all.findIndex(l => l?.title === currentListName);
+  if (idx === -1) return;
+  
   showConfirmationModal(
     `Supprimer de ${listName.toUpperCase()} ?`,
   () => {
-    selected.forEach(link => link.remove());
-    // 2. Mettre à jour la liste des couvertures dans localStorage
-      const index = lists.findIndex(l => l.title === listName);
-      if (index !== -1) {
-        const currentImages = Array.from(document.querySelectorAll('.product-link img')).map(img => img.src);
-        lists[index].covers = currentImages;
-        lists[index].count = currentImages.length + " article" + (currentImages.length > 1 ? "s" : "");
-        localStorage.setItem("tokomiLists", JSON.stringify(lists));
+ const links = Array.from(document.querySelectorAll('.product-link'));
+      const removeIdx = Array.from(selected)
+        .map(el => links.indexOf(el))
+        .filter(i => i > -1)
+        .sort((a,b) => b - a);
+
+      if (Array.isArray(all[idx].items) && all[idx].items.length) {
+        removeIdx.forEach(i => all[idx].items.splice(i, 1));
+      } else if (Array.isArray(all[idx].covers) && all[idx].covers.length) {
+        removeIdx.forEach(i => all[idx].covers.splice(i, 1));
       }
+
+      localStorage.setItem(LS_KEY, JSON.stringify(all));
+      renderListDetail();
+      annulerSelection();
+    }
+  );
+}
     // Mise à jour du compteur
     const total = document.querySelectorAll('.product-link').length;
     document.getElementById("detailCount").textContent = `${total} ARTICLE${total > 1 ? 'S' : ''}`;
