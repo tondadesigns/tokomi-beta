@@ -116,7 +116,7 @@
 
   </div>
 
-  <p id="checkout-date"></p>
+  <p id="checkout-date">Mardi 12 aout</p>
   <p id="checkout-article-count">ARTICLES DANS LE PANIER : 3</p>
 
   <div class="carousel" id="checkout-carousel">
@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         console.error("❌ Élément introuvable : shipping-summary ou selected-shipping.");
       }
-   }
+   
 
   const count = parseInt(localStorage.getItem('tokomi_cart_count')) || 0;
   const products = JSON.parse(localStorage.getItem('tokomi_cart_products')) || [];
