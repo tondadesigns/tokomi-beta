@@ -1571,13 +1571,19 @@ function finalizeOrder() {// Affiche l'animatique de chargement
     }
   }
 
-  function updateCartCount() {
-  // Sélectionne tous les produits dans le panier
-  const cartItems = document.querySelectorAll(".cart-item"); // adapte la classe à ton HTML
-  const count = cartItems.length;
+  // ---- COMPTEURS
+function updateCartTotals() {
+  const cart = JSON.parse(localStorage.getItem('tokomi_cart_items')) || [];
 
-  // Sauvegarde le nombre d'articles
-  localStorage.setItem("tokomi_cart_count", count);
+  let totalCount = 0; // somme des quantités
+  cart.forEach(item => { totalCount += item.quantity || 1; });
+
+  // stocke pour checkout.html
+  localStorage.setItem('tokomi_cart_count', totalCount);
+
+  // (optionnel) afficher localement si tu as un compteur
+  const checkoutCountEl = document.getElementById('checkout-count');
+  if (checkoutCountEl) checkoutCountEl.textContent = totalCount;
 }
 
 // Mets à jour au chargement
@@ -2443,6 +2449,7 @@ function increaseQty(index) {
 
   updateTotal();
   updateCounts();
+  updateCartTotals();
 }
 
 function decreaseQty(index) {
@@ -2456,6 +2463,7 @@ function decreaseQty(index) {
 
   updateTotal();
   updateCounts();
+  updateCartTotals();
 }
 
 function removeItem(index) {
@@ -2468,6 +2476,7 @@ function removeItem(index) {
   renderCart();
   updateTotal();
   updateCounts();
+  updateCartTotals();
 }
 
 function addToFavorites(index) {
@@ -2483,6 +2492,7 @@ function addToFavorites(index) {
   if (!exists) {
     favorites.push(item);
     localStorage.setItem("tokomi_favorites", JSON.stringify(favorites));
+    updateCartTotals();
   }
 
   // Retire du panier
@@ -2500,6 +2510,7 @@ function addToFavorites(index) {
   renderCart();
   updateTotal();
   updateCounts();
+  updateCartTotals();
 }
 </script>
 
