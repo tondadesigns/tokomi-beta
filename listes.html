@@ -481,7 +481,6 @@
     <input type="checkbox" />
     <span class="custom-check"></span>
   </label>
-</div>
 
   <p id="emptyMessage" class="empty-message"></p>
 
@@ -602,7 +601,7 @@ function toggleMenu(button) {
 }
 function renameList(item) {
   const card = item.closest('.list-card');
-  const oldTitle = card.querySelector('strong').textContent;
+  const oldTitle = card.querySelector('.list-card-title').textContent;
   const newTitle = prompt("Nouveau nom de la liste :", oldTitle);
   if (!newTitle || newTitle === oldTitle) return;
   card.querySelector('strong').textContent = newTitle;
@@ -636,28 +635,6 @@ function deleteList(item) {
     }
     // Sauvegarde dans localStorage après création
    
-
-
-  if (card.classList.contains('selectable')) {
-    const checkbox = card.querySelector('.list-checkbox');
-    if (checkbox) {
-      checkbox.checked = !checkbox.checked;
-      updateListSelectionUI();
-    }
-  } else {
-    const listTitle = card.querySelector('strong')?.textContent;
-    if (listTitle) {
-      localStorage.setItem('tokomiCurrentList', listTitle);
-      window.location.href = 'liste-detail.html'; // navigation
-    }
-     // ou item.title selon le contexte
-  }
-});
-
-        card.querySelector('.list-checkbox').addEventListener('change', updateListSelectionUI);
-        listContainer.appendChild(card);
-      }
-    }
 
 function updateListCount() {
   const count = document.getElementById('listContainer').children.length;
@@ -779,12 +756,16 @@ function renameSelectedList() {
   if (!checked) return;
 
   const card = checked.closest('.list-card');
-  const titleElement = card.querySelector('strong');
+  const titleElement = card.querySelector('.list-card-title');
   const oldTitle = titleElement.textContent;
   const newTitle = prompt("Nouveau nom de la liste :", oldTitle);
   if (newTitle && newTitle !== oldTitle) {
     titleElement.textContent = newTitle;
-    saveToLocalStorage();
+     const lists = getLists();
+  const a = lists.find(l => (l.title||'').toUpperCase() === oldTitle.toUpperCase());
+  if (a) a.title = newTitle;
+  saveLists(lists);
+
   }
 
   updateListSelectionUI();
@@ -835,11 +816,6 @@ document.addEventListener('DOMContentLoaded', () => {
   updateEmptyMessage();
   updateListCount();
 });
-
-  
-     
-    }
-
 
   </script>
 <div class="selection-actions" id="selectionActions" style="display: none;">
