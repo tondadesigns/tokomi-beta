@@ -188,7 +188,7 @@
 
 /* Petit check animé */
 .product-link::after {
-  
+  content: "✓";
   position: absolute;
   top: 6px;
   right: 8px;
@@ -288,14 +288,8 @@ function renderListDetail() {
               image: src,
               href: `produit-detail.html?id=${encodeURIComponent(listName)}-${idx}`
             }))
-          : [];
+          : []);
       
-if (items.length === 0) {
-  document.getElementById("detailCount").textContent = "0 ARTICLE";
-  container.innerHTML = "<p>Aucun article dans cette liste.</p>";
-  return;
-  }
-        );
 
   // Rendu (conserve .product-link + .product-thumb pour ton mode sélection)
   items.forEach((item, index) => {
@@ -411,6 +405,8 @@ function updateSelectionCount() {
 }
 
     function supprimer() {
+      const currentListName = localStorage.getItem('tokomiCurrentList');
+      const all = getLists();
       showConfirmationModal(`Supprimer de ${listName} ?`, () => {
         const updated = lists.filter(l => l.title !== listName);
         localStorage.setItem("tokomiLists", JSON.stringify(updated));
@@ -472,9 +468,7 @@ function updateSelectionCount() {
       localStorage.setItem(LS_KEY, JSON.stringify(all));
       renderListDetail();
       annulerSelection();
-    }
-  );
-}
+   
     // Mise à jour du compteur
     const total = document.querySelectorAll('.product-link').length;
     document.getElementById("detailCount").textContent = `${total} ARTICLE${total > 1 ? 'S' : ''}`;
