@@ -601,17 +601,15 @@ function toggleMenu(button) {
 }
 function renameList(item) {
   const card = item.closest('.list-card');
-  const oldTitle = card.querySelector('.list-card-title').textContent;
+  const titleEl = card.querySelector('.list-card-title');
+  const oldTitle = titleEl.textContent;
   const newTitle = prompt("Nouveau nom de la liste :", oldTitle);
   if (!newTitle || newTitle === oldTitle) return;
-  card.querySelector('strong').textContent = newTitle;
-  const lists = JSON.parse(localStorage.getItem('tokomiLists') || '[]');
-  const updated = lists.map(entry => entry.title === oldTitle ? { ...entry, title: newTitle } : entry);
-  localStorage.setItem('tokomiLists', JSON.stringify(updated));
-  const albumItems = JSON.parse(localStorage.getItem('tokomiAlbumItems') || '{}');
-  albumItems[newTitle] = albumItems[oldTitle];
-  delete albumItems[oldTitle];
-  localStorage.setItem('tokomiAlbumItems', JSON.stringify(albumItems));
+  titleEl.textContent = newTitle;
+  const lists = getLists();
+  const a = lists.find(l => (l.title||'').toUpperCase() === oldTitle.toUpperCase());
+  if (a) a.title = newTitle;
+  saveLists(lists);
 }
 
 function deleteList(item) {
