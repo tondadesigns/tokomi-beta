@@ -446,11 +446,25 @@
 .modal-close:hover {
   color: black;
 }
+    .list-card {
+  border: 1px solid black;
+  background-color: white;
+  width: 100%;
+  height: 160px; /* hauteur réduite */
+  display: block;
+}
+
+    .list-container {
+  padding: 0 16px 80px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 colonnes */
+  gap: 12px;
+}
 .list-wrapper {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  max-width: 268px;
+  max-width: 160px;
 }
 
 .list-info {
@@ -839,7 +853,7 @@ function deleteSelectedLists() {
     `;
     wrapper.appendChild(card);
     wrapper.appendChild(info);
-    container.appendChild(card);
+    container.appendChild(wrapper);
   });
 }
 document.addEventListener('DOMContentLoaded', () => {
