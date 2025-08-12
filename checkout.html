@@ -192,6 +192,23 @@
   
   
 document.addEventListener("DOMContentLoaded", function () {
+  
+  const checkoutDateElem = document.getElementById("checkout-date");
+
+  // Jours et mois en français
+  const jours = ["DIMANCHE", "LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI"];
+  const mois = ["JANVIER", "FÉVRIER", "MARS", "AVRIL", "MAI", "JUIN", "JUILLET", "AOÛT", "SEPTEMBRE", "OCTOBRE", "NOVEMBRE", "DÉCEMBRE"];
+
+  const aujourdHui = new Date();
+  const jourSemaine = jours[aujourdHui.getDay()];
+  const jour = aujourdHui.getDate();
+  const moisNom = mois[aujourdHui.getMonth()];
+
+  // Mise à jour du texte
+  checkoutDateElem.textContent = `${jourSemaine} ${jour} ${moisNom}`;
+  });
+  
+  
     // Adresse
     const address = localStorage.getItem("tokomi_address");
     if (address) {
