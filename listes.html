@@ -446,6 +446,29 @@
 .modal-close:hover {
   color: black;
 }
+.list-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 268px;
+}
+
+.list-info {
+  margin-top: 6px;
+  padding-left: 4px; /* un peu à droite comme tu voulais */
+}
+
+.list-card-title {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.list-card-count {
+  font-size: 11px;
+  font-weight: 300;
+  color: #777;
+}
 
   </style>
 </head>
@@ -797,14 +820,25 @@ function deleteSelectedLists() {
 
   lists.forEach(list => {
     const count = Array.isArray(list.items) ? list.items.length : 0;
-
+    const wrapper = document.createElement('div');
+    wrapper.className = 'list-wrapper';
     const card = document.createElement('a');
     card.className = 'list-card';
     card.href = `listes-detail.html?id=${encodeURIComponent(list.id)}`;
     card.innerHTML = `
+    <div class="list-covers-grid">
+        <!-- Ici tu peux mettre des <img> ou un placeholder -->
+      </div>
+      `;
+
+    const info = document.createElement('div');
+    info.className = 'list-info';
+    info.innerHTML = `
       <div class="list-card-title">${(list.title||'SANS NOM').toUpperCase()}</div>
       <div class="list-card-count">${count} article${count>1?'s':''}</div>
     `;
+    wrapper.appendChild(card);
+    wrapper.appendChild(info);
     container.appendChild(card);
   });
 }
