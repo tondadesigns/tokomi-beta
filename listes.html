@@ -557,6 +557,33 @@ function getLists() {
   catch { return []; }
 }
 
+// Quand on clique sur une liste
+function openListDetail(listId) {
+  localStorage.setItem("tokomiSelectedListId", listId);
+  window.location.href = "liste-detail.html";
+}
+
+// Afficher les listes
+function renderLists() {
+  const container = document.getElementById("listContainer");
+  const lists = getLists();
+  container.innerHTML = "";
+
+  lists.forEach(list => {
+    const div = document.createElement("div");
+    div.className = "list-card";
+    div.innerHTML = `
+      <h3>${list.title}</h3>
+      <p>${list.items?.length || 0} articles</p>
+    `;
+    div.onclick = () => openListDetail(list.id);
+    container.appendChild(div);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", renderLists);
+
+
 function saveLists(lists) {
   localStorage.setItem(LS_KEY, JSON.stringify(lists));
 }
