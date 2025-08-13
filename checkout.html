@@ -308,7 +308,30 @@ document.addEventListener('visibilitychange', () => {
 });
 
 });
+function finalizeOrder() {
+  // Affiche l'écran de chargement
+  const loader = document.getElementById("loading-screen");
+  if (loader) loader.style.display = "flex";
+
+  // Optionnel : un petit délai pour simuler un traitement avant la redirection
+  setTimeout(() => {
+    window.location.href = "confirmation.html";
+  }, 1500); // 1.5 secondes
+}
+
 </script>
-  
+<div id="loading-screen" style="
+    position: fixed;
+    inset: 0;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: white;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  ">
+    <img src="./tokomi-loader.gif" alt="Chargement..." style="width: 120px; height: auto; animation: spin 2s linear infinite;" />
+  </div>
 </body>
 </html>
