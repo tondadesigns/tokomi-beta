@@ -20,7 +20,7 @@
       margin-bottom: 62px;
     }
     .section {
-      margin-bottom: 24px;
+      margin-bottom: 30px;
       
     }
     .label {
@@ -35,17 +35,24 @@
       text-transform: none;
       margin-bottom: 18px;
     }
+    .section:nth-of-type(2) .value {
+  margin-bottom: 40px; /* après date estimée */
+}
+.section:nth-of-type(3) .value {
+  margin-bottom: 40px; /* après adresse livraison */
+}
+
     .summary {
       display: flex;
       justify-content: space-between;
       margin-bottom: 8px;
-      font-size: 22px;
+      font-size: 26px;
       font-weight: 300;
     }
     .total {
       border-top: 1px solid #ddd;
       padding-top: 8px;
-      font-size: 26px;
+      font-size: 30px;
       font-weight: 600;
     }
   </style>
