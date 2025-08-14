@@ -75,30 +75,19 @@
   </div>
   <div class="section">
     <div class="label">RÉSUMÉ</div>
-    <div class="summary"><span>SOUS-TOTAL</span><span>€1440.00</span></div>
-    <div class="summary"><span>EXPÉDITION</span><span>€9.00</span></div>
-    <div class="summary total"><span>TOTAL</span><span>€1449.00</span></div>
+    <div class="summary"><span>SOUS-TOTAL</span><span id="subtotal">€0.00</span></div>
+    <div class="summary"><span>EXPÉDITION</span><span id="shipping-fee">€0.00</span></div>
+    <div class="summary total"><span>TOTAL</span><span id="total">€0.00</span></div>
   </div>
 
 
   <script>
   document.getElementById("order-number").textContent = localStorage.getItem('tokomi_order_number') || "#000000";
-  document.getElementById("estimated-date").textContent = localStorage.getItem('tokomi_estimated_date') || "DATE NON DISPONIBLE";
   document.getElementById("confirmation-address").textContent = localStorage.getItem('tokomi_summary_address') || "Non fournie";
-  document.getElementById("subtotal").textContent = `€${localStorage.getItem('tokomi_subtotal') || '0'}`;
-  document.getElementById("shipping-fee").textContent = `€${localStorage.getItem('tokomi_shipping') || '0'}`;
-  document.getElementById("total").textContent = `€${localStorage.getItem('tokomi_total') || '0'}`;
 
-  const estimated = localStorage.getItem('tokomi_estimated_date') || "PROCHAINE LIVRAISON";
-  document.getElementById('estimated-date').textContent = estimated;
 
 </script>
-<script>
-  window.addEventListener("DOMContentLoaded", () => {
-    const date = localStorage.getItem('tokomi_estimated_date') || "PROCHAINE LIVRAISON";
-    document.getElementById('estimated-date').textContent = date;
-  });
-</script>
+
 
 <script>
 
@@ -107,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const price = localStorage.getItem("tokomi_shipping_price") || "€0.00";
   const total = localStorage.getItem("tokomi_total") || "€0.00";
 
-  document.getElementById("estimated-date").textContent = date;
+
   document.querySelector(".summary:nth-of-type(1) span:last-child").textContent = localStorage.getItem("tokomi_cart_total") || "€0.00";
   document.querySelector(".summary:nth-of-type(2) span:last-child").textContent = price;
   document.querySelector(".summary.total span:last-child").textContent = `€${total}`;
@@ -124,6 +113,91 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // ---------- Helpers ----------
+  const money = n => `€${(+n || 0).toFixed(2)}`;
+  const parsePrice = (s) => {
+    if (!s) return 0;
+    const m = String(s).match(/([0-9]+[.,]?[0-9]*)/);
+    return m ? parseFloat(m[1].replace(',', '.')) : 0;
+  };
+
+  // ---------- 1) ARRIVÉE ESTIMÉE (estimated-date) ----------
+  // Priorités : tokomi_shipping_date > selectedShipping (garde la partie date) > tokomi_shipping_option
+  let dateText =
+    localStorage.getItem("tokomi_shipping_date")
+    || null;
+
+  if (!dateText) {
+    const selectedShipping = localStorage.getItem("selectedShipping"); // ex: "LUNDI 16 JUIN – €9,90" ou "LUNDI 16 JUIN - €9,90"
+    if (selectedShipping) {
+      dateText = selectedShipping.split(/–|-/)[0].trim().toUpperCase();
+    }
+  }
+  if (!dateText) {
+    const opt = localStorage.getItem("tokomi_shipping_option"); // ex: "STANDARD 7-10 JOURS – €9.90"
+    if (opt) {
+      dateText = opt.split(/–|-/)[0].trim().toUpperCase();
+    }
+  }
+  if (!dateText) dateText = "À CONFIRMER";
+
+  const elDate = document.getElementById("estimated-date");
+  if (elDate) elDate.textContent = dateText;
+
+  // ---------- 2) ADRESSE ----------
+  const addr = localStorage.getItem("tokomi_summary_address")
+           || localStorage.getItem("tokomi_address")
+           || "Adresse non disponible";
+  const elAddr = document.getElementById("confirmation-address");
+  if (elAddr) elAddr.textContent = addr;
+
+  // ---------- 3) PRIX EXPÉDITION ----------
+  // Priorités : tokomi_shipping_price > extrait de selectedShipping > extrait de tokomi_shipping_option
+  let shipPrice = localStorage.getItem("tokomi_shipping_price");
+  let shippingNum = parsePrice(shipPrice);
+
+  if (!shippingNum) {
+    const selectedShipping = localStorage.getItem("selectedShipping");
+    if (selectedShipping) shippingNum = parsePrice(selectedShipping);
+  }
+  if (!shippingNum) {
+    const shipOpt = localStorage.getItem("tokomi_shipping_option");
+    if (shipOpt) shippingNum = parsePrice(shipOpt);
+  }
+
+  // ---------- 4) SOUS-TOTAL ----------
+  // Priorités : tokomi_subtotal (persisté depuis panier) > recalcul depuis tokomi_cart_items
+  let subtotal = parseFloat(localStorage.getItem("tokomi_subtotal"));
+  if (isNaN(subtotal)) {
+    const items = JSON.parse(localStorage.getItem("tokomi_cart_items") || "[]");
+    subtotal = items.reduce((sum, it) => {
+      const q = it.quantity || 1;
+      const p = parseFloat(it.price) || 0;
+      return sum + q * p;
+    }, 0);
+  }
+
+  // ---------- 5) TOTAL ----------
+  // Priorités : tokomi_total (s’il a été persisté) sinon subtotal + expédition
+  let total = parseFloat(localStorage.getItem("tokomi_total"));
+  if (isNaN(total)) total = subtotal + (shippingNum || 0);
+
+  // ---------- 6) Rendu montants ----------
+  const elSub = document.getElementById("subtotal");
+  const elShip = document.getElementById("shipping-fee");
+  const elTot = document.getElementById("total");
+  if (elSub) elSub.textContent = money(subtotal);
+  if (elShip) elShip.textContent = money(shippingNum);
+  if (elTot) elTot.textContent = money(total);
+
+  // ---------- 7) (Optionnel) N° commande si stocké ----------
+  const orderEl = document.getElementById("order-number");
+  const orderNo = localStorage.getItem('tokomi_order_number');
+  if (orderEl && orderNo) orderEl.textContent = orderNo.toUpperCase();
+});
 </script>
 
 
