@@ -308,28 +308,54 @@ document.addEventListener('visibilitychange', () => {
 function finalizeOrder() {
   // Affiche l'écran de chargement
   const loader = document.getElementById("loading-screen");
-  if (loader) loader.style.display = "flex";
-
+  if (loader) {
+    loader.style.display = "flex";
+     }
   // Optionnel : un petit délai pour simuler un traitement avant la redirection
   setTimeout(() => {
     window.location.href = "confirmation.html";
-  }, 2000); // 2 secondes
+  }, 4000); // 4 secondes
 }
 
 </script>
+<!-- LOADING SCREEN TOKOMI -->
 <div id="loading-screen" style="
-    position: fixed;
-    inset: 0;
-    width: 100vw; 
-    height: 100vh;
-    background: white;
-    display: none;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: 30vh;
-    z-index: 9999;
+  position: fixed;
+  inset: 0;
+  background: white;
+  display: none;
+  flex-direction: column;
+  z-index: 9999;
+">
+  <!-- Header inspiré de index.html -->
+  <div style="
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+    font-family: 'Space Grotesk', sans-serif;
   ">
-    <img src="./tokomi-loader.gif" alt="Chargement..." style="width: 140px; height: auto; animation: spin 2s linear infinite;" />
+    <div style="font-size: 14px; font-weight: 600; letter-spacing: 0.04em;">TOKOMI</div>
+    <!-- tu peux mettre un icône/menu ici -->
   </div>
+
+  <!-- Loader centré plus haut -->
+  <div style="
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 28vh;
+    font-family: 'Space Grotesk', sans-serif;
+  ">
+    <img id="tokomi-loader" src="./tokomi-loader.gif" alt="Chargement..." style="width: 120px; height: auto;" />
+    <div style="margin-top: 16px; font-size: 12px; font-weight: 300; letter-spacing: 0.06em;">
+      CHARGEMENT…
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
