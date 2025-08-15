@@ -285,6 +285,26 @@ if (totalLabel) totalLabel.textContent = totalLabel.textContent.toUpperCase();
 });
 </script>
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const parsePrice = (s) => {
+    if (!s) return 0;
+    const m = String(s).match(/([0-9]+[.,]?[0-9]*)/);
+    return m ? parseFloat(m[1].replace(',', '.')) : 0;
+  };
+
+  const subtotalEl = document.getElementById('subtotal');
+  const shippingEl = document.getElementById('shipping-fee');
+  const totalEl = document.getElementById('total');
+
+  if (subtotalEl && shippingEl && totalEl) {
+    const subtotal = parsePrice(subtotalEl.textContent);
+    const shipping = parsePrice(shippingEl.textContent);
+    const total = subtotal + shipping;
+    totalEl.textContent = `€${total.toFixed(2)}`;
+  }
+});
+</script>
 
 
 </body>
