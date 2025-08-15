@@ -83,8 +83,6 @@
 
   <script>
   document.getElementById("order-number").textContent = localStorage.getItem('tokomi_order_number') || "#000000";
-  document.getElementById("confirmation-address").textContent = localStorage.getItem('tokomi_summary_address') || "Non fournie";
-
 
 </script>
 
@@ -102,18 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector(".summary.total span:last-child").textContent = `€${total}`;
 });
 </script>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const address = localStorage.getItem("tokomi_summary_address");
-    if (address) {
-      document.getElementById("confirmation-address").innerText = address;
-    } else {
-      document.getElementById("confirmation-address").innerText = "Adresse non disponible";
-    }
-  });
 
-  
-</script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   // ---------- Helpers ----------
@@ -234,6 +221,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // fenêtre (ex: ENTRE LUNDI 12 AOÛT ET JEUDI 15 AOÛT)
     el.textContent = `ENTRE ${fmt(dMin)} ET ${fmt(dMax)}`;
   }
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const raw = localStorage.getItem("tokomi_summary_address");
+  const el  = document.getElementById("confirmation-address");
+  // Affiche joliment les retours à la ligne
+  el.innerHTML = raw ? raw.replace(/\n/g, "<br>") : "Adresse non disponible";
 });
 </script>
 
