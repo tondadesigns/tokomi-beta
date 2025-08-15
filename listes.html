@@ -22,6 +22,17 @@
       align-items: center;
       padding: 16px;
     }
+
+      .btn-retour {
+  margin-top: 39px;
+  margin-left: -6px;
+  font-size: 12px;
+  font-weight: 300;
+  color: black;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
     
     .btn-cancel  {
       position: absolute;
@@ -491,6 +502,7 @@
 
   
 <div class="header">
+  <button class="btn-retour" onclick="window.location.href='profil.html'">RETOUR</button>
   <span id="btnCancel" class="btn-cancel" onclick="exitSelectionMode()" style="display: none;">ANNULER</span>
   <div class="menu-wrapper">
     <span id="menuToggle" class="menu-icon" onclick="toggleContextMenu(event)">PLUS</span>
