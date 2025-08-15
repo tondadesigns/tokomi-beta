@@ -278,6 +278,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.summary span:first-child').forEach(el => {
     el.textContent = sentenceCase(el.textContent);
   });
+  // Forcer TOTAL en majuscule
+const totalLabel = document.querySelector('.summary.total span:first-child');
+if (totalLabel) totalLabel.textContent = totalLabel.textContent.toUpperCase();
+
 });
 </script>
 
