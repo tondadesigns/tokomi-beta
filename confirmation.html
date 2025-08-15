@@ -305,6 +305,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const orderNum = localStorage.getItem('tokomi_order_number') || "#000000";
+  const el = document.querySelector('.section .value');
+  if (el) el.textContent = orderNum;
+});
+</script>
+
 
 
 </body>
