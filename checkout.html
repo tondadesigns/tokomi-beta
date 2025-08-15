@@ -189,6 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const summary = document.getElementById("address-summary");
       if (display) display.textContent = address;
       if (summary) summary.style.display = "block";
+      localStorage.setItem("tokomi_summary_address", address);
     }
 
     // Paiement
