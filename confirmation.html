@@ -113,13 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-  // ---------- 2) ADRESSE ----------
-  const addr = localStorage.getItem("tokomi_summary_address")
-           || localStorage.getItem("tokomi_address")
-           || "Adresse non disponible";
-  const elAddr = document.getElementById("confirmation-address");
-  if (elAddr) elAddr.textContent = addr;
-
   // ---------- 3) PRIX EXPÉDITION ----------
   // Priorités : tokomi_shipping_price > extrait de selectedShipping > extrait de tokomi_shipping_option
   let shipPrice = localStorage.getItem("tokomi_shipping_price");
@@ -225,12 +218,22 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const raw = localStorage.getItem("tokomi_summary_address");
-  const el  = document.getElementById("confirmation-address");
+  // Prend d'abord l'adresse "summary", sinon l'adresse simple, sinon fallback
+  const raw =
+    localStorage.getItem("tokomi_summary_address") ||
+    localStorage.getItem("tokomi_address") ||
+    "";
+
+  const el = document.getElementById("confirmation-address");
+  if (!el) return;
+
   // Affiche joliment les retours à la ligne
-  el.innerHTML = raw ? raw.replace(/\n/g, "<br>") : "Adresse non disponible";
+  el.innerHTML = raw
+    ? raw.replace(/\n/g, "<br>")
+    : "Adresse non disponible";
 });
 </script>
+
 
 
 </body>
