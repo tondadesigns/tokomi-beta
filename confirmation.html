@@ -59,12 +59,22 @@
       font-weight: 600;
       text-transform: uppercase;
     }
-    #estimated-date {
-    text-transform: none !important;
-  }
-    .summary span:first-child {
-  text-transform: none;
+    /* estimated-date en minuscules + 1ère lettre en majuscule */
+#estimated-date { 
+  text-transform: lowercase !important; 
 }
+#estimated-date::first-letter { 
+  text-transform: uppercase; 
+}
+
+/* Libellés de gauche "SOUS-TOTAL" / "EXPÉDITION" → phrase case */
+.summary span:first-child {
+  text-transform: lowercase !important;
+}
+.summary span:first-child::first-letter {
+  text-transform: uppercase;
+}
+
   </style>
 </head>
 <body>
@@ -91,6 +101,13 @@
     <div class="summary"><span>EXPÉDITION</span><span id="shipping-fee">€0.00</span></div>
     <div class="summary total"><span>TOTAL</span><span id="total">€0.00</span></div>
   </div>
+<!-- Bouton retour -->
+<div style="text-align: center; margin-top: 30px;">
+  <button onclick="window.location.href='accueil.html'" 
+          style="padding: 12px 24px; font-size: 16px; background: black; color: white; border: none; border-radius: 6px; cursor: pointer;">
+    RETOUR À L'ACCUEIL
+  </button>
+</div>
 
 
   <script>
@@ -243,6 +260,24 @@ document.addEventListener("DOMContentLoaded", () => {
   el.innerHTML = raw
     ? raw.replace(/\n/g, "<br>")
     : "Adresse non disponible";
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const sentenceCase = s => {
+    if (!s) return '';
+    s = s.toLowerCase();
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  };
+
+  // estimated-date → phrase case
+  const ed = document.getElementById('estimated-date');
+  if (ed) ed.textContent = sentenceCase(ed.textContent);
+
+  // Libellés des lignes de résumé (1er <span>)
+  document.querySelectorAll('.summary span:first-child').forEach(el => {
+    el.textContent = sentenceCase(el.textContent);
+  });
 });
 </script>
 
