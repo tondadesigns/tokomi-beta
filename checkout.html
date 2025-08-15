@@ -118,7 +118,7 @@
   </div>
 
   <p id="checkout-date"></p>
-  <p id="checkout-article-count">ARTICLES DANS LE PANIER : 3</p>
+  <p id="checkout-article-count">ARTICLES DANS LE PANIER : </p>
 
   <div class="carousel" id="checkout-carousel">
     <div></div><div></div><div></div>
@@ -282,6 +282,7 @@ function renderCheckoutFromLS() {
     const mois  = ["JANVIER","FÉVRIER","MARS","AVRIL","MAI","JUIN","JUILLET","AOÛT","SEPTEMBRE","OCTOBRE","NOVEMBRE","DÉCEMBRE"];
     const d = new Date();
     checkoutDateElem.textContent = `${jours[d.getDay()]} ${d.getDate()} ${mois[d.getMonth()]}`;
+    localStorage.setItem("tokomi_checkout_date_iso", d.toISOString().slice(0,10));
   }
 }
 
