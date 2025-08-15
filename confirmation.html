@@ -58,11 +58,12 @@
       font-size: 30px;
       font-weight: 600;
     }
-    #estimated-date,
-  #subtotal,
-  #shipping-fee {
-    text-transform: none;
+    #estimated-date {
+    text-transform: none !important;
   }
+    .summary span:first-child {
+  text-transform: lowercase;
+}
   </style>
 </head>
 <body>
@@ -73,7 +74,7 @@
   <div class="section">
     <div class="label">COMMANDE</div>
     <div class="value">#000000</div>
-    <div class="value" style: margin-bottom: 10px;>Vous recevrez un numéro de suivi dès que votre commande aura été expédiée.</div>
+    <div class="value" style= "margin-bottom: 10px";>Vous recevrez un numéro de suivi dès que votre commande aura été expédiée.</div>
   </div>
   <div class="section">
     <div class="label">ARRIVÉE ESTIMÉE</div>
