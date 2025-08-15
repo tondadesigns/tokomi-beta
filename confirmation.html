@@ -124,28 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return m ? parseFloat(m[1].replace(',', '.')) : 0;
   };
 
-  // ---------- 1) ARRIVÉE ESTIMÉE (estimated-date) ----------
-  // Priorités : tokomi_shipping_date > selectedShipping (garde la partie date) > tokomi_shipping_option
-  let dateText =
-    localStorage.getItem("tokomi_shipping_date")
-    || null;
 
-  if (!dateText) {
-    const selectedShipping = localStorage.getItem("selectedShipping"); // ex: "LUNDI 16 JUIN – €9,90" ou "LUNDI 16 JUIN - €9,90"
-    if (selectedShipping) {
-      dateText = selectedShipping.split(/–|-/)[0].trim().toUpperCase();
-    }
-  }
-  if (!dateText) {
-    const opt = localStorage.getItem("tokomi_shipping_option"); // ex: "STANDARD 7-10 JOURS – €9.90"
-    if (opt) {
-      dateText = opt.split(/–|-/)[0].trim().toUpperCase();
-    }
-  }
-  if (!dateText) dateText = "À CONFIRMER";
-
-  const elDate = document.getElementById("estimated-date");
-  if (elDate) elDate.textContent = dateText;
 
   // ---------- 2) ADRESSE ----------
   const addr = localStorage.getItem("tokomi_summary_address")
@@ -197,6 +176,64 @@ document.addEventListener("DOMContentLoaded", () => {
   const orderEl = document.getElementById("order-number");
   const orderNo = localStorage.getItem('tokomi_order_number');
   if (orderEl && orderNo) orderEl.textContent = orderNo.toUpperCase();
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- helpers ---
+  const addDays = (date, n) => {
+    const d = new Date(date);
+    d.setDate(d.getDate() + n);
+    return d;
+  };
+  const fmt = (d) => {
+    const jours = ["DIMANCHE","LUNDI","MARDI","MERCREDI","JEUDI","VENDREDI","SAMEDI"];
+    const mois  = ["JANVIER","FÉVRIER","MARS","AVRIL","MAI","JUIN","JUILLET","AOÛT","SEPTEMBRE","OCTOBRE","NOVEMBRE","DÉCEMBRE"];
+    return `${jours[d.getDay()]} ${d.getDate()} ${mois[d.getMonth()]}`;
+  };
+
+  // --- base date (checkout) ---
+  const iso = localStorage.getItem("tokomi_checkout_date_iso");
+  const base = iso ? new Date(iso) : new Date(); // fallback aujourd'hui si absent
+
+  // --- lire le mode d’expédition choisi ---
+  // ex possibles: "STANDARD 7-10 JOURS – €9,90" | "EXPRESS 3-5 JOURS – €14,90" | "EN 1 JOUR – €24,90"
+  const rawOpt = localStorage.getItem("selectedShipping")
+             || localStorage.getItem("tokomi_shipping_option")
+             || "";
+
+  const opt = rawOpt.toLowerCase();
+
+  // --- déterminer la fenêtre ---
+  let minDays = 0, maxDays = 0;
+  if (opt.includes("standard")) {           // STANDARD 7-10 JOURS
+    minDays = 7; maxDays = 10;
+  } else if (opt.includes("express")) {     // EXPRESS 3-5 JOURS
+    minDays = 3; maxDays = 5;
+  } else if (opt.includes("1 jour") || opt.includes("en 1 jour")) { // EN 1 JOUR
+    minDays = 1; maxDays = 1;
+  } else {
+    // mode inconnu → on garde une info générique
+    const el = document.getElementById("estimated-date");
+    if (el) el.textContent = "À CONFIRMER";
+    return;
+  }
+
+  // --- calcul et rendu ---
+  const dMin = addDays(base, minDays);
+  const dMax = addDays(base, maxDays);
+
+  const el = document.getElementById("estimated-date");
+  if (!el) return;
+
+  if (minDays === maxDays) {
+    // 1 jour
+    el.textContent = fmt(dMin);
+  } else {
+    // fenêtre (ex: ENTRE LUNDI 12 AOÛT ET JEUDI 15 AOÛT)
+    el.textContent = `ENTRE ${fmt(dMin)} ET ${fmt(dMax)}`;
+  }
 });
 </script>
 
