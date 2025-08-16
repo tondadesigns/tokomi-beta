@@ -32,7 +32,7 @@
     }
     .btn-retour {
   position: absolute;
-  left: 10px;
+  left: 60px;
   top: 54px;
   background: none;
   border: none;
@@ -40,6 +40,13 @@
   font-weight: 300;
   cursor: pointer;
   font-family: 'Space Grotesk', sans-serif;
+}
+    .page-title {
+  font-size: 34px;
+  font-weight: 600;
+  position: relative;
+  top: 60px;   /* décale de 60px vers le bas */
+  text-align: center;
 }
     .membership-image {
       width: calc(100% - 32px);
@@ -196,7 +203,8 @@
 
   <header>
   <button class="btn-retour" onclick="location.href='profil.html'">RETOUR</button>
-  Adhésion</header>
+  <h1 class="page-title"> Adhésion</h1>
+  </header>
 
   <img src="https://via.placeholder.com/800x240" alt="Adhésion" class="membership-image" />
 
