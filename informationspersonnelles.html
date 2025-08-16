@@ -39,16 +39,14 @@ body, body * {
       padding: 20px 40px;
       position: relative;
     }
+    
     #menuToggle { 
-      position: absolute;
-  right: 42px;
-  top: 74px;
-  background: none;
-  border: none;
-  font-size: 28px;
-  font-weight: 300;
-  cursor: pointer;
-  font-family: 'Space Grotesk', sans-serif;
+      background: none;
+      border: none;
+      font-size: 20px;
+      font-weight: 300;
+      cursor: pointer;
+    }
     }
     
     #menuToggle.selection-active {
@@ -56,6 +54,16 @@ body, body * {
   font-weight: 300; /* si tu veux aussi en gras */
 }
 
+h1 {
+      width: 100%;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 500;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
     .menu-icon {
       font-size: 12px;
       cursor: pointer;
@@ -63,13 +71,13 @@ body, body * {
 
     .context-menu {
       position: absolute;
-      top: 40px;
-      right: 16px;
+      top: 60px;
+      right: 40px;
       background: white;
       border: 1px solid #ddd;
       border-radius: none;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      font-size: 11.5px;
+      font-size: 14px;
       display: none;
       z-index: 10;
     }
@@ -86,7 +94,7 @@ body, body * {
     }
     .section {
       margin-left: 18px;
-      margin-top: 162px;
+      margin-top: 40px;
     }
 
     .info-block {
@@ -94,14 +102,14 @@ body, body * {
     }
 
     .info-title {
-      font-size: 10px;
+      font-size: 14px;
       font-weight: 600;
       margin-bottom: 4px;
       color: #555;
     }
 
     .info-value {
-      font-size: 12px;
+      font-size: 16px;
       font-weight: 300;
     }
 
