@@ -170,7 +170,7 @@ h1.page-title {
   <div class="section">
     <div class="info-block" data-key="fullname">
       <div class="info-title">Prénom Nom</div>
-      <div class="info-value" contenteditable="false">Kevin Djamboleka</div>
+      <div class="info-value" id="user-fullname" contenteditable="false">Kevin Djamboleka</div>
     </div>
     <div class="info-block">
       <div class="info-title">Adresse postale</div>
@@ -186,12 +186,12 @@ h1.page-title {
     </div>
     <div class="info-block">
       <div class="info-title">Mot de passe</div>
-      <div class="info-value masked">****</div>
+      <div class="info-value masked" id="user-password" contenteditable="false">****</div>
     </div>
   </div>
 
 <!-- Bouton ENREGISTRER -->
-  <div style="text-align:center; margin: 40px 0;">
+  <div id="saveContainer" style="text-align:center; margin: 40px 0;">
     <button id="saveBtn" style="
       padding: 20px 36px;
       font-size: 20px;
@@ -219,6 +219,8 @@ h1.page-title {
 
   <script>
   const menu = document.getElementById("menu");
+  
+  const saveContainer = document.getElementById("saveContainer"); // <-- AJOUT
 
   function toggleContextMenu(event) {
     event.stopPropagation();
@@ -226,8 +228,7 @@ h1.page-title {
   }
 
   // Fermer le menu si on clique ailleurs
-  window.addEventListener("click", () => {
-    menu.style.display = "none";
+  window.addEventListener("click", () => { menu.style.display = "none";
   });
 
   menu.addEventListener("click", e => e.stopPropagation());
@@ -245,8 +246,9 @@ h1.page-title {
       block.style.fontSize = "24px";
       block.style.fontWeight = "300";
     });
+    saveContainer.style.display = "block";
   }
-
+  
   function exitSelectionMode() {
     const blocks = document.querySelectorAll(".info-block .info-value");
     blocks.forEach(block => {
@@ -261,9 +263,21 @@ h1.page-title {
     document.getElementById("menu").style.display = "none";
 
   }
+  const userData = JSON.parse(localStorage.getItem("signupData")) || {};
+  const full = [userData.prenom, userData.nom].filter(Boolean).join(" ").trim();
+  if (document.getElementById("user-fullname")) {
+    document.getElementById("user-fullname").textContent = full || "x x";
+  }
+  document.getElementById("user-address").textContent = userData.adresse || "x x";
+  document.getElementById("user-email").textContent = userData.email || "x x";
+  document.getElementById("user-phone").textContent = userData.telephone || "x x";
+
   const saveBtn = document.getElementById("saveBtn");
 
   saveBtn.addEventListener("click", () => {
+    
+    const fullname = (document.getElementById("user-fullname").textContent || "").trim();
+    const [prenom = "", nom = ""] = fullname.split(/\s+/, 2);
     const updatedData = {
       prenom: document.getElementById("user-fullname").textContent.split(" ")[0] || "",
       nom: document.getElementById("user-fullname").textContent.split(" ")[1] || "",
@@ -277,6 +291,7 @@ h1.page-title {
     localStorage.setItem("signupData", JSON.stringify(updatedData));
 
     alert("✅ Informations enregistrées avec succès !");
+    exitSelectionMode();
   });
 </script>
 
