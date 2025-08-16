@@ -19,10 +19,6 @@ body, body * {
 }
 
     .btn-retour {
-      position: absolute;
-  left: 42px;
-  top: 20px;
-  bottom: 42px;
   background: none;
   border: none;
   color: black;
@@ -47,7 +43,14 @@ body, body * {
       font-weight: 300;
       cursor: pointer;
     }
-    }
+    .page-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0;
+}
     
     #menuToggle.selection-active {
   font-size: 12px; /* pour "TOUT SÉLECTIONNER" */
@@ -121,7 +124,7 @@ h1 {
 <body>
 <button class="btn-retour" onclick="location.href='profil.html'">RETOUR</button>
   <header>
-  <h1>INFORMATIONS PERSONNELLES</h1>
+  <h1 class="page-title">INFORMATIONS PERSONNELLES</h1>
     <span id="menuToggle" class="menu-icon" onclick="toggleContextMenu(event)">PLUS</span>
     
     <div class="context-menu" id="menu" style="display: none;" >
