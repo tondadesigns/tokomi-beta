@@ -129,53 +129,71 @@
     <h1 class="page-title">Historique des commandes</h1>
   </header>
 
-  <div class="order-list">
-    <!-- Exemple de commande -->
-    <div class="order-card">
-      <div class="order-header">
-        <div>Commande #10234</div>
-        <div>15 juillet 2025</div>
-      </div>
-      <div class="order-status">Statut : Livrée</div>
-      <div class="order-products">
-        <div class="product-thumb">
-          <img src="https://via.placeholder.com/150x200" alt="Produit 1">
-          <div class="product-info">
-            <div class="brand">Marque 1</div>
-            <div class="name">Nom produit 1</div>
-            <div class="price">€200</div>
-          </div>
-        </div>
-        <div class="product-thumb">
-          <img src="https://via.placeholder.com/150x200" alt="Produit 2">
-          <div class="product-info">
-            <div class="brand">Marque 2</div>
-            <div class="name">Nom produit 2</div>
-            <div class="price">€180</div>
-          </div>
-        </div>
-        <div class="product-thumb">
-          <img src="https://via.placeholder.com/150x200" alt="Produit 2">
-          <div class="product-info">
-            <div class="brand">Marque 2</div>
-            <div class="name">Nom produit 2</div>
-            <div class="price">€180</div>
-          </div>
-        </div>
-        <div class="product-thumb">
-          <img src="https://via.placeholder.com/150x200" alt="Produit 2">
-          <div class="product-info">
-            <div class="brand">Marque 2</div>
-            <div class="name">Nom produit 2</div>
-            <div class="price">€180</div>
-          </div>
-        </div>
-      </div>
-    </div>
+ 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.querySelector('.order-list');
+  const orders = JSON.parse(localStorage.getItem('tokomi_orders')) || [];
+  container.innerHTML = '';
 
-    <!-- Exemple vide -->
-    <!-- <div class="no-orders">Aucune commande pour le moment.</div> -->
-  </div>
+  if (!orders.length) {
+    const empty = document.createElement('div');
+    empty.className = 'no-orders';
+    empty.textContent = 'Aucune commande pour le moment.';
+    container.appendChild(empty);
+    return;
+  }
+
+  orders.forEach(order => {
+    const card = document.createElement('div');
+    card.className = 'order-card';
+
+    const header = document.createElement('div');
+    header.className = 'order-header';
+    header.innerHTML = `
+      <div>Commande #${order.number || order.id || '—'}</div>
+      <div>${formatDate(order.date)}</div>
+    `;
+
+    const status = document.createElement('div');
+    status.className = 'order-status';
+    status.textContent = `Statut : ${order.status || '—'}`;
+
+    const products = document.createElement('div');
+    products.className = 'order-products';
+
+    (order.products || []).forEach(p => {
+      const thumb = document.createElement('div');
+      thumb.className = 'product-thumb';
+      thumb.innerHTML = `
+        <img src="${p.image || 'https://via.placeholder.com/150x200'}" alt="${escapeHtml(p.name || 'Produit')}">
+        <div class="product-info">
+          <div class="brand">${p.brand || ''}</div>
+          <div class="name">${p.name || ''}</div>
+          <div class="price">€${Number(p.price || 0).toFixed(0)}</div>
+        </div>
+      `;
+      products.appendChild(thumb);
+    });
+
+    card.appendChild(header);
+    card.appendChild(status);
+    card.appendChild(products);
+    container.appendChild(card);
+  });
+
+  function formatDate(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    return d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
+  }
+  function escapeHtml(str) {
+    return (str || '').replace(/[&<>"']/g, m => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[m]));
+  }
+});
+</script>
 
 </body>
 </html>
