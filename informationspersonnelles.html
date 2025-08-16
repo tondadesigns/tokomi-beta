@@ -190,6 +190,24 @@ h1.page-title {
     </div>
   </div>
 
+<!-- Bouton ENREGISTRER -->
+  <div style="text-align:center; margin: 40px 0;">
+    <button id="saveBtn" style="
+      padding: 12px 28px;
+      font-size: 20px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      border: none;
+      background: black;
+      color: white;
+      cursor: pointer;
+      border-radius: 4px;
+    ">
+      ENREGISTRER
+    </button>
+  </div>
+
+  
   <script>
     const userData = JSON.parse(localStorage.getItem("signupData")) || {};
 
@@ -239,11 +257,28 @@ h1.page-title {
       block.style.fontSize = "";
       block.style.fontWeight = "";
     });
+    saveContainer.style.display = "none";
     document.getElementById("menu").style.display = "none";
 
   }
-</script>
+  const saveBtn = document.getElementById("saveBtn");
 
+  saveBtn.addEventListener("click", () => {
+    const updatedData = {
+      prenom: document.getElementById("user-fullname").textContent.split(" ")[0] || "",
+      nom: document.getElementById("user-fullname").textContent.split(" ")[1] || "",
+      adresse: document.getElementById("user-address").textContent,
+      email: document.getElementById("user-email").textContent,
+      telephone: document.getElementById("user-phone").textContent,
+      password: document.getElementById("user-password").textContent
+    };
+
+    // Sauvegarde dans localStorage
+    localStorage.setItem("signupData", JSON.stringify(updatedData));
+
+    alert("✅ Informations enregistrées avec succès !");
+  });
+</script>
 
 
 
