@@ -191,7 +191,7 @@ h1.page-title {
   </div>
 
 <!-- Bouton ENREGISTRER -->
-  <div id="saveContainer" style="text-align:center; margin: 40px 0;">
+  <div id="saveContainer" style=" display:none; text-align:center; margin: 40px 0;">
     <button id="saveBtn" style="
       padding: 20px 36px;
       font-size: 20px;
@@ -206,16 +206,6 @@ h1.page-title {
       ENREGISTRER
     </button>
   </div>
-
-  
-  <script>
-    const userData = JSON.parse(localStorage.getItem("signupData")) || {};
-
-    document.getElementById("user-fullname").textContent = (userData.prenom || "x") + " " + (userData.nom || "x");
-    document.getElementById("user-address").textContent = userData.adresse || "x x";
-    document.getElementById("user-email").textContent = userData.email || "x x";
-    document.getElementById("user-phone").textContent = userData.telephone || "x x";
-  </script>
 
   <script>
   const menu = document.getElementById("menu");
@@ -265,26 +255,33 @@ h1.page-title {
   }
   const userData = JSON.parse(localStorage.getItem("signupData")) || {};
   const full = [userData.prenom, userData.nom].filter(Boolean).join(" ").trim();
-  if (document.getElementById("user-fullname")) {
-    document.getElementById("user-fullname").textContent = full || "x x";
-  }
-  document.getElementById("user-address").textContent = userData.adresse || "x x";
-  document.getElementById("user-email").textContent = userData.email || "x x";
-  document.getElementById("user-phone").textContent = userData.telephone || "x x";
+ const elFullname = document.getElementById("user-fullname");
+  if (elFullname) elFullname.textContent = full || "x x";
+
+  const elAddr = document.getElementById("user-address");
+  if (elAddr) elAddr.textContent = (userData.adresse || "x x");
+
+  const elEmail = document.getElementById("user-email");
+  if (elEmail) elEmail.textContent = (userData.email || "x x");
+
+  const elPhone = document.getElementById("user-phone");
+  if (elPhone) elPhone.textContent = (userData.telephone || "x x");
+
 
   const saveBtn = document.getElementById("saveBtn");
 
   saveBtn.addEventListener("click", () => {
     
-    const fullname = (document.getElementById("user-fullname").textContent || "").trim();
+    const fullname = (elFullname ? elFullname.textContent : "").trim();
     const [prenom = "", nom = ""] = fullname.split(/\s+/, 2);
+    const pwdEl = document.getElementById("user-password");
     const updatedData = {
-      prenom: document.getElementById("user-fullname").textContent.split(" ")[0] || "",
-      nom: document.getElementById("user-fullname").textContent.split(" ")[1] || "",
-      adresse: document.getElementById("user-address").textContent,
-      email: document.getElementById("user-email").textContent,
-      telephone: document.getElementById("user-phone").textContent,
-      password: document.getElementById("user-password").textContent
+      prenom,
+      nom,
+      adresse: (elAddr ? elAddr.textContent : "").trim(),
+      email: (elEmail ? elEmail.textContent : "").trim(),
+      telephone: (elPhone ? elPhone.textContent : "").trim(),
+      password: pwdEl ? pwdEl.textContent.trim() : ""
     };
 
     // Sauvegarde dans localStorage
