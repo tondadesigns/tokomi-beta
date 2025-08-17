@@ -109,10 +109,40 @@
   </div>
 
   <script>
-    function selectRadio(id) {
-      document.getElementById(id).checked = true;
-    }
-  </script>
+  const GENDER_KEY = 'tokomi_explore_gender';
+  const MAP = { masculin: 'men', feminin: 'women' };
+
+  // Clic sur le rond custom
+  function selectRadio(id) {
+    const input = document.getElementById(id);
+    input.checked = true;
+
+    // Sauvegarde la préférence normalisée
+    const normalized = MAP[id] || 'all';
+    localStorage.setItem(GENDER_KEY, normalized);
+  }
+
+  // Accessibilité: si l'utilisateur active le vrai input (clavier),
+  // on enregistre aussi la préférence.
+  document.addEventListener('DOMContentLoaded', () => {
+    // Pré-sélection selon la préférence enregistrée
+    const pref = localStorage.getItem(GENDER_KEY); // 'men' | 'women' | null
+    if (pref === 'men')   document.getElementById('masculin').checked = true;
+    if (pref === 'women') document.getElementById('feminin').checked = true;
+
+    // Écoute les changements clavier/label
+    const masculin = document.getElementById('masculin');
+    const feminin  = document.getElementById('feminin');
+
+    masculin.addEventListener('change', () => {
+      if (masculin.checked) localStorage.setItem(GENDER_KEY, 'men');
+    });
+    feminin.addEventListener('change', () => {
+      if (feminin.checked) localStorage.setItem(GENDER_KEY, 'women');
+    });
+  });
+</script>
+
 
 </body>
 </html>
