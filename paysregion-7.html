@@ -65,7 +65,7 @@ html, body {
     .search-bar {
       display: block;
       width: clamp(320px, 90vw, 820px) !important;
-      transform: translateX(clamp(12px, 6vw, 120px));
+      transform: translateX(clamp(12px, 14vw, 380px));
       margin: 0 auto !important;
       max-width: 720px;
       flex: 0 0 auto !important;
@@ -83,7 +83,11 @@ html, body {
   box-sizing: border-box;
   outline: none;
 }
-
+@media (max-width: 600px) {
+  .search-bar {
+    transform: translateX(24px);
+  }
+}
 .container {
   overflow-y: auto;
   height: calc(100vh - 140px);
