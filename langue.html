@@ -102,23 +102,44 @@
       <input type="radio" name="langue" id="en">
       <span class="custom-radio" onclick="selectLangue('en')"></span>
     </label>
-    <label class="langue-option">
-      <span class="langue-label">中文</span>
-      <input type="radio" name="langue" id="zh">
-      <span class="custom-radio" onclick="selectLangue('zh')"></span>
-    </label>
-    <label class="langue-option">
-      <span class="langue-label">Espagnol</span>
-      <input type="radio" name="langue" id="es">
-      <span class="custom-radio" onclick="selectLangue('es')"></span>
-    </label>
+    
   </div>
 
   <script>
-    function selectLangue(id) {
-      document.getElementById(id).checked = true;
-    }
-  </script>
+  const LANG_KEY = 'tokomi_lang';
+
+  // Enregistre et applique la langue (sans redirection)
+  function applyLang(lang) {
+    const safe = (lang === 'en') ? 'en' : 'fr';
+    localStorage.setItem(LANG_KEY, safe);
+    document.documentElement.setAttribute('lang', safe);
+    // Si tu veux rediriger juste après le choix, dé-commente la ligne ci-dessous :
+    // location.href = 'accueil.html';
+  }
+
+  // Garde ta signature et tes appels existants
+  function selectLangue(id) {
+    const input = document.getElementById(id);
+    if (!input) return;
+    input.checked = true;
+    applyLang(id); // id est 'fr' ou 'en'
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Pré-sélection selon la préférence enregistrée (fr par défaut)
+    const saved = localStorage.getItem(LANG_KEY) || 'fr';
+    const el = document.getElementById(saved);
+    if (el) el.checked = true;
+    document.documentElement.setAttribute('lang', saved);
+
+    // Si l’utilisateur change la radio via clavier/label, on persiste aussi
+    const fr = document.getElementById('fr');
+    const en = document.getElementById('en');
+    fr?.addEventListener('change', () => fr.checked && applyLang('fr'));
+    en?.addEventListener('change', () => en.checked && applyLang('en'));
+  });
+</script>
+
 
 </body>
 </html>
