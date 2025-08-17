@@ -64,15 +64,16 @@ html, body {
 
     .search-bar {
       display: block;
-      width: clamp(320px, 90vw, 820px) !important;
-      transform: translateX(clamp(12px, 14vw, 380px));
-      margin: 0 auto !important;
+      width: min(100%, 820px) !important;
+      transform: none !important;
+      margin: 0 !important;
       max-width: 720px;
       flex: 0 0 auto !important;
       height: 18px;
   padding: 12px 32px;
   font-size: 12px;
   font-weight: 300;
+      margin-left: auto !important;
   margin-top: -12px;
   margin-bottom: -22px;
   border: none;
@@ -85,7 +86,7 @@ html, body {
 }
 @media (max-width: 600px) {
   .search-bar {
-    transform: translateX(24px);
+    margin-right: 12px !important;
   }
 }
 .container {
