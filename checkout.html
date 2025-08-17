@@ -297,58 +297,74 @@ window.addEventListener('storage', renderCheckoutFromLS);
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden) renderCheckoutFromLS();
 });
-
 });
-function finalizeOrder() {
-    window.location.href = "loading.html";
-}
-
 </script>
 <script>
+/* ====== KEYS ====== */
+const ORDERS_KEY  = 'tokomi_orders';
+const PENDING_KEY = 'tokomi_pending_order';
+const CART_KEY    = 'tokomi_cart_items';
+
+/* Numéro de commande unique */
 function generateOrderNumber() {
-  // Préfixe "TK" + date (année, mois, jour, heure, minute, seconde) + un nombre aléatoire
   const now = new Date();
-  const y = now.getFullYear().toString().slice(-2); // 2 derniers chiffres de l'année
+  const y = now.getFullYear().toString().slice(-2);
   const m = String(now.getMonth() + 1).padStart(2, '0');
   const d = String(now.getDate()).padStart(2, '0');
   const h = String(now.getHours()).padStart(2, '0');
   const min = String(now.getMinutes()).padStart(2, '0');
   const s = String(now.getSeconds()).padStart(2, '0');
-  const random = Math.floor(Math.random() * 9000) + 1000; // 4 chiffres aléatoires
-
+  const random = Math.floor(Math.random() * 9000) + 1000;
   return `TK${y}${m}${d}${h}${min}${s}${random}`;
 }
 
-function finalizeOrder() {
-  // Générer un numéro de commande
-  const orderNumber = generateOrderNumber();
-  localStorage.setItem('tokomi_order_number', orderNumber);
+/* Construit la commande à partir du panier + résumés */
+function prepareOrderFromCart(orderNumber) {
+  const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
 
-  // Rediriger vers loading.html
-  window.location.href = 'loading.html';
+  // totaux
+  const subtotalLS    = parseFloat(localStorage.getItem('tokomi_subtotal'));
+  const shippingLS    = parseFloat(localStorage.getItem('tokomi_shipping_price'));
+  const subtotal = !isNaN(subtotalLS)
+    ? subtotalLS
+    : cart.reduce((sum, it) => sum + (parseFloat(it.price)||0) * (it.quantity||1), 0);
+  const shipping = isNaN(shippingLS) ? 0 : shippingLS;
+  const total = subtotal + shipping;
+
+  // infos de résumé
+  const address       = localStorage.getItem('tokomi_address') || '';
+  const shippingOpt   = localStorage.getItem('tokomi_shipping_option') || '';
+  const shippingDate  = localStorage.getItem('tokomi_shipping_date') || '';
+  const paymentMethod = localStorage.getItem('tokomi_payment_method') || '';
+
+  return {
+    id: orderNumber,
+    number: orderNumber,
+    date: new Date().toISOString(),
+    status: 'En cours', // passera à "Confirmée" sur confirmation.html
+    totals: { subtotal, shipping, total },
+    address,
+    shipping: { option: shippingOpt, date: shippingDate, price: shipping },
+    payment: paymentMethod,
+    products: cart.map(it => ({
+      brand: it.brand || it.marque || '',
+      name:  it.name  || it.titre  || '',
+      price: Number(it.price || 0),
+      quantity: it.quantity || 1,
+      image: it.image || it.img || ''
+    }))
+  };
 }
-</script>
-<script>
-function generateOrderNumber() {
-  // Préfixe "TK" + date (année, mois, jour, heure, minute, seconde) + un nombre aléatoire
-  const now = new Date();
-  const y = now.getFullYear().toString().slice(-2); // 2 derniers chiffres de l'année
-  const m = String(now.getMonth() + 1).padStart(2, '0');
-  const d = String(now.getDate()).padStart(2, '0');
-  const h = String(now.getHours()).padStart(2, '0');
-  const min = String(now.getMinutes()).padStart(2, '0');
-  const s = String(now.getSeconds()).padStart(2, '0');
-  const random = Math.floor(Math.random() * 9000) + 1000; // 4 chiffres aléatoires
 
-  return `TK${y}${m}${d}${h}${min}${s}${random}`;
-}
-
+/* Bouton COMMANDER */
 function finalizeOrder() {
-  // Générer un numéro de commande
   const orderNumber = generateOrderNumber();
-  localStorage.setItem('tokomi_order_number', orderNumber);
+  localStorage.setItem('tokomi_order_number', orderNumber); // utile pour l’afficher sur confirmation
 
-  // Rediriger vers loading.html
+  const pending = prepareOrderFromCart(orderNumber);
+  localStorage.setItem(PENDING_KEY, JSON.stringify(pending)); // staging
+
+  // ta logique existante : on passe par loading.html
   window.location.href = 'loading.html';
 }
 </script>
