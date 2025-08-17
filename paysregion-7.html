@@ -53,8 +53,8 @@ html, body {
   background: white;
   z-index: 10;
   display: flex;
-  padding: 20px 16px;
-  height: auto;
+  padding: 20px 16px !important;
+  height: auto !important;
   border-bottom: 1px solid white !important;
   transition: none !important;
   margin-bottom: -16px;
@@ -63,9 +63,11 @@ html, body {
 }
 
     .search-bar {
-      width: 100%;
+      display: block;
+      width: min(100%, 820px) !important;
+      margin: 0 auto !important;
       max-width: 720px;
-      flex: 0 1 auto;
+      flex: 0 0 auto !important;
       height: 18px;
   padding: 12px 32px;
   font-size: 12px;
