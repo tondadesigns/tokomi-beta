@@ -313,6 +313,28 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+<script>
+(function commitPendingOrder(){
+  const ORDERS_KEY  = 'tokomi_orders';
+  const PENDING_KEY = 'tokomi_pending_order';
+  const CART_KEY    = 'tokomi_cart_items';
+
+  const pending = JSON.parse(localStorage.getItem(PENDING_KEY) || 'null');
+  if (!pending) return;
+
+  pending.status = 'Confirmée';
+
+  const orders = JSON.parse(localStorage.getItem(ORDERS_KEY) || '[]');
+  const pid = pending.number || pending.id;
+  if (!orders.some(o => (o.number || o.id) === pid)) {
+    orders.unshift(pending);
+    localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
+  }
+
+  localStorage.removeItem(PENDING_KEY);
+  localStorage.removeItem(CART_KEY); // vide le panier
+})();
+</script>
 
 
 </body>
