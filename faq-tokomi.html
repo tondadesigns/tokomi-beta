@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ – Tokomi</title>
+  <style>
+    body { font-family: 'Space Grotesk', sans-serif; margin:0; background:#fff; color:#111; }
+    .faq-wrapper{ max-width:900px; margin:0 auto; padding:0 16px 80px; }
+
+    /* Sous-titres de section – style Tokomi */
+    .section-title{
+      margin:40px 0 8px;
+      padding:12px 0 10px;
+      font: 600 12px/1 'Space Grotesk', sans-serif;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      border-top:1px solid #111;
+      display:flex; align-items:center; gap:10px;
+    }
+    .section-title::before{ content:"—"; font-weight:300; }
+
+    /* Accordéon */
+    .dropdown{ border-bottom:1px solid #eee; }
+    .dropdown-header{
+      display:flex; align-items:center; justify-content:space-between;
+      cursor:pointer; padding:14px 0;
+    }
+    .dropdown-title{
+      font: 600 12px/1.3 'Space Grotesk', sans-serif;
+      text-transform:uppercase; letter-spacing:.02em;
+    }
+    .dropdown-toggle{ font-size:18px; line-height:1; width:24px; text-align:right; }
+    .dropdown-content{
+      max-height:0; overflow:hidden; transition:max-height .25s ease;
+      font: 300 12px/1.6 'Space Grotesk', sans-serif; color:#333;
+      padding:0 0;
+    }
+    .dropdown.open .dropdown-content{ padding:0 0 12px; }
+
+    @media (max-width:600px){
+      .faq-wrapper{ padding-bottom:60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="faq-wrapper">
+
+    <!-- COMMANDE -->
+    <h3 class="section-title">Commande</h3>
+    <div class="faq-section" data-scope="commande">
+      <div class="dropdown" onclick="toggleDropdown(this)">
+        <div class="dropdown-header">
+          <span class="dropdown-title">Comment passer commande sur Tokomi ?</span>
+          <span class="dropdown-toggle">+</span>
+        </div>
+        <div class="dropdown-content"><p>Connectez-vous, explorez les articles et ajoutez au panier. Validez votre adresse, l’option de livraison et le paiement pour confirmer.</p></div>
+      </div>
+
+      <div class="dropdown" onclick="toggleDropdown(this)">
+        <div class="dropdown-header">
+          <span class="dropdown-title">Puis-je modifier ou annuler ma commande ?</span>
+          <span class="dropdown-toggle">+</span>
+        </div>
+        <div class="dropdown-content"><p>Oui tant que la commande n’est pas expédiée, depuis “Mes commandes”. Après expédition, passez par une demande de retour dès réception.</p></div>
+      </div>
+
+      <div class="dropdown" onclick="toggleDropdown(this)">
+        <div class="dropdown-header">
+          <span class="dropdown-title">Les articles sont-ils authentiques ?</span>
+          <span class="dropdown-toggle">+</span>
+        </div>
+        <div class="dropdown-content"><p>Tous les articles sont 100% authentiques, issus des marques ou de partenaires certifiés.</p></div>
+      </div>
+    </div>
+
+    <!-- LIVRAISON -->
+    <h3 class="section-title">Livraison</h3>
+    <div class="faq-section" data-scope="livraison">
+      <div class="dropdown" onclick="toggleDropdown(this)">
+        <div class="dropdown-header">
+          <span class="dropdown-title">Zones de livraison</span>
+          <span class="dropdown-toggle">+</span>
+        </div>
+        <div class="dropdown-content"><p>Déploiement initial en RDC (Kinshasa & grandes villes), extension progressive en Afrique. Les options disponibles s’affichent au checkout selon l’adresse.</p></div>
+      </div>
+
+      <div class="dropdown" onclick="toggleDropdown(this)">
+        <div class="dropdown-header">
+          <span class="dropdown-title">Délais & frais</span>
+          <span class="dropdown-toggle">+</span>
+        </div>
+        <div class="dropdown-content"><p>Délais estimés 3–7 jours ouvrés selon la destination et l’option (Standard/Express). Les frais sont calculés dynamiquement au checkout avant paiement.</p></div>
+      </div>
+
+      <div class="dropdown" onclick="toggleDropdown(this)">
+        <div class="dropdown-header">
+          <span class="dropdown-title">Suivre ma commande</span>
+          <span class="dropdown-toggle">+</span>
+        </div>
+        <div class="dropdown-content"><p>Le lien de suivi apparaît dans “Mes commandes” dès l’expédition et vous est envoyé par email.</p></div>
+      </div>
+
+      <div class="dropdown" onclick="toggleDropdown(this)">
+        <div class="dropdown-header">
+          <span class="dropdown-title">Douanes & taxes</span>
+          <span class="dropdown-toggle">+</span>
+        </div>
+        <div class="dropdown-content"><p>Des droits peuvent s’appliquer selon le pays. Quand possible, ils sont estimés au checkout ; sinon, le transporteur peut les réclamer à la livraison.</p></div>
+      </div>
+    </div>
+
+    <!-- PAIEMENT -->
+    <h3 class="section-title">Paiement</h3>
+    <div class="faq-section" data-scope="paiement">
+      <div class="dropdown" onclick="toggleDropdown(this)">
+        <div class="dropdown-header">
+          <span class="dropdown-title">Moyens de paiement acceptés</span>
+          <span class="dropdown-toggle">+</span>
+        </div>
+        <div class="dropdown-content"><p>Visa, Mastercard, PayPal, et Mobile Money quand disponible (ex. Orange, M-Pesa). Les options s’adaptent à votre pays de livraison.</p></div>
+      </div>
+
+      <div class="dropdown" onclick="toggleDropdown(this)">
+        <div class="dropdown-header">
+          <span class="dropdown-title">Sécurité des paiements</span>
+          <span class="dropdown-toggle">+</span>
+        </div>
+        <div class="dropdown-content"><p>Transactions chiffrées, 3-D Secure si requis. Nous ne stockons pas vos données de carte complètes.</p></div>
+      </div>
+
+      <div class="dropdown" onclick="toggleDropdown(this)">
+        <div class="dropdown-header">
+          <span class="dropdown-title">Utiliser un code promo</span>
+          <span class="dropdown-toggle">+</span>
+        </div>
+        <div class="dropdown-content"><p>Entrez le code au checkout puis validez. La remise s’affiche immédiatement dans le récapitulatif.</p></div>
+      </div>
+    </div>
+
+    <!-- RETOURS -->
+    <h3 class="section-title">Retours</h3>
+    <div class="faq-section" data-scope="retours">
+      <div class="dropdown" onclick="toggleDropdown(this)">
+        <div class="dropdown-header">
+          <span class="dropdown-title">Retour & remboursement</span>
+          <span class="dropdown-toggle">+</span>
+        </div>
+        <div class="dropdown-content"><p>14 jours après réception (neuf, non porté, étiquettes intactes). Remboursement sur le moyen de paiement d’origine après contrôle qualité.</p></div>
+      </div>
+
+      <div class="dropdown" onclick="toggleDropdown(this)">
+        <div class="dropdown-header">
+          <span class="dropdown-title">Article endommagé</span>
+          <span class="dropdown-toggle">+</span>
+        </div>
+        <div class="dropdown-content"><p>Contactez-nous sous 48h avec photos via “Contactez-nous”. Échange ou remboursement selon évaluation.</p></div>
+      </div>
+    </div>
+
+    <!-- COMPTE -->
+    <h3 class="section-title">Compte</h3>
+    <div class="faq-section" data-scope="compte">
+      <div class="dropdown" onclick="toggleDropdown(this)">
+        <div class="dropdown-header">
+          <span class="dropdown-title">Créer / accéder à mon compte</span>
+          <span class="dropdown-toggle">+</span>
+        </div>
+        <div class="dropdown-content"><p>Créez un compte depuis “Se connecter”. Suivez vos commandes, retours et avantages fidélité depuis votre espace.</p></div>
+      </div>
+
+      <div class="dropdown" onclick="toggleDropdown(this)">
+        <div class="dropdown-header">
+          <span class="dropdown-title">Supprimer mes données (RGPD)</span>
+          <span class="dropdown-toggle">+</span>
+        </div>
+        <div class="dropdown-content"><p>Depuis “Paramètres & confidentialité”, demandez la suppression de votre compte. Nous traiterons votre demande conformément au RGPD.</p></div>
+      </div>
+
+      <div class="dropdown" onclick="toggleDropdown(this)">
+        <div class="dropdown-header">
+          <span class="dropdown-title">Programme de fidélité</span>
+          <span class="dropdown-toggle">+</span>
+        </div>
+        <div class="dropdown-content"><p>Gagnez des avantages en progressant de Bronze à Privé. Les seuils et bénéfices s’affichent sur la page “Membership”.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleDropdown(el){
+      const section = el.closest('.faq-section');
+      const isOpen = el.classList.contains('open');
+      section.querySelectorAll('.dropdown.open').forEach(d=>{
+        if(d!==el){
+          d.classList.remove('open');
+          d.querySelector('.dropdown-toggle').textContent = '+';
+          d.querySelector('.dropdown-content').style.maxHeight = null;
+        }
+      });
+      if(!isOpen){
+        el.classList.add('open');
+        el.querySelector('.dropdown-toggle').textContent = '–';
+        const c = el.querySelector('.dropdown-content');
+        c.style.maxHeight = c.scrollHeight + 'px';
+      }else{
+        el.classList.remove('open');
+        el.querySelector('.dropdown-toggle').textContent = '+';
+        el.querySelector('.dropdown-content').style.maxHeight = null;
+      }
+    }
+  </script>
+</body>
+</html>
