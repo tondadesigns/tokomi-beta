@@ -47,43 +47,33 @@ html, body {
     }
 
     .search-container {
-  position: sticky;
-  top: 80px;
-  width: 100%;
-  background: white;
-  z-index: 10;
-  display: flex;
-  padding: 20px 16px !important;
-  height: auto !important;
+  margin-top: 28px !important;
+  padding: 10px !important;
+  outline: none;
   border-bottom: 1px solid white !important;
+  height: 64px; 
   transition: none !important;
-  margin-bottom: -16px;
-  justify-content: center !important;
-  align-items: center;
 }
 
     .search-bar {
-      display: block;
-     width: 130%;
-      height: 18px;
-  padding: 12px 32px;
+width: 90%;
+  height: 48px;
+  padding: 0 16px;
   font-size: 12px;
   font-weight: 300;
-  margin-top: -12px;
-  margin-bottom: -22px;
-  border: none;
-  border-radius: 0;
   text-transform: uppercase;
-  font-family: 'Space Grotesk', sans-serif;
-   transition: none !important;
-  box-sizing: border-box;
+  border: none;
+  border-bottom: none;  /* ✅ maintenant blanche (invisible) */
+  border-radius: 0;
   outline: none;
+  background-color: white;
+  text-align: center;
+  display: block;
+  margin: 0 auto;  
+  transition: none !important;
+  box-sizing: border-box;
 }
-@media (max-width: 600px) {
-  .search-bar {
-    margin-right: 0 !important;
-  }
-}
+
 .container {
   overflow-y: auto;
   height: calc(100vh - 140px);
@@ -158,6 +148,7 @@ html, body {
   <button class="btn-retour" onclick="location.href='profil.html'">RETOUR</button>
 
   <div class="title">Pays</div>
+  
   <div class="search-container">
     <input type="text" id="searchInput" placeholder="OÙ RECHERCHEZ-VOUS ?" class="search-bar">
     </div>
