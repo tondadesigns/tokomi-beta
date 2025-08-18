@@ -76,10 +76,12 @@ width: 90%;
 }
 
 .container {
-  overflow-y: auto;
-  height: calc(100vh - 140px);
+
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
       margin-top: -2px;
-      padding: 20px 24px 20px;
+      padding: 20px 24px 120px;
       display: flex;
       flex-direction: column;
       gap: 10px;
