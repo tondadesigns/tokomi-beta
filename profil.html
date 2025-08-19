@@ -277,6 +277,40 @@
   window.location.href = 'signup.html'; // adapte si ta page s’appelle autrement
 }
   </script>
+<script>
+function login() {
+  const email    = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+
+  if (!email || !password) {
+    alert("Veuillez remplir tous les champs.");
+    return;
+  }
+
+  const data = JSON.parse(localStorage.getItem('signupData') || '{}');
+
+  // Vérification simple des identifiants
+  if (!data.email || !data.password) {
+    alert("Aucun compte enregistré. Créez un compte d’abord.");
+    window.location.href = 'signup.html';
+    return;
+  }
+
+  const okEmail = data.email.trim().toLowerCase() === email.toLowerCase();
+  const okPwd   = data.password === password;
+
+  if (okEmail && okPwd) {
+    // Authentifié : on passe en mode user et on pousse le prénom comme username
+    localStorage.setItem('tokomi_auth', 'user');
+    localStorage.setItem('tokomi_username', data.prenom || '');
+
+    // redirection vers le profil (où .username affichera le prénom)
+    window.location.href = 'profil.html';
+  } else {
+    alert("Identifiants incorrects.");
+  }
+}
+</script>
 
 </body>
 </html>
