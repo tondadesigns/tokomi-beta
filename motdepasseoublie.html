@@ -19,10 +19,10 @@
     }
 
     .btn-retour {
-      position: absolute;
       left: 0;
       top: 104px;
-      transform: translateX(-40px);
+      position: fixed;
+  left: calc(env(safe-area-inset-left) + 0px);
       z-index: 1000;
       background: none;
       border: none;
