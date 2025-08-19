@@ -219,18 +219,17 @@
         localStorage.removeItem('tokomi_auth'); // on sort du mode invité
         window.location.href = 'connexion.html';
       };
-    }
+    
     // 3) Ajouter le bouton "Créer un compte"
-    const signupContainer = document.getElementById('signupContainer');
-    if (signupContainer) {
-      const btn = document.createElement('button');
-      btn.textContent = 'Créer un compte';
-      btn.onclick = redirectToSignUp;
-      btn.style.marginTop = '6px';
-      btn.style.marginBottom = '62px';
-      btn.style.marginLeft = '-1px';
-      btn.className = 'btn';
-      signupContainer.appendChild(btn);
+      const signupBtn = document.createElement('button');
+      signupBtn.textContent = 'Créer un compte';
+      signupBtn.onclick = redirectToSignUp;
+      signupBtn.style.marginTop = '6px';
+      signupBtn.style.marginBottom = '62px';
+      signupBtn.style.marginLeft = '-1px';
+      signupBtn.className = 'btn';
+      
+      authBtn.insertAdjacentElement('afterend', signupBtn);
     }
   }
 });
