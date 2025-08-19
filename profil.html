@@ -211,15 +211,31 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
   const auth = localStorage.getItem('tokomi_auth');
-
-  if (auth === 'guest') {
-    // vider le nom
-    const usernameDiv = document.querySelector('.username');
+  const data = JSON.parse(localStorage.getItem('signupData') || '{}');
+  const usernameDiv = document.querySelector('.username');
+  const authBtn = document.getElementById('authBtn') || document.querySelector('.btn');
+      
+  if (auth === 'user') {
+  // ✅ Prénom = username
+    if (usernameDiv) usernameDiv.textContent = (data.prenom || "").toUpperCase();
+    
+// Bouton = Déconnexion
+    if (authBtn) {
+      authBtn.textContent = 'Déconnexion';
+      authBtn.onclick = () => {
+        localStorage.removeItem('tokomi_auth');
+        window.location.href = 'accueil.html';
+      };
+    }
+    
+  } else if (auth === 'guest') {
+   // vider le nom
+    
     if (usernameDiv) usernameDiv.textContent = '';
 
     // transformer le bouton Déconnexion -> Se connecter
     // (idéal: donne un id à ce bouton, ex. id="authBtn")
-    const authBtn = document.getElementById('authBtn') || document.querySelector('.btn');
+    
     if (authBtn) {
       authBtn.textContent = 'Se connecter';
       authBtn.onclick = () => {
@@ -236,6 +252,23 @@
       signupBtn.style.marginLeft = '-1px';
       signupBtn.className = 'btn btn-signup';
       
+      authBtn.insertAdjacentElement('afterend', signupBtn);
+    }
+    } else {
+    // Aucun flag (non connecté) : proposer Se connecter + Créer un compte
+    if (usernameDiv) usernameDiv.textContent = '';
+
+    if (authBtn) {
+      authBtn.textContent = 'Se connecter';
+      authBtn.onclick = () => { window.location.href = 'connexion.html'; };
+
+      const signupBtn = document.createElement('button');
+      signupBtn.textContent = 'Créer un compte';
+      signupBtn.onclick = redirectToSignUp;
+      signupBtn.style.marginTop = '4px';
+      signupBtn.style.marginBottom = '30px';
+      signupBtn.style.marginLeft = '-1px';
+      signupBtn.className = 'btn btn-signup';
       authBtn.insertAdjacentElement('afterend', signupBtn);
     }
   }
