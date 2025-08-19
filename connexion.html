@@ -129,21 +129,50 @@
     </div>
   </div>
 
-  <script>
-    function login() {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+ <script>
+function login() {
+  const emailEl = document.getElementById('email');
+  const pwdEl   = document.getElementById('password');
+  const email    = (emailEl?.value || "").trim();
+  const password = (pwdEl?.value || "");
 
-      if (!email || !password) {
-        alert("Veuillez remplir tous les champs.");
-        return;
-      }
+  if (!email || !password) {
+    alert("Veuillez remplir tous les champs.");
+    return;
+  }
 
-      // Simulation d'une connexion réussie
-      alert("Connexion réussie. Bienvenue !");
-      window.location.href = "accueil.html";
-    }
-  </script>
+  const raw = localStorage.getItem('signupData');
+  if (!raw) {
+    alert("Aucun compte enregistré. Créez un compte d’abord.");
+    window.location.href = 'signup.html';
+    return;
+  }
+
+  let data;
+  try { data = JSON.parse(raw); } catch (e) {
+    alert("Données de compte invalides. Veuillez recréer votre compte.");
+    localStorage.removeItem('signupData');
+    window.location.href = 'signup.html';
+    return;
+  }
+
+  const okEmail = (data.email || "").trim().toLowerCase() === email.toLowerCase();
+  const okPwd   = (data.password || "") === password;
+
+  if (!okEmail || !okPwd) {
+    alert("Identifiants incorrects.");
+    return;
+  }
+
+  // ✅ Auth OK → on passe en mode user et on pousse le prénom comme username
+  localStorage.setItem('tokomi_auth', 'user');
+  localStorage.setItem('tokomi_username', (data.prenom || "").trim());
+
+  // Redirection vers le profil (où .username affichera le prénom)
+  window.location.href = 'profil.html';
+}
+</script>
+
 
 </body>
 </html>
