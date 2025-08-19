@@ -263,5 +263,31 @@
     }, 2500);
     }
   </script>
+  <script>
+document.getElementById('signupForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const user = {
+    firstName: document.getElementById('first-name')?.value.trim() || "",
+    lastName: document.getElementById('last-name')?.value.trim() || "",
+    email: document.getElementById('email')?.value.trim() || "",
+    phone: document.getElementById('phone')?.value.trim() || "",
+    address1: document.getElementById('address1')?.value.trim() || "",
+    address2: document.getElementById('address2')?.value.trim() || "",
+    city: document.getElementById('city')?.value.trim() || "",
+    postalCode: document.getElementById('postal-code')?.value.trim() || "",
+    country: document.getElementById('country')?.value.trim() || ""
+  };
+
+  // Sauvegarde
+  localStorage.setItem('tokomi_user', JSON.stringify(user));
+  localStorage.setItem('tokomi_auth', 'user');                 // mode connecté
+  localStorage.setItem('tokomi_username', user.firstName || "");// prénom = username
+
+  // Redirection vers la page d’infos personnelles
+  window.location.href = 'informationspersonnelles.html';
+});
+</script>
+
 </body>
 </html>
