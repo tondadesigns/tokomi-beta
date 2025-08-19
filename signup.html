@@ -210,7 +210,7 @@
   <button class="btn-retour" onclick="location.href='intro-utilisateur.html'">RETOUR</button>
   <div class="form-container">
     <h2>Mon compte</h2>
-    <form onsubmit="showModal(event)">
+    <form id="signupForm" onsubmit="showModal(event)">
       <div class="form-group">
         <label for="first-name" style="color: grey; font-size: 300;">Prénom</label>
         <input type="text" id="first-name" name="first-name" required>
@@ -221,7 +221,7 @@
       </div>
       <div class="form-group">
         <label for="last-name" style="color: grey; font-size: 300;" >Adresse postale</label>
-        <input type="text" id="last-name" name="last-name" required>
+        <input type="text" id="address1" name="address1" required>
       </div>
       <div class="form-group">
         <label for="email" style="color: grey; font-size: 300;">Adresse e-mail</label>
@@ -252,40 +252,36 @@
     </div>
   </div>
   <script>
-    function showModal(event) {
-      event.preventDefault();
-      const modal = document.getElementById('confirmationModal');
-    modal.style.display = 'flex';
+  function showModal() {
+    const modal = document.getElementById('confirmationModal');
+    if (modal) modal.style.display = 'flex';
+  }
 
-    // Redirection vers la page d’accueil après 2,5 secondes
+  document.getElementById('signupForm').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const data = {
+      prenom:    document.getElementById('first-name')?.value.trim() || "",
+      nom:       document.getElementById('last-name')?.value.trim()  || "",
+      adresse:   document.getElementById('address1')?.value.trim()   || "",
+      email:     document.getElementById('email')?.value.trim()      || "",
+      telephone: document.getElementById('phone')?.value.trim()      || "",
+      password:  document.getElementById('password')?.value.trim()   || ""
+    };
+
+    // Sauvegarde
+    localStorage.setItem('signupData', JSON.stringify(data));
+    localStorage.setItem('tokomi_auth', 'user');            // connecté
+    localStorage.setItem('tokomi_username', data.prenom||"");// prénom = username si besoin
+
+    // UI: modal de confirmation puis redirection
+    showModal();
     setTimeout(() => {
-      window.location.href = 'accueil.html'; // remplace par ta page d'accueil réelle si besoin
-    }, 2500);
-    }
-  </script>
-  <script>
-document.getElementById('signupForm').addEventListener('submit', function(e){
-  e.preventDefault();
-
-  const data = {
-    prenom:      document.getElementById('first-name')?.value.trim() || "",
-    nom:         document.getElementById('last-name')?.value.trim()  || "",
-    adresse:     document.getElementById('address1')?.value.trim()    || "",
-    email:       document.getElementById('email')?.value.trim()       || "",
-    telephone:   document.getElementById('phone')?.value.trim()       || "",
-    password:    document.getElementById('password')?.value.trim()    || ""
-    // ajoute d'autres champs si besoin (address2, city, etc.) mais ta page infos lit ceux-ci
-  };
-
-  localStorage.setItem('signupData', JSON.stringify(data));
-  localStorage.setItem('tokomi_auth', 'user'); // connecté
-  // optionnel : pour d’autres usages
-  localStorage.setItem('tokomi_username', data.prenom || "");
-
-  // redirection vers la page d’infos persos
-  window.location.href = 'informationspersonnelles.html';
-});
+      window.location.href = 'informationspersonnelles.html';
+    }, 900); // délai court pour l'effet visuel
+  });
 </script>
+
 
 
 </body>
