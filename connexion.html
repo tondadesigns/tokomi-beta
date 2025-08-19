@@ -30,14 +30,18 @@
       font-family: 'Space Grotesk', sans-serif;
     }
     .login-container {
+     transform: translateY(-6vh);   /* remonte ~6% de la hauteur d’écran */
+  transition: transform .25s ease; 
       width: 100%;
       max-width: 360px;
       padding: 32px;
       text-align: center;
     }
-
+  @media (max-width: 600px) {
+  .login-container { transform: translateY(-4vh); }
+}
     h2 {
-      font-size: 28px;
+      font-size: 30px;
       font-weight: 600;
       margin-bottom: 24px;
       text-transform: uppercase;
@@ -74,7 +78,7 @@
       margin-top: 24px;
       padding: 20px;
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 200;
       text-transform: uppercase;
       background-color: black;
