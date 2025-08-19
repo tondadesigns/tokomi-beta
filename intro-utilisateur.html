@@ -126,6 +126,9 @@
   };
   
     function continueAsGuest() {
+      // marquer le mode invité et nettoyer un éventuel nom
+  localStorage.setItem('tokomi_auth', 'guest');
+  localStorage.removeItem('tokomi_username');
       // 1. Vider le contenu du div .username
     const usernameDiv = document.querySelector('.username');
     if (usernameDiv) {
