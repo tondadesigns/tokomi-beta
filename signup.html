@@ -264,30 +264,29 @@
     }
   </script>
   <script>
-document.getElementById('signupForm').addEventListener('submit', function (e) {
+document.getElementById('signupForm').addEventListener('submit', function(e){
   e.preventDefault();
 
-  const user = {
-    firstName: document.getElementById('first-name')?.value.trim() || "",
-    lastName: document.getElementById('last-name')?.value.trim() || "",
-    email: document.getElementById('email')?.value.trim() || "",
-    phone: document.getElementById('phone')?.value.trim() || "",
-    address1: document.getElementById('address1')?.value.trim() || "",
-    address2: document.getElementById('address2')?.value.trim() || "",
-    city: document.getElementById('city')?.value.trim() || "",
-    postalCode: document.getElementById('postal-code')?.value.trim() || "",
-    country: document.getElementById('country')?.value.trim() || ""
+  const data = {
+    prenom:      document.getElementById('first-name')?.value.trim() || "",
+    nom:         document.getElementById('last-name')?.value.trim()  || "",
+    email:       document.getElementById('email')?.value.trim()       || "",
+    telephone:   document.getElementById('phone')?.value.trim()       || "",
+    adresse:     document.getElementById('address1')?.value.trim()    || "",
+    password:    document.getElementById('password')?.value.trim()    || ""
+    // ajoute d'autres champs si besoin (address2, city, etc.) mais ta page infos lit ceux-ci
   };
 
-  // Sauvegarde
-  localStorage.setItem('tokomi_user', JSON.stringify(user));
-  localStorage.setItem('tokomi_auth', 'user');                 // mode connecté
-  localStorage.setItem('tokomi_username', user.firstName || "");// prénom = username
+  localStorage.setItem('signupData', JSON.stringify(data));
+  localStorage.setItem('tokomi_auth', 'user'); // connecté
+  // optionnel : pour d’autres usages
+  localStorage.setItem('tokomi_username', data.prenom || "");
 
-  // Redirection vers la page d’infos personnelles
+  // redirection vers la page d’infos persos
   window.location.href = 'informationspersonnelles.html';
 });
 </script>
+
 
 </body>
 </html>
