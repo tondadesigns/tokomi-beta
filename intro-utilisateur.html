@@ -126,6 +126,19 @@
   };
   
     function continueAsGuest() {
+      // 1. Vider le contenu du div .username
+    const usernameDiv = document.querySelector('.username');
+    if (usernameDiv) {
+      usernameDiv.textContent = "";
+    }
+
+    // 2. Transformer le bouton Déconnexion en Se connecter
+    const logoutBtn = document.querySelector('.btn');
+    if (logoutBtn) {
+      logoutBtn.textContent = "Se connecter";
+      logoutBtn.setAttribute("onclick", "redirectToLogin()");
+    }
+
       window.location.href = 'accueil.html';
     }
 
