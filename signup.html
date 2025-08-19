@@ -270,9 +270,9 @@ document.getElementById('signupForm').addEventListener('submit', function(e){
   const data = {
     prenom:      document.getElementById('first-name')?.value.trim() || "",
     nom:         document.getElementById('last-name')?.value.trim()  || "",
+    adresse:     document.getElementById('address1')?.value.trim()    || "",
     email:       document.getElementById('email')?.value.trim()       || "",
     telephone:   document.getElementById('phone')?.value.trim()       || "",
-    adresse:     document.getElementById('address1')?.value.trim()    || "",
     password:    document.getElementById('password')?.value.trim()    || ""
     // ajoute d'autres champs si besoin (address2, city, etc.) mais ta page infos lit ceux-ci
   };
