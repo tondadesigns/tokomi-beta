@@ -201,8 +201,26 @@
 
 
   <script>
-    const userName = 'Tonda';
-    document.getElementById('user-name').textContent = userName.toUpperCase();
+    document.addEventListener('DOMContentLoaded', () => {
+  const auth = localStorage.getItem('tokomi_auth');
+
+  if (auth === 'guest') {
+    // vider le nom
+    const usernameDiv = document.querySelector('.username');
+    if (usernameDiv) usernameDiv.textContent = '';
+
+    // transformer le bouton Déconnexion -> Se connecter
+    // (idéal: donne un id à ce bouton, ex. id="authBtn")
+    const authBtn = document.getElementById('authBtn') || document.querySelector('.btn');
+    if (authBtn) {
+      authBtn.textContent = 'Se connecter';
+      authBtn.onclick = () => {
+        localStorage.removeItem('tokomi_auth'); // on sort du mode invité
+        window.location.href = 'login.html';
+      };
+    }
+  }
+});
   </script>
 
 </body>
