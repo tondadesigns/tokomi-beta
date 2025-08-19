@@ -208,22 +208,42 @@ h1.page-title {
   </div>
 
   <script>
-  const menu = document.getElementById("menu");
   
-  const saveContainer = document.getElementById("saveContainer"); // <-- AJOUT
+  
+ 
 
   function toggleContextMenu(event) {
     event.stopPropagation();
+    const menu = document.getElementById("menu");
+    if (!menu) return;
     menu.style.display = menu.style.display === "block" ? "none" : "block";
   }
 
   // Fermer le menu si on clique ailleurs
-  window.addEventListener("click", () => { menu.style.display = "none";
+  window.addEventListener("click", () => { 
+    const menu = document.getElementById("menu");
+    if (menu) menu.style.display = "none";
   });
 
-  menu.addEventListener("click", e => e.stopPropagation());
+  document.getElementById("menu")?.addEventListener("click", e => e.stopPropagation());
 
+  const userData = JSON.parse(localStorage.getItem("signupData")) || {};
+  const elFullname = document.getElementById("user-fullname");
+  const full = [userData.prenom, userData.nom].filter(Boolean).join(" ").trim();
+ 
+  if (elFullname) elFullname.textContent = full || "x x";
+
+  const elAddr = document.getElementById("user-address");
+  if (elAddr) elAddr.textContent = (userData.adresse || "x x");
+
+  const elEmail = document.getElementById("user-email");
+  if (elEmail) elEmail.textContent = (userData.email || "x x");
+
+  const elPhone = document.getElementById("user-phone");
+  if (elPhone) elPhone.textContent = (userData.telephone || "x x");
+    
   function enterSelectionMode() {
+    const saveContainer = document.getElementById("saveContainer");
     const blocks = document.querySelectorAll(".info-block .info-value");
     blocks.forEach(block => {
       block.setAttribute("contenteditable", "true");
@@ -236,10 +256,11 @@ h1.page-title {
       block.style.fontSize = "24px";
       block.style.fontWeight = "300";
     });
-    saveContainer.style.display = "block";
+   if (saveContainer) saveContainer.style.display = "block";
   }
   
   function exitSelectionMode() {
+    const saveContainer = document.getElementById("saveContainer");
     const blocks = document.querySelectorAll(".info-block .info-value");
     blocks.forEach(block => {
       block.setAttribute("contenteditable", "false");
@@ -249,47 +270,43 @@ h1.page-title {
       block.style.fontSize = "";
       block.style.fontWeight = "";
     });
-    saveContainer.style.display = "none";
-    document.getElementById("menu").style.display = "none";
-
+    if (saveContainer) saveContainer.style.display = "none";
+    const menu = document.getElementById("menu");
+    if (menu) menu.style.display = "none";
   }
-  const userData = JSON.parse(localStorage.getItem("signupData")) || {};
-  const full = [userData.prenom, userData.nom].filter(Boolean).join(" ").trim();
- const elFullname = document.getElementById("user-fullname");
-  if (elFullname) elFullname.textContent = full || "x x";
-
-  const elAddr = document.getElementById("user-address");
-  if (elAddr) elAddr.textContent = (userData.adresse || "x x");
-
-  const elEmail = document.getElementById("user-email");
-  if (elEmail) elEmail.textContent = (userData.email || "x x");
-
-  const elPhone = document.getElementById("user-phone");
-  if (elPhone) elPhone.textContent = (userData.telephone || "x x");
-
 
   const saveBtn = document.getElementById("saveBtn");
-
   saveBtn.addEventListener("click", () => {
-    
     const fullname = (elFullname ? elFullname.textContent : "").trim();
     const [prenom = "", nom = ""] = fullname.split(/\s+/, 2);
     const pwdEl = document.getElementById("user-password");
+    const existing = JSON.parse(localStorage.getItem("signupData") || "{}");
+
+    // Ne pas écraser par "****" ou vide
+    let newPassword = existing.password || "";
+    if (pwdEl) {
+      const raw = (pwdEl.textContent || "").trim();
+      if (raw && raw !== "****") newPassword = raw;
+    }
     const updatedData = {
       prenom,
       nom,
       adresse: (elAddr ? elAddr.textContent : "").trim(),
       email: (elEmail ? elEmail.textContent : "").trim(),
       telephone: (elPhone ? elPhone.textContent : "").trim(),
-      password: pwdEl ? pwdEl.textContent.trim() : ""
+      password: newPassword
     };
 
     // Sauvegarde dans localStorage
     localStorage.setItem("signupData", JSON.stringify(updatedData));
+    localStorage.setItem("tokomi_username", updatedData.prenom || "");
 
     alert("✅ Informations enregistrées avec succès !");
     exitSelectionMode();
   });
+    
+  window.enterSelectionMode = enterSelectionMode;
+  window.exitSelectionMode  = exitSelectionMode;
 </script>
 
 
