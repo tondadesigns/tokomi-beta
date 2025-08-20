@@ -339,6 +339,17 @@ html, body {
   color: #000;
   font-weight: 600;
 }
+
+    /* Ultra-compact entre les carrousels */
+.product-carousel-section { padding: 4px 0 !important; margin: 0 !important; }
+.product-carousel-section + .product-carousel-section { margin-top: -10px !important; }
+
+.section-header { margin: 0 !important; padding: 0 16px 4px !important; }
+.carousel { margin: 0 0 4px 14px !important; padding: 0 16px 4px !important; }
+
+/* Neutralise toute marge résiduelle sur les cartes */
+.carousel .product-card { margin-bottom: 0 !important; }
+
     
   </style>
 </head>
@@ -526,7 +537,7 @@ html, body {
         <div class="product-name">SANDRO</div>
         <div class="product-price">€200</div>
       </div>
-      <div class="product-card" style="margin-bottom: 30px;">
+      <div class="product-card">
         <img src="./chaussure3.jpg" alt="Produit 7" />
         <div class="product-brand">Jill Sander</div>
         <div class="product-name">MELON JAUNE</div>
