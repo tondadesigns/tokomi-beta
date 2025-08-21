@@ -73,7 +73,7 @@
 }
 
 .subcategory-carousel {
-  display: flex;
+  display: flex !important;
   overflow-x: auto;
   padding: 8px 16px;
   gap: 12px;
@@ -590,6 +590,8 @@ color: #111;
       font-weight: 300;
       font-size: 12px;
     }
+.category-button.active { font-weight: 700 !important; color: #000 !important; }
+.subcategory-carousel { display: flex !important; }
 
 </style>
 </head>
@@ -807,7 +809,7 @@ document.addEventListener('DOMContentLoaded', () => {
 let currentAudience = "femme";
   
   const subcatCarousel = document.getElementById('subcategory-carousel');
-  const categorySwitch = document.querySelectorAll('.category-switch');
+  const categorySwitch = document.querySelector('.category-switch');
 
   const subcategories = {
     femme: ["Robes", "Talons", "Bijoux", "Vestes", "Bags", "Casual", "Workwear", "Sport", "Soirée", "Lingerie", "Été", "Nouveautés", "Minimal", "Chic"],
@@ -825,6 +827,7 @@ let currentAudience = "femme";
       subcatCarousel.appendChild(el);
     });
     subcatCarousel.classList.remove("hidden");
+    subcatCarousel.style.display = 'flex';
   }
 
     document.querySelectorAll('.category-button').forEach(b => b.classList.remove('active'));
@@ -854,17 +857,7 @@ let currentAudience = "femme";
   renderProducts(list2);
     });
   }
-});
-  const initialBtn = document.querySelector(`.category-button[data-category="${currentAudience}"]`);
-  if (initialBtn) initialBtn.classList.add('active');
-  
-  updateSubcategories("currentAudience");
-  let initial = filterByAudience(allProducts, currentAudience);
-  initial = filterByUrlTags(initial, filtres);
-  renderProducts(initial);
-}); // fin du DOMContentLoaded
-
-  
+  });
 </script>
 <script>
     function openFilter() {
