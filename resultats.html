@@ -471,6 +471,9 @@ color: #111;
   white-space: nowrap;
 }
 
+.subcategory-carousel { display: flex !important; }
+.subcategory-carousel.hidden { display: none !important; }
+
   
 .filter-fullscreen {
       position: fixed;
@@ -632,9 +635,6 @@ color: #111;
       <button class="apply-button" onclick="applyFilters()">VOIR LES RÉSULTATS</button>
     </div>
   </div>
-
-
-
 
 
 <header class="top-bar" style="display: flex; justify-content: space-between; align-items: center; padding: 0 16px;">
@@ -812,28 +812,6 @@ let initial = filterByAudience(allProducts, currentAudience);
 initial = filterByUrlTags(initial, filtres);
 renderProducts(initial);
   
-
-    // Filtrage des produits selon les filtres de l'URL
-  const filteredProducts = allProducts.filter(product =>
-    filtres.every(filtre => product.tags.includes(filtre.toUpperCase()))
-  );
-
-  // Affichage dans la galerie
-  const gallery = document.getElementById("product-gallery");
-  filteredProducts.forEach(product => {
-    const card = document.createElement("div");
-    card.className = "product-card";
-    card.innerHTML = `
-      <div class="img-placeholder">
-        <div class="color-tag">+ 3 COULEURS</div>
-      </div>
-      <div class="brand">${product.brand}</div>
-      <div class="product-name">${product.name}</div>
-      <div class="price">€${product.price}</div>
-    `;
-    gallery.appendChild(card);
-  });
-
   const subcatCarousel = document.getElementById('subcategory-carousel');
   const categoryButtons = document.querySelectorAll('.category-button');
 
@@ -844,8 +822,9 @@ renderProducts(initial);
   };
 
   function updateSubcategories(category) {
+    if (!subcatCarousel) return;
     subcatCarousel.innerHTML = "";
-    subcategories[category].forEach(label => {
+    (subcategories[category] || []).forEach(label => {
       const el = document.createElement("div");
       el.className = "subcategory";
       el.textContent = label.toUpperCase();
@@ -859,10 +838,8 @@ renderProducts(initial);
       categoryButtons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      // mise à jour des sous-catégories
-    const cat = btn.dataset.category; // "femme" | "homme" | "enfant"
-    currentAudience = cat;
-      updateSubcategories(cat);
+    currentAudience = btn.dataset.category; // "femme" | "homme" | "enfant"
+      updateSubcategories(currentAudience);
       
        // filtrage produits = audience + filtres URL
     let list = filterByAudience(allProducts, currentAudience);
@@ -870,8 +847,16 @@ renderProducts(initial);
     renderProducts(list);
     });
   });
+  const initialBtn = document.querySelector(`.category-button[data-category="${currentAudience}"]`);
+  if (initialBtn) initialBtn.classList.add('active');
+  
+  updateSubcategories("currentAudience");
+  let initial = filterByAudience(allProducts, currentAudience);
+  initial = filterByUrlTags(initial, filtres);
+  renderProducts(initial);
+}); // fin du DOMContentLoaded
 
-  updateSubcategories("femme");
+  
 </script>
 <script>
     function openFilter() {
