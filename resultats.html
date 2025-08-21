@@ -644,7 +644,7 @@ color: #111;
 
 
 <nav class="category-switch">
-  <div class="category-button active" data-category="femme">FEMME <span class="arrow-up"></span></div>
+  <div class="category-button" data-category="femme">FEMME</div>
   <div class="category-button" data-category="homme">HOMME</div>
   <div class="category-button" data-category="enfant">ENFANT</div>
 </nav>
@@ -751,18 +751,67 @@ color: #111;
 </div>
 
 <script>
+document.addEventListener('DOMContentLoaded', () => {
+ // Catalogue de produits simplifié
+  const allProducts = [
+    { brand: "RICK OWENS", name: "BASKETS GEOBASKET", tags: ["RICK OWENS", "CHAUSSURES", "NOIR"], price: 400, audience: "homme" },
+    { brand: "BALENCIAGA", name: "TRIPLE S CLEAR SOLE", tags: ["BALENCIAGA", "CHAUSSURES", "NOIR"], price: 520, audience: "femme" },
+    { brand: "FEAR OF GOD", name: "ESSENTIALS HOODIE", tags: ["FEAR OF GOD", "VÊTEMENTS", "NOIR"], price: 350, audience: "homme" },
+    { brand: "KITH", name: "CHELSEA BOOTS", tags: ["KITH", "CHAUSSURES", "BEIGE"], price: 260, audience: "enfant" }
+  ];
+
+  // --- Helpers (👉 tu les insères ici) ---
+  function renderProducts(products) {
+    const gallery = document.getElementById("product-gallery");
+    if (!gallery) return;
+
+    gallery.innerHTML = "";
+    products.forEach(product => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <div class="img-placeholder">
+          <div class="color-tag">+ 3 COULEURS</div>
+        </div>
+        <div class="brand">${product.brand}</div>
+        <div class="product-name">${product.name}</div>
+        <div class="price">€${product.price}</div>
+      `;
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => window.location.href = 'produit-tokomi.html');
+      card.querySelectorAll('.brand, .product-name, .price').forEach(el => {
+        el.style.cursor = 'pointer';
+        el.addEventListener('click', e => {
+          e.stopPropagation();
+          window.location.href = 'produit-tokomi.html';
+        });
+      });
+      gallery.appendChild(card);
+    });
+  }
+
+  function filterByUrlTags(products, tags) {
+    if (!tags || tags.length === 0) return products;
+    return products.filter(p => tags.every(f => p.tags.includes(f)));
+  }
+
+  function filterByAudience(products, audience) {
+    if (!audience) return products;
+    return products.filter(p => p.audience === audience);
+  }
+
   
  const urlParams = new URLSearchParams(window.location.search);
-  const filtres = urlParams.getAll("filtre"); // tableau de tags sélectionnés
-  console.log("Filtres actifs :", filtres);
+  const filtres = urlParams.getAll("filtre").map(f => f.toUpperCase()); // tableau de tags sélectionnés
 
-  // Catalogue de produits simplifié
-  const allProducts = [
-    { brand: "RICK OWENS", name: "BASKETS GEOBASKET", tags: ["RICK OWENS", "CHAUSSURES", "NOIR"], price: 400 },
-    { brand: "BALENCIAGA", name: "TRIPLE S CLEAR SOLE", tags: ["BALENCIAGA", "CHAUSSURES", "NOIR"], price: 520 },
-    { brand: "FEAR OF GOD", name: "ESSENTIALS HOODIE", tags: ["FEAR OF GOD", "VÊTEMENTS", "NOIR"], price: 350 },
-    { brand: "KITH", name: "CHELSEA BOOTS", tags: ["KITH", "CHAUSSURES", "BEIGE"], price: 260 }
-  ];
+  // audience par défaut (peut être "femme", ou lire un param ?)
+let currentAudience = "femme";
+
+// combinaison initiale
+let initial = filterByAudience(allProducts, currentAudience);
+initial = filterByUrlTags(initial, filtres);
+renderProducts(initial);
+  
 
     // Filtrage des produits selon les filtres de l'URL
   const filteredProducts = allProducts.filter(product =>
@@ -809,7 +858,16 @@ color: #111;
     btn.addEventListener('click', () => {
       categoryButtons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      updateSubcategories(btn.dataset.category);
+
+      // mise à jour des sous-catégories
+    const cat = btn.dataset.category; // "femme" | "homme" | "enfant"
+    currentAudience = cat;
+      updateSubcategories(cat);
+      
+       // filtrage produits = audience + filtres URL
+    let list = filterByAudience(allProducts, currentAudience);
+    list = filterByUrlTags(list, filtres);
+    renderProducts(list);
     });
   });
 
