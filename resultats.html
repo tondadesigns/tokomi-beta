@@ -591,6 +591,8 @@ color: #111;
       font-size: 12px;
     }
 .category-button.active { font-weight: 700 !important; color: #000 !important; }
+  .subcategory { border: 1px solid #eee; background: #f5f5f5; cursor: pointer; }
+.subcategory.active { font-weight: 600; border-color: #000; background: #eaeaea; }
 .subcategory-carousel { display: flex !important; }
 
 </style>
@@ -810,34 +812,66 @@ let currentAudience = "femme";
   
   const subcatCarousel = document.getElementById('subcategory-carousel');
   const categorySwitch = document.querySelector('.category-switch');
+  
+let currentSubcatTag = null;
 
   const subcategories = {
     femme: ["Robes", "Talons", "Bijoux", "Vestes", "Bags", "Casual", "Workwear", "Sport", "Soirée", "Lingerie", "Été", "Nouveautés", "Minimal", "Chic"],
     homme: ["Sneakers", "Pantalons", "Chemises", "Vestes", "Accessoires", "Business", "Casual", "Luxe", "Créateurs", "Streetwear", "Sacs", "Sport", "T-shirts", "Caps"],
     enfant: ["Pyjamas", "Jeux", "Mini looks", "T-shirts", "Sandales", "Vestes", "Bibs", "Sport", "Accessoires", "Tenues cérémonie", "Doudounes", "École", "Mini sacs", "Basics"]
   };
+  
+function mapSubcategoryToTag(label) {
+    const l = label.toLowerCase();
+    const SHOES = ["sneakers","talons","sandales","mules","boots","bottes","bottines","derbies","mocassins","escarpins","chaussures"];
+    const CLOTH = ["robes","pantalons","chemises","vestes","t-shirts","t-shirts","caps","hoodies","sweaters","lingerie","soiree","soirée","workwear","casual","minimal","chic","été","doudounes"];
+    // Dans tes échantillons produits, on a surtout "CHAUSSURES" et "VÊTÊMENTS"
+    if (SHOES.some(k => l.includes(k))) return "CHAUSSURES";
+    if (CLOTH.some(k => l.includes(k))) return "VÊTEMENTS";
+    // par défaut : on essaie le label en majuscules (si tu l'utilises dans tags)
+    return label.toUpperCase();
+  }
+  
+  function getFilteredList() {
+    let list = filterByAudience(allProducts, currentAudience);
+    list = filterByUrlTags(list, filtres);
+    if (currentSubcatTag) {
+      list = list.filter(p => p.tags.includes(currentSubcatTag));
+    }
+    return list;
+  }
 
   function updateSubcategories(category) {
     if (!subcatCarousel) return;
     subcatCarousel.innerHTML = "";
     (subcategories[category] || []).forEach(label => {
-      const el = document.createElement("div");
-      el.className = "subcategory";
-      el.textContent = label.toUpperCase();
-      subcatCarousel.appendChild(el);
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "subcategory";
+      btn.textContent = label.toUpperCase();
+      btn.dataset.filter = mapSubcategoryToTag(label); // ✅ tag produit ciblé
+      subcatCarousel.appendChild(btn);
     });
     subcatCarousel.classList.remove("hidden");
     subcatCarousel.style.display = 'flex';
   }
-
+  
+    if (subcatCarousel) {
+    subcatCarousel.addEventListener('click', (e) => {
+      const btn = e.target.closest('.subcategory');
+      if (!btn) return;
+      // visuel actif
+      subcatCarousel.querySelectorAll('.subcategory').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      // filtre
+      currentSubcatTag = btn.dataset.filter || null;
+      renderProducts(getFilteredList());
+    });
+  }
     document.querySelectorAll('.category-button').forEach(b => b.classList.remove('active'));
     document.querySelector(`.category-button[data-category="${currentAudience}"]`)?.classList.add('active');
       updateSubcategories(currentAudience);
-      
-       // filtrage produits = audience + filtres URL
-    let list = filterByAudience(allProducts, currentAudience);
-    list = filterByUrlTags(list, filtres);
-    renderProducts(list);
+      renderProducts(getFilteredList());
   
   if (categorySwitch) {
   categorySwitch.addEventListener('click', (e) => {
@@ -850,11 +884,10 @@ let currentAudience = "femme";
 
   // filtre + rendu
   currentAudience = btn.dataset.category; // "femme" | "homme" | "enfant"
+  currentSubcatTag = null; 
   updateSubcategories(currentAudience);
 
-  let list2 = filterByAudience(allProducts, currentAudience);
-  list2 = filterByUrlTags(list2, filtres);
-  renderProducts(list2);
+  renderProducts(getFilteredList());
     });
   }
   });
