@@ -809,7 +809,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const filtres = urlParams.getAll("filtre").map(f => f.toUpperCase()); // tableau de tags sélectionnés
   // audience par défaut (peut être "femme", ou lire un param ?)
 let currentAudience = "femme";
-  
+  const audienceFromUrl = urlParams.get("audience");
+if (audienceFromUrl) currentAudience = audienceFromUrl;
+
   const subcatCarousel = document.getElementById('subcategory-carousel');
   const categorySwitch = document.querySelector('.category-switch');
   
@@ -1058,8 +1060,13 @@ if (!items) return;
 
 // ✅ INSERTION DE LA NOUVELLE FONCTION ICI :
   function applyFilters() {
+    const activeCat = document.querySelector('.category-button.active');
+  const audience = activeCat ? activeCat.dataset.category : null;
     const params = Array.from(selectedTags).map(tag => `filtre=${encodeURIComponent(tag)}`).join('&');
-    window.location.href = `resultats.html?${params}`;
+    const audiencePart = audience ? `audience=${encodeURIComponent(audience)}` : '';
+  const query = [audiencePart, params].filter(Boolean).join('&');
+
+    window.location.href = `resultats.html?${query ? `?${query}` : ''}`;
   }
 
 </script>
