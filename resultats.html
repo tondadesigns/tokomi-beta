@@ -62,8 +62,8 @@
 .category-button.active {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 12px;
-  color: black;
-  font-weight: 600;
+  color: black !important;
+  font-weight: 600 !important;
   border-radius: 0;
 }
 
@@ -803,17 +803,11 @@ document.addEventListener('DOMContentLoaded', () => {
   
  const urlParams = new URLSearchParams(window.location.search);
   const filtres = urlParams.getAll("filtre").map(f => f.toUpperCase()); // tableau de tags sélectionnés
-
   // audience par défaut (peut être "femme", ou lire un param ?)
 let currentAudience = "femme";
-
-// combinaison initiale
-let initial = filterByAudience(allProducts, currentAudience);
-initial = filterByUrlTags(initial, filtres);
-renderProducts(initial);
   
   const subcatCarousel = document.getElementById('subcategory-carousel');
-  const categoryButtons = document.querySelectorAll('.category-button');
+  const categorySwitch = document.querySelectorAll('.category-switch');
 
   const subcategories = {
     femme: ["Robes", "Talons", "Bijoux", "Vestes", "Bags", "Casual", "Workwear", "Sport", "Soirée", "Lingerie", "Été", "Nouveautés", "Minimal", "Chic"],
@@ -833,20 +827,34 @@ renderProducts(initial);
     subcatCarousel.classList.remove("hidden");
   }
 
-  categoryButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      categoryButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-    currentAudience = btn.dataset.category; // "femme" | "homme" | "enfant"
+    document.querySelectorAll('.category-button').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.category-button[data-category="${currentAudience}"]`)?.classList.add('active');
       updateSubcategories(currentAudience);
       
        // filtrage produits = audience + filtres URL
     let list = filterByAudience(allProducts, currentAudience);
     list = filterByUrlTags(list, filtres);
     renderProducts(list);
+  
+  if (categorySwitch) {
+  categorySwitch.addEventListener('click', (e) => {
+  const btn = e.target.closest('.category-button');
+  if (!btn) return;
+
+  // toggle visuel
+  document.querySelectorAll('.category-button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  // filtre + rendu
+  currentAudience = btn.dataset.category; // "femme" | "homme" | "enfant"
+  updateSubcategories(currentAudience);
+
+  let list2 = filterByAudience(allProducts, currentAudience);
+  list2 = filterByUrlTags(list2, filtres);
+  renderProducts(list2);
     });
-  });
+  }
+});
   const initialBtn = document.querySelector(`.category-button[data-category="${currentAudience}"]`);
   if (initialBtn) initialBtn.classList.add('active');
   
