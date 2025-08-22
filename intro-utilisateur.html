@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Bienvenue – Tokomi</title>
+  <title data-i18n-title="intro.title">Bienvenue – Tokomi</title>
   <style>
     html, body {
       margin: 0;
@@ -89,6 +89,10 @@
       border: 1px solid white;
     }
   </style>
+  <!-- 1) Dictionnaire -->
+<script src="/i18n/translations.js"></script>
+<!-- 2) Moteur i18n -->
+<script src="/i18n/i18n.js"></script>
 </head>
 <body>
   <div class="language-toggle">
@@ -103,9 +107,9 @@
 
   <div class="content">
     <!-- IDs ajoutés pour la traduction -->
-    <button id="btnGuest" onclick="continueAsGuest()">Poursuivre en tant qu’invité</button>
-    <button id="btnLogin" onclick="redirectToLogin()">Connexion</button>
-    <button id="btnSignup" onclick="redirectToSignUp()">Créer un compte</button>
+    <button data-i18n="intro.btnGuest" onclick="continueAsGuest()">Poursuivre en tant qu’invité</button>
+    <button data-i18n="intro.btnLogin" onclick="redirectToLogin()">Connexion</button>
+    <button data-i18n="intro.btnSignup" onclick="redirectToSignUp()">Créer un compte</button>
   </div>
 
   <script>
