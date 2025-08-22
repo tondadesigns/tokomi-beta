@@ -89,10 +89,7 @@
       border: 1px solid white;
     }
   </style>
-  <!-- 1) Dictionnaire -->
-<script src="/i18n/translations.js"></script>
-<!-- 2) Moteur i18n -->
-<script src="/i18n/i18n.js"></script>
+
 </head>
 <body>
   <div class="language-toggle">
@@ -176,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // ===== Logique existante conservée =====
-  function continueAsGuest() {
+  window.continueAsGuest = fonction() {
     // marquer le mode invité et nettoyer un éventuel nom
     localStorage.setItem('tokomi_auth', 'guest');
     localStorage.removeItem('tokomi_username');
@@ -195,16 +192,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.location.href = 'accueil.html';
-  }
+  };
 
-  function redirectToLogin() {
+  window.redirectToLogin = function () {
     window.location.href = 'connexion.html';
-  }
+  };
       
-  function redirectToSignUp() {
+  window.redirectToSignUp = function () {
     window.location.href = 'signup.html';
-  }
-  </script>
+  };
+  </script
+      <!-- 1) Dictionnaire -->
+<script src="/i18n/translations.js"></script>
+<!-- 2) Moteur i18n -->
+<script src="/i18n/i18n.js"></script>
 </body>
 </html>
 
