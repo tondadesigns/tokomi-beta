@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title data-i18n-title="intro.title">Bienvenue – Tokomi</title>
+  <title>Bienvenue – Tokomi</title>
   <style>
     html, body {
       margin: 0;
@@ -89,7 +89,6 @@
       border: 1px solid white;
     }
   </style>
-
 </head>
 <body>
   <div class="language-toggle">
@@ -104,63 +103,57 @@
 
   <div class="content">
     <!-- IDs ajoutés pour la traduction -->
-    <button data-i18n="intro.btnGuest" onclick="continueAsGuest()">Poursuivre en tant qu’invité</button>
-    <button data-i18n="intro.btnLogin" onclick="redirectToLogin()">Connexion</button>
-    <button data-i18n="intro.btnSignup" onclick="redirectToSignUp()">Créer un compte</button>
+    <button id="btnGuest" onclick="continueAsGuest()">Poursuivre en tant qu’invité</button>
+    <button id="btnLogin" onclick="redirectToLogin()">Connexion</button>
+    <button id="btnSignup" onclick="redirectToSignUp()">Créer un compte</button>
   </div>
 
   <script>
   // ===== Dictionnaire de traductions =====
   const I18N = {
     fr: {
-      htmlLang: "fr",
-      intro: {
-      title: "Bienvenue – Tokomi",
       btnGuest: "Poursuivre en tant qu’invité",
       btnLogin: "Connexion",
-      btnSignup: "Créer un compte"
-        }
+      btnSignup: "Créer un compte",
+      title: "Bienvenue – Tokomi",
+      htmlLang: "fr"
     },
     en: {
-      htmlLang: "en",
-      intro: {
-      title: "Welcome – Tokomi",
       btnGuest: "Continue as guest",
       btnLogin: "Sign in",
-      btnSignup: "Create an account"
+      btnSignup: "Create an account",
+      title: "Welcome – Tokomi",
+      htmlLang: "en"
     }
-   }
   };
-    
-  // petit helper pour lire "intro.btnGuest"
-function t(dict, keyPath) {
-return keyPath.split('.').reduce((o, k) => (o && o[k] != null ? o[k] : undefined), dict);
-}
 
   // Applique les traductions sur la page
   function applyTranslations(lang) {
     const dict = I18N[lang] || I18N.fr;
 
-// 1) éléments de texte : [data-i18n="intro.btnGuest"]
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    const val = t(dict, key);
-    if (typeof val === 'string') el.textContent = val;
-  });
-  // <title data-i18n-title="intro.title">
-  const titleKey = document.querySelector('[data-i18n-title]')?.getAttribute('data-i18n-title');
-  const titleVal = t(dict, titleKey || '');
-  if (typeof titleVal === 'string') document.title = titleVal;
+    // Boutons
+    const g = document.getElementById('btnGuest');
+    const l = document.getElementById('btnLogin');
+    const s = document.getElementById('btnSignup');
+    if (g) g.textContent = dict.btnGuest;
+    if (l) l.textContent = dict.btnLogin;
+    if (s) s.textContent = dict.btnSignup;
+
+    // <title>
+    document.title = dict.title;
+
+    // <html lang="...">
     document.documentElement.setAttribute('lang', dict.htmlLang || lang);
   }
 
-   window.changeLanguage = function() {
+  function changeLanguage() {
     const selectedLang = document.getElementById('languageSelect').value;
     localStorage.setItem('selectedLang', selectedLang);
     applyTranslations(selectedLang);
   }
 
-document.addEventListener('DOMContentLoaded', () => {
+  // Charger la langue sauvegardée au démarrage
+  window.onload = function () {
     const savedLang = localStorage.getItem('selectedLang') || 'fr';
     const select = document.getElementById('languageSelect');
     if (select) select.value = savedLang;
@@ -168,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // ===== Logique existante conservée =====
-  window.continueAsGuest = function () {
+  function continueAsGuest() {
     // marquer le mode invité et nettoyer un éventuel nom
     localStorage.setItem('tokomi_auth', 'guest');
     localStorage.removeItem('tokomi_username');
@@ -187,20 +180,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.location.href = 'accueil.html';
-  };
+  }
 
-  window.redirectToLogin = function () {
+  function redirectToLogin() {
     window.location.href = 'connexion.html';
-  };
+  }
       
-  window.redirectToSignUp = function () {
+  function redirectToSignUp() {
     window.location.href = 'signup.html';
-  };
-  </script
-      <!-- 1) Dictionnaire -->
-<script src="/i18n/translations.js"></script>
-<!-- 2) Moteur i18n -->
-<script src="/i18n/i18n.js"></script>
+  }
+  </script>
 </body>
 </html>
-
