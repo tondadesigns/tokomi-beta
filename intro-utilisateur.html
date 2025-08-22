@@ -147,15 +147,10 @@ return keyPath.split('.').reduce((o, k) => (o && o[k] != null ? o[k] : undefined
     const val = t(dict, key);
     if (typeof val === 'string') el.textContent = val;
   });
-
-  // 2) <title data-i18n-title="intro.title">
-  const titleEl = document.querySelector('[data-i18n-title]');
-  if (titleEl) {
-    const key = titleEl.getAttribute('data-i18n-title');
-    const val = t(dict, key);
-    if (typeof val === 'string') document.title = val;
-  }
-
+  // <title data-i18n-title="intro.title">
+  const titleKey = document.querySelector('[data-i18n-title]')?.getAttribute('data-i18n-title');
+  const titleVal = t(dict, titleKey || '');
+  if (typeof titleVal === 'string') document.title = titleVal;
     document.documentElement.setAttribute('lang', dict.htmlLang || lang);
   }
 
@@ -173,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // ===== Logique existante conservée =====
-  window.continueAsGuest = fonction() {
+  window.continueAsGuest = function () {
     // marquer le mode invité et nettoyer un éventuel nom
     localStorage.setItem('tokomi_auth', 'guest');
     localStorage.removeItem('tokomi_username');
