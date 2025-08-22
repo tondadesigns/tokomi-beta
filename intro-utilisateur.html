@@ -116,37 +116,48 @@
   // ===== Dictionnaire de traductions =====
   const I18N = {
     fr: {
+      htmlLang: "fr",
+      intro: {
+      title: "Bienvenue – Tokomi",
       btnGuest: "Poursuivre en tant qu’invité",
       btnLogin: "Connexion",
       btnSignup: "Créer un compte",
-      title: "Bienvenue – Tokomi",
-      htmlLang: "fr"
     },
     en: {
+      htmlLang: "en",
+      intro: {
+      title: "Welcome – Tokomi",
       btnGuest: "Continue as guest",
       btnLogin: "Sign in",
       btnSignup: "Create an account",
-      title: "Welcome – Tokomi",
-      htmlLang: "en"
     }
+   }
   };
+    
+  // petit helper pour lire "intro.btnGuest"
+function t(dict, keyPath) {
+return keyPath.split('.').reduce((o, k) => (o && o[k] != null ? o[k] : undefined), dict);
+}
 
   // Applique les traductions sur la page
   function applyTranslations(lang) {
     const dict = I18N[lang] || I18N.fr;
 
-    // Boutons
-    const g = document.getElementById('btnGuest');
-    const l = document.getElementById('btnLogin');
-    const s = document.getElementById('btnSignup');
-    if (g) g.textContent = dict.btnGuest;
-    if (l) l.textContent = dict.btnLogin;
-    if (s) s.textContent = dict.btnSignup;
+// 1) éléments de texte : [data-i18n="intro.btnGuest"]
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const val = t(dict, key);
+    if (typeof val === 'string') el.textContent = val;
+  });
 
-    // <title>
-    document.title = dict.title;
+  // 2) <title data-i18n-title="intro.title">
+  const titleEl = document.querySelector('[data-i18n-title]');
+  if (titleEl) {
+    const key = titleEl.getAttribute('data-i18n-title');
+    const val = t(dict, key);
+    if (typeof val === 'string') document.title = val;
+  }
 
-    // <html lang="...">
     document.documentElement.setAttribute('lang', dict.htmlLang || lang);
   }
 
@@ -156,8 +167,7 @@
     applyTranslations(selectedLang);
   }
 
-  // Charger la langue sauvegardée au démarrage
-  window.onload = function () {
+document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('selectedLang') || 'fr';
     const select = document.getElementById('languageSelect');
     if (select) select.value = savedLang;
