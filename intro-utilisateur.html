@@ -14,30 +14,29 @@
     }
     
     .language-toggle {
-  position: absolute;
-  top: 80px;
-  right: 60px;
-  z-index: 1000;
-  font-family: 'Space Grotesk', sans-serif;
-}
+      position: absolute;
+      top: 80px;
+      right: 60px;
+      z-index: 1000;
+      font-family: 'Space Grotesk', sans-serif;
+    }
 
-.language-toggle select {
-  padding: 4px 8px;
-  font-size: 26px;
-  font-weight: 500;
-  color: #000;
-  border: 1px solid #ccc;
-  border-radius: 0;
-  background-color: white;
-  cursor: pointer;
-}
+    .language-toggle select {
+      padding: 4px 8px;
+      font-size: 26px;
+      font-weight: 500;
+      color: #000;
+      border: 1px solid #ccc;
+      border-radius: 0;
+      background-color: white;
+      cursor: pointer;
+    }
     
     .background {
       position: absolute;
       color: #000;
       inset: 0;
       z-index: 1;
-  
     }
 
     .overlay {
@@ -93,43 +92,81 @@
 </head>
 <body>
   <div class="language-toggle">
-  <select id="languageSelect" onchange="changeLanguage()">
-    <option value="fr">FR</option>
-    <option value="en">EN</option>
-  </select>
-</div>
+    <select id="languageSelect" onchange="changeLanguage()">
+      <option value="fr">FR</option>
+      <option value="en">EN</option>
+    </select>
+  </div>
   
   <div class="background"></div>
   <div class="overlay"></div>
 
   <div class="content">
-    <button onclick="continueAsGuest()">Poursuivre en tant qu’invité</button>
-   <button onclick="redirectToLogin()">Connexion</button>
-    <button onclick="redirectToSignUp()">Créer un compte</button>
+    <!-- IDs ajoutés pour la traduction -->
+    <button id="btnGuest" onclick="continueAsGuest()">Poursuivre en tant qu’invité</button>
+    <button id="btnLogin" onclick="redirectToLogin()">Connexion</button>
+    <button id="btnSignup" onclick="redirectToSignUp()">Créer un compte</button>
   </div>
 
   <script>
-  
+  // ===== Dictionnaire de traductions =====
+  const I18N = {
+    fr: {
+      btnGuest: "Poursuivre en tant qu’invité",
+      btnLogin: "Connexion",
+      btnSignup: "Créer un compte",
+      title: "Bienvenue – Tokomi",
+      htmlLang: "fr"
+    },
+    en: {
+      btnGuest: "Continue as guest",
+      btnLogin: "Sign in",
+      btnSignup: "Create an account",
+      title: "Welcome – Tokomi",
+      htmlLang: "en"
+    }
+  };
+
+  // Applique les traductions sur la page
+  function applyTranslations(lang) {
+    const dict = I18N[lang] || I18N.fr;
+
+    // Boutons
+    const g = document.getElementById('btnGuest');
+    const l = document.getElementById('btnLogin');
+    const s = document.getElementById('btnSignup');
+    if (g) g.textContent = dict.btnGuest;
+    if (l) l.textContent = dict.btnLogin;
+    if (s) s.textContent = dict.btnSignup;
+
+    // <title>
+    document.title = dict.title;
+
+    // <html lang="...">
+    document.documentElement.setAttribute('lang', dict.htmlLang || lang);
+  }
+
   function changeLanguage() {
     const selectedLang = document.getElementById('languageSelect').value;
     localStorage.setItem('selectedLang', selectedLang);
-    // Recharge ou redirige si besoin
-    // Tu peux ici ajouter une vraie logique de traduction
+    applyTranslations(selectedLang);
   }
 
-  // Charger la langue sauvegardée
+  // Charger la langue sauvegardée au démarrage
   window.onload = function () {
-    const savedLang = localStorage.getItem('selectedLang');
-    if (savedLang) {
-      document.getElementById('languageSelect').value = savedLang;
-    }
+    const savedLang = localStorage.getItem('selectedLang') || 'fr';
+    const select = document.getElementById('languageSelect');
+    if (select) select.value = savedLang;
+    applyTranslations(savedLang);
   };
-  
-    function continueAsGuest() {
-      // marquer le mode invité et nettoyer un éventuel nom
-  localStorage.setItem('tokomi_auth', 'guest');
-  localStorage.removeItem('tokomi_username');
-      // 1. Vider le contenu du div .username
+
+  // ===== Logique existante conservée =====
+  function continueAsGuest() {
+    // marquer le mode invité et nettoyer un éventuel nom
+    localStorage.setItem('tokomi_auth', 'guest');
+    localStorage.removeItem('tokomi_username');
+
+    // 1. Vider le contenu du div .username
     const usernameDiv = document.querySelector('.username');
     if (usernameDiv) {
       usernameDiv.textContent = "";
@@ -142,20 +179,17 @@
       logoutBtn.setAttribute("onclick", "redirectToLogin()");
     }
 
-      window.location.href = 'accueil.html';
-    }
+    window.location.href = 'accueil.html';
+  }
 
-   function redirectToLogin() {
-      window.location.href = 'connexion.html';
-    }
+  function redirectToLogin() {
+    window.location.href = 'connexion.html';
+  }
       
-    function redirectToSignUp() {
-      window.location.href = 'signup.html';
-    }
-    
+  function redirectToSignUp() {
+    window.location.href = 'signup.html';
+  }
   </script>
-
-  
-
 </body>
 </html>
+
