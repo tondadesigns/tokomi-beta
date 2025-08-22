@@ -159,7 +159,7 @@ return keyPath.split('.').reduce((o, k) => (o && o[k] != null ? o[k] : undefined
     document.documentElement.setAttribute('lang', dict.htmlLang || lang);
   }
 
-  function changeLanguage() {
+   window.changeLanguage = function() {
     const selectedLang = document.getElementById('languageSelect').value;
     localStorage.setItem('selectedLang', selectedLang);
     applyTranslations(selectedLang);
