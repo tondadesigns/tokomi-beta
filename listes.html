@@ -441,7 +441,7 @@
 }
 
 #menuToggle.selection-active {
-  margin-top: 50px;
+  margin-top: 49px;
   font-weight: 300; /* ou 400, 500, selon ton besoin */
   font-size: 12px;
 }
@@ -581,23 +581,50 @@ function openListDetail(listId) {
 function renderLists() {
   const container = document.getElementById("listContainer");
   const lists = getLists();
-  container.innerHTML = "";
+  container.innerHTML = '';
 
   lists.forEach(list => {
-    const div = document.createElement("div");
-    div.className = "list-card";
-    div.innerHTML = `
-      <h3>${list.title}</h3>
-      <p>${list.items?.length || 0} articles</p>
+    const count = Array.isArray(list.items) ? list.items.length : 0;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'list-wrapper';
+    wrapper.dataset.id = list.id; // ✅ on garde l'id pour rename/delete
+
+    const card = document.createElement('a');
+    card.className = 'list-card';
+    card.href = `listes-detail.html?id=${encodeURIComponent(list.id)}`;
+    card.innerHTML = `
+      <div class="list-covers-grid"></div>
+
+      <!-- ✅ pastille de sélection (cachée par défaut) -->
+      <div class="list-select-box" style="display:none">
+        <label class="custom-check-wrapper">
+          <input type="checkbox" class="list-checkbox" />
+          <span class="custom-check"></span>
+        </label>
+      </div>
     `;
-    div.onclick = () => openListDetail(list.id);
-    container.appendChild(div);
+
+    const info = document.createElement('div');
+    info.className = 'list-info';
+    info.innerHTML = `
+      <div class="list-card-title">${(list.title||'SANS NOM').toUpperCase()}</div>
+      <div class="list-card-count">${count} article${count>1?'s':''}</div>
+    `;
+
+    wrapper.appendChild(card);
+    wrapper.appendChild(info);
+    container.appendChild(wrapper);
   });
 }
 
-document.addEventListener("DOMContentLoaded", renderLists);
-
-
+// ✅ Un seul init au chargement
+document.addEventListener('DOMContentLoaded', () => {
+  renderLists();
+  updateEmptyMessage();
+  updateListCount();
+});
+    
 function saveLists(lists) {
   localStorage.setItem(LS_KEY, JSON.stringify(lists));
 }
@@ -788,6 +815,7 @@ function enterListSelectionMode() {
   // (on n’utilise plus le span #btnCancel)
   const cancelSpan = document.getElementById('btnCancel');
   if (cancelSpan) cancelSpan.style.display = 'none';
+  updateListSelectionUI();
 }
 
 function toggleAllSelection() {
@@ -826,6 +854,7 @@ function enableListSelectionMode() {
   // (on n’utilise plus le span #btnCancel)
   const cancelSpan = document.getElementById('btnCancel');
   if (cancelSpan) cancelSpan.style.display = 'none';
+  updateListSelectionUI();
   }
     
 
@@ -863,18 +892,20 @@ restoreBackButton();
 
 
 function renameSelectedList() {
-  const checked = document.querySelector('.list-checkbox:checked');
+  const checked = document.querySelector('.list-card.selectable.list-checkbox:checked');
   if (!checked) return;
 
-  const card = checked.closest('.list-card');
-  const titleElement = card.querySelector('.list-card-title');
-  const oldTitle = titleElement.textContent;
+  const wrapper = checked.closest('.list-wrapper');
+  const id = wrapper?.dataset.id;
+  const titleEl = wrapper.querySelector('.list-card-title');
+  const oldTitle = titleEl?.textContent || '';
   const newTitle = prompt("Nouveau nom de la liste :", oldTitle);
-  if (newTitle && newTitle !== oldTitle) {
-    titleElement.textContent = newTitle;
+  if (!newTitle || newTitle === oldTitle) return;
+    titleEl.textContent = newTitle;
      const lists = getLists();
-  const a = lists.find(l => (l.title||'').toUpperCase() === oldTitle.toUpperCase());
-  if (a) a.title = newTitle;
+  const found = lists.find(l => l.id === id);
+  if (found) {
+    found.title = newTitle;
   saveLists(lists);
 
   }
@@ -883,44 +914,58 @@ function renameSelectedList() {
 }
 
 function deleteSelectedLists() {
-  const checked = document.querySelectorAll('.list-checkbox:checked');
+  const checked = document.querySelectorAll('.list-card.selectable .list-checkbox:checked');
   if (checked.length === 0) return;
 
   if (!confirm("Supprimer les listes sélectionnées ?")) return;
-
+  
+  const idsToDelete = [];
   checked.forEach(cb => {
-    const card = cb.closest('.list-card');
-    const title = card.querySelector('strong').textContent;
-    card.remove();
+    const wrapper = cb.closest('.list-wrapper');
+    const id = wrapper?.dataset.id;
+    if (id) {
+      idsToDelete.push(id);
+      wrapper.remove(); // retirer du DOM
+    }
+  });
 
     // Supprimer du localStorage
-    const lists = JSON.parse(localStorage.getItem('tokomiLists') || '[]');
-    const updated = lists.filter(entry => entry.title !== title);
-    localStorage.setItem('tokomiLists', JSON.stringify(updated));
-  });
+    const lists = getLists();
+    const updated = lists.filter(l => !idsToDelete.includes(l.id));
+  saveLists(updated);
 
   updateEmptyMessage();
   updateListCount();
   updateListSelectionUI();
 }
   
-    function renderLists() {
-  const container = document.getElementById('listContainer');
+    
+function renderLists() {
+  const container = document.getElementById("listContainer");
   const lists = getLists();
   container.innerHTML = '';
 
   lists.forEach(list => {
     const count = Array.isArray(list.items) ? list.items.length : 0;
+
     const wrapper = document.createElement('div');
     wrapper.className = 'list-wrapper';
+    wrapper.dataset.id = list.id; // ✅ on garde l'id pour rename/delete
+
     const card = document.createElement('a');
     card.className = 'list-card';
     card.href = `listes-detail.html?id=${encodeURIComponent(list.id)}`;
     card.innerHTML = `
-    <div class="list-covers-grid">
-        <!-- Ici tu peux mettre des <img> ou un placeholder -->
+      <div class="list-covers-grid"></div>
+
+      <!-- ✅ pastille de sélection (cachée par défaut) -->
+      <div class="list-select-box" style="display:none">
+        <label class="custom-check-wrapper">
+          <input type="checkbox" class="list-checkbox" />
+          <span class="custom-check"></span>
+        </label>
       </div>
-      `;
+    `;
 
     const info = document.createElement('div');
     info.className = 'list-info';
@@ -928,17 +973,50 @@ function deleteSelectedLists() {
       <div class="list-card-title">${(list.title||'SANS NOM').toUpperCase()}</div>
       <div class="list-card-count">${count} article${count>1?'s':''}</div>
     `;
+
     wrapper.appendChild(card);
     wrapper.appendChild(info);
     container.appendChild(wrapper);
   });
 }
+
+// ✅ Un seul init au chargement
 document.addEventListener('DOMContentLoaded', () => {
   renderLists();
   updateEmptyMessage();
   updateListCount();
 });
+   
 
+// ✅ Quand on coche/décoche une liste, on met à jour la barre d’actions
+document.addEventListener('change', (e) => {
+  if (e.target.matches('.list-checkbox')) {
+    updateListSelectionUI();
+  }
+});
+
+// ✅ En mode sélection : cliquer sur la carte => toggle la case (pas de navigation)
+document.addEventListener('click', (e) => {
+  const card = e.target.closest('.list-card');
+  if (!card) return;
+
+  if (card.classList.contains('selectable')) {
+    // si on ne clique pas directement sur la pastille, on toggle la case
+    if (!e.target.closest('.list-select-box')) {
+      e.preventDefault(); // empêche le lien vers listes-detail
+      const cb = card.querySelector('.list-checkbox');
+      if (cb) {
+        cb.checked = !cb.checked;
+        updateListSelectionUI();
+      }
+    } else {
+      e.preventDefault(); // clic sur la pastille => pas de navigation non plus
+    }
+  }
+});
+
+
+    
   </script>
 <div class="selection-actions" id="selectionActions" style="display: none;">
   <button onclick="renameSelectedList()">RENOMMER</button>
