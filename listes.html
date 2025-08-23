@@ -733,7 +733,35 @@ function updateListSelectionUI() {
 }
 }
 
-// Ces fonctions ciblent la dernière liste (exemple simple à ajuster selon ton besoin)
+function makeBackButtonCancel() {
+  const backBtn = document.querySelector('.btn-retour');
+  if (!backBtn) return;
+
+  // Mémoriser l'état initial une seule fois
+  if (!backBtn.dataset.originalText) {
+    backBtn.dataset.originalText = backBtn.textContent || 'RETOUR';
+  }
+  if (!backBtn.dataset.originalOnclick) {
+    backBtn.dataset.originalOnclick = backBtn.getAttribute('onclick') || "window.location.href='profil.html'";
+  }
+
+  // Devenir "ANNULER"
+  backBtn.textContent = 'ANNULER';
+  backBtn.removeAttribute('onclick');     // on neutralise la redirection
+  backBtn.onclick = exitSelectionMode;    // clique => sortir du mode sélection
+}
+
+function restoreBackButton() {
+  const backBtn = document.querySelector('.btn-retour');
+  if (!backBtn) return;
+
+  // Revenir à "RETOUR" + son onclick d'origine
+  backBtn.textContent = backBtn.dataset.originalText || 'RETOUR';
+  backBtn.onclick = null; // enlève le handler JS
+  const original = backBtn.dataset.originalOnclick || "window.location.href='profil.html'";
+  backBtn.setAttribute('onclick', original);
+}
+
 
 function enterListSelectionMode() {
   document.getElementById('menu').style.display = 'none';
@@ -753,8 +781,12 @@ function enterListSelectionMode() {
   toggle.textContent = 'TOUT SÉLECTIONNER (0)';
   toggle.onclick = toggleAllSelection;
 
-  document.getElementById('btnCancel').style.display = 'inline';
+   // ➜ le bouton RETOUR devient ANNULER
+  makeBackButtonCancel();
 
+  // (on n’utilise plus le span #btnCancel)
+  const cancelSpan = document.getElementById('btnCancel');
+  if (cancelSpan) cancelSpan.style.display = 'none';
 }
 
 function toggleAllSelection() {
@@ -787,7 +819,12 @@ function enableListSelectionMode() {
   toggle.onclick = toggleAllSelection;
 
 
-      document.getElementById('btnCancel').style.display = 'inline';
+       // ➜ le bouton RETOUR devient ANNULER
+  makeBackButtonCancel();
+
+  // (on n’utilise plus le span #btnCancel)
+  const cancelSpan = document.getElementById('btnCancel');
+  if (cancelSpan) cancelSpan.style.display = 'none';
   }
     
 
@@ -812,10 +849,8 @@ function exitSelectionMode() {
   // 3. Masque la barre d'actions
   const selectionBar = document.getElementById('selectionActions');
   if (selectionBar) selectionBar.style.display = 'none';
-
-    // 4. Masque le bouton ANNULER
-  const btnCancel = document.getElementById('btnCancel');
-  if (btnCancel) btnCancel.style.display = 'none';
+  
+restoreBackButton();
 
   const toggle = document.getElementById('menuToggle');
    if (toggle) {
