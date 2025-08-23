@@ -981,6 +981,14 @@ margin-bottom: -48px;
     });
   });
 </script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.applyTranslations) {
+      const saved = localStorage.getItem('selectedLang') || 'fr';
+      applyTranslations(saved);
+    }
+  });
+</script>
 
 </body>
 </html>
