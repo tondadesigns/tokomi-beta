@@ -892,25 +892,44 @@ restoreBackButton();
 
 
 function renameSelectedList() {
-  const checked = document.querySelector('.list-card.selectable.list-checkbox:checked');
-  if (!checked) return;
+  // ✅ le bon sélecteur : checkbox cochée à l'intérieur d'une carte en mode sélection
+  const checkedBoxes = document.querySelectorAll('.list-card.selectable .list-checkbox:checked');
 
-  const wrapper = checked.closest('.list-wrapper');
-  const id = wrapper?.dataset.id;
-  const titleEl = wrapper.querySelector('.list-card-title');
-  const oldTitle = titleEl?.textContent || '';
-  const newTitle = prompt("Nouveau nom de la liste :", oldTitle);
-  if (!newTitle || newTitle === oldTitle) return;
-    titleEl.textContent = newTitle;
-     const lists = getLists();
-  const found = lists.find(l => l.id === id);
-  if (found) {
-    found.title = newTitle;
-  saveLists(lists);
-
+  if (checkedBoxes.length === 0) {
+    alert("Sélectionne une liste à renommer.");
+    return;
+  }
+  if (checkedBoxes.length > 1) {
+    alert("Renomme une seule liste à la fois.");
+    return;
   }
 
-  updateListSelectionUI();
+  const cb = checkedBoxes[0];
+  const wrapper = cb.closest('.list-wrapper');
+  if (!wrapper) return;
+
+  const id = wrapper.dataset.id;
+  const titleEl = wrapper.querySelector('.list-card-title');
+  const oldTitle = (titleEl?.textContent || '').trim();
+  const newTitle = prompt("Nouveau nom de la liste :", oldTitle);
+
+  if (!newTitle || newTitle.trim() === oldTitle) return;
+
+  // ✅ UI : ton affichage est en uppercase
+  titleEl.textContent = newTitle.trim().toUpperCase();
+
+  // ✅ DATA : maj du localStorage par id
+  const lists = getLists();
+  const found = lists.find(l => l.id === id);
+  if (found) {
+    found.title = newTitle.trim();
+    saveLists(lists);
+  }
+
+  // Optionnel : on sort du mode sélection et on rafraîchit les compteurs
+  exitSelectionMode();
+  updateListCount();
+  updateEmptyMessage();
 }
 
 function deleteSelectedLists() {
