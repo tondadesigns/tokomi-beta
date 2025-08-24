@@ -675,11 +675,22 @@ document.addEventListener('keydown', (e) => {
       }
 });
 
-    function createList() {  const name = listNameInput.value.trim();
+    function createList() {  
+  
+  const lists = getLists();
+  if (lists.length >= 5) {
+    alert("Vous ne pouvez pas créer plus de 5 listes.");
+    closeCreateListModal();
+    return;
+  }
+
+ 
+  const name = listNameInput.value.trim();
   if (!name) { listNameInput.focus(); return; }
 
   // 1) Lire l'état, pousser la nouvelle liste dans le schéma {id,title,items:[]}
-  const lists = getLists();
+  
+  
   const id = Date.now().toString();
   lists.push({ id, title: name, items: [] });
   saveLists(lists);
