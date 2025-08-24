@@ -254,49 +254,85 @@ function getLists() {
   catch { return []; }
 }
 
+/* ⬇️ NEW: utilitaires pour récupérer la liste sélectionnée */
+function getQueryId() {
+  const p = new URLSearchParams(window.location.search);
+  return p.get('id') || null;
+}
+
+function getSelectedList() {
+  const lists = getLists();
+  // 1) Priorité à l'id dans l'URL
+  const id = getQueryId();
+  if (id) {
+    const byId = lists.find(l => String(l.id) === String(id));
+    if (byId) return byId;
+  }
+  // 2) Fallbacks: ancien stockage par id puis par titre
+  const legacyId = localStorage.getItem('tokomiSelectedListId');
+  if (legacyId) {
+    const byLegacyId = lists.find(l => String(l.id) === String(legacyId));
+    if (byLegacyId) return byLegacyId;
+  }
+  const legacyTitle = localStorage.getItem('tokomiCurrentList');
+  if (legacyTitle) {
+    const byTitle = lists.find(l => l?.title === legacyTitle);
+    if (byTitle) return byTitle;
+  }
+  return null;
+}
+
+
 function renderListDetail() {
   const container = document.getElementById("listDetailContainer");
+  const titleEl = document.getElementById("detailTitle");
+  const countEl = document.getElementById("detailCount");
+
   container.innerHTML = "";
 
-  const lists = getLists();
-
-  // On garde ta logique existante : on identifie la liste par son titre courant
-  const listName = localStorage.getItem('tokomiCurrentList');
-  const list = lists.find(l => l?.title === listName);
+  const list = getSelectedList();
 
   if (!list) {
-    document.getElementById("detailTitle").textContent = "Liste introuvable";
-    document.getElementById("detailCount").textContent = "0 ARTICLE";
+    titleEl.textContent = "Liste introuvable";
+    countEl.textContent = "0 ARTICLE";
     container.innerHTML = "<p>Aucune donnée pour cette liste.</p>";
     return;
   }
 
   // Titre
-  document.getElementById("detailTitle").textContent = list.title;
+  titleEl.textContent = (list.title || "SANS NOM").toUpperCase();
 
-  // Source des items : d'abord list.items (format recommandé), sinon fallback sur list.covers
+  // Normalise les items (préférence à list.items)
   const items =
     Array.isArray(list.items) && list.items.length
       ? list.items.map((it, idx) => ({
           name: it.name || `Article ${idx + 1}`,
-          image: it.image || "https://via.placeholder.com/100x100?text=?",
-          href: it.href || `produit-detail.html?id=${encodeURIComponent(listName)}-${idx}`
+          image: it.image || "https://via.placeholder.com/400x600?text=?",
+          href: it.href || `produit-detail.html?id=${encodeURIComponent(list.id)}&i=${idx}`
         }))
       : (Array.isArray(list.covers) && list.covers.length
           ? list.covers.map((src, idx) => ({
               name: `Article ${idx + 1}`,
               image: src,
-              href: `produit-detail.html?id=${encodeURIComponent(listName)}-${idx}`
+              href: `produit-detail.html?id=${encodeURIComponent(list.id)}&i=${idx}`
             }))
           : []);
-      
 
-  // Rendu (conserve .product-link + .product-thumb pour ton mode sélection)
+  // Affichage selon le nombre d’articles
+  if (items.length === 0) {
+    countEl.textContent = "AUCUN ARTICLE POUR L’INSTANT";
+    container.innerHTML = ""; // on laisse vide (ou tu peux mettre un message UX ici)
+    return;
+  } else {
+    countEl.textContent = `${items.length} ARTICLE${items.length > 1 ? 'S' : ''}`;
+  }
+
+  // Rendu des vignettes
   items.forEach((item, index) => {
     const link = document.createElement("a");
     link.href = item.href;
     link.className = "product-link";
-    link.dataset.index = index; // utile si besoin
+    link.dataset.index = index;
 
     const img = document.createElement("img");
     img.src = item.image;
@@ -306,15 +342,10 @@ function renderListDetail() {
     link.appendChild(img);
     container.appendChild(link);
   });
-
-  // Compteur
-  document.getElementById("detailCount").textContent =
-    `${items.length} ARTICLE${items.length > 1 ? 'S' : ''}`;
 }
 
 // Lancer le rendu au chargement
 document.addEventListener("DOMContentLoaded", renderListDetail);
-
     function toggleMenu() {
       const menu = document.getElementById("contextMenu");
       menu.style.display = menu.style.display === "block" ? "none" : "block";
