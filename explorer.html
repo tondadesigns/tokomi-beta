@@ -426,43 +426,43 @@ html, body {
     </div>
 
     <div class="carousel">
-      <div class="product-card">
+      <div class="product-card" data-id="1">
         <img src="./chaussure1.jpg" alt="Produit 1" />
         <div class="product-brand">Jill Sander</div>
         <div class="product-name">RICK OWENS</div>
         <div class="product-price">€50</div>
       </div>
-      <div class="product-card">
+      <div class="product-card" data-id="2">
         <img src="./chaussure2.jpg" alt="Produit 2" />
         <div class="product-brand">Jill Sander</div>
         <div class="product-name">BALENCIAGA</div>
         <div class="product-price">€100</div>
       </div>
-      <div class="product-card">
+      <div class="product-card" data-id="3">
         <img src="./chaussure3.jpg" alt="Produit 3" />
         <div class="product-brand">Jill Sander</div>
         <div class="product-name">FEAR OF GOD</div>
         <div class="product-price">€150</div>
       </div>
-      <div class="product-card">
+      <div class="product-card" data-id="4">
         <img src="./chaussure4.jpg" alt="Produit 4" />
         <div class="product-brand">Jill Sander</div>
         <div class="product-name">KITH</div>
         <div class="product-price">€200</div>
       </div>
-      <div class="product-card">
+      <div class="product-card" data-id="5">
         <img src="./chaussure1.jpg" alt="Produit 5" />
         <div class="product-brand">Jill Sander</div>
         <div class="product-name">LORO PIANA</div>
         <div class="product-price">€200</div>
       </div>
-      <div class="product-card">
+      <div class="product-card" data-id="6">
         <img src="./chaussure2.jpg" alt="Produit 6" />
         <div class="product-brand">Jill Sander</div>
         <div class="product-name">SANDRO</div>
         <div class="product-price">€200</div>
       </div>
-      <div class="product-card">
+      <div class="product-card" data-id="7">
         <img src="./chaussure3.jpg" alt="Produit 7" />
         <div class="product-brand">Jill Sander</div>
         <div class="product-name">MELON JAUNE</div>
@@ -526,6 +526,15 @@ html, body {
     if (currentPath.includes(link.getAttribute('href'))) {
       link.classList.add('active');
     }
+  });
+</script>
+<script>
+  document.querySelectorAll('.product-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const productId = card.dataset.id; 
+      // Redirige vers la page produit avec l'id en paramètre
+      window.location.href = `produit-tokomi.html?id=${productId}`;
+    });
   });
 </script>
 </body>
