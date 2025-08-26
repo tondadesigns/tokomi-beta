@@ -877,6 +877,11 @@ function scrollToImage(imageId) {
     });
   });
 </script>
-
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const productId = params.get("id");
+  console.log("Produit ouvert :", productId);
+  // Ici tu charges dynamiquement les infos du produit
+</script>
 </body>
 </html>
