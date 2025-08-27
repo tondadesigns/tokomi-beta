@@ -486,36 +486,45 @@
 </div>
 
 
-  <div class="thumbnail-carousel">
-    <div class="thumbnail" onclick="showColor(this)">
-      <div class="thumb-image" style="background-image: url('noir.jpg');"></div>
-      <span class="selected-color-label"></span>
-    </div>
-    <div class="thumbnail" onclick="showColor(this)">
-      <div class="thumb-image" style="background-image: url('beige.jpg');"></div>
-      <span class="selected-color-label"></span>
-    </div>
-    <div class="thumbnail" onclick="showColor(this)">
-      <div class="thumb-image" style="background-image: url('rouge.jpg');"></div>
-      <span class="selected-color-label"></span>
-    </div>
-    <div class="thumbnail" onclick="showColor(this)">
-      <div class="thumb-image" style="background-image: url('bleu.jpg');"></div>
-      <span class="selected-color-label"></span>
-    </div>
-    <div class="thumbnail" onclick="showColor(this)">
-      <div class="thumb-image" style="background-image: url('gris.jpg');"></div>
-      <span class="selected-color-label"></span>
-    </div>
-    <div class="thumbnail" onclick="showColor(this)">
-      <div class="thumb-image" style="background-image: url('vert.jpg');"></div>
-      <span class="selected-color-label"></span>
-    </div>
-    <div class="thumbnail" onclick="showColor(this)">
-      <div class="thumb-image" style="background-image: url('blanc.jpg');"></div>
-      <span class="selected-color-label"></span>
-    </div>
+ <div class="thumbnail-carousel">
+  <!-- NOIR (avec set d'images dédié en exemple) -->
+  <div class="thumbnail" data-color="noir"
+       data-images='["hoodie-noir-1.png","hoodie-noir-2.png","hoodie-noir-3.png","hoodie-noir-4.png"]'>
+    <div class="thumb-image" style="background-image: url('noir.jpg');"></div>
+    <span class="selected-color-label"></span>
   </div>
+
+  <!-- BEIGE (sans data-images => utilisera le fallback par défaut) -->
+  <div class="thumbnail" data-color="beige">
+    <div class="thumb-image" style="background-image: url('beige.jpg');"></div>
+    <span class="selected-color-label"></span>
+  </div>
+
+  <div class="thumbnail" data-color="rouge">
+    <div class="thumb-image" style="background-image: url('rouge.jpg');"></div>
+    <span class="selected-color-label"></span>
+  </div>
+
+  <div class="thumbnail" data-color="bleu">
+    <div class="thumb-image" style="background-image: url('bleu.jpg');"></div>
+    <span class="selected-color-label"></span>
+  </div>
+
+  <div class="thumbnail" data-color="gris">
+    <div class="thumb-image" style="background-image: url('gris.jpg');"></div>
+    <span class="selected-color-label"></span>
+  </div>
+
+  <div class="thumbnail" data-color="vert">
+    <div class="thumb-image" style="background-image: url('vert.jpg');"></div>
+    <span class="selected-color-label"></span>
+  </div>
+
+  <div class="thumbnail" data-color="blanc">
+    <div class="thumb-image" style="background-image: url('blanc.jpg');"></div>
+    <span class="selected-color-label"></span>
+  </div>
+</div>
 
   <div class="product-details">
     <div class="brand">RICK OWENS</div>
@@ -732,29 +741,6 @@
 
   <script>
     const cart = [];
-    function showColor(thumbnailElement) {
-      document.querySelectorAll('.selected-color-label').forEach(label => {
-        label.textContent = '';
-        label.classList.remove('active');
-      });
-
-      const thumb = thumbnailElement.querySelector('.thumb-image');
-      const imageStyle = thumb.style.backgroundImage;
-      const match = imageStyle.match(/url\\(["']?([^"')]+)["']?\\)/);
-      const imageName = match ? match[1].split('/').pop() : ''; // ex: "beige.jpg"
-
-      const colorName = imageName.split('.')[0]; // ex: "beige"
-      const colorLabel = colorName.charAt(0).toUpperCase() + colorName.slice(1);
-      
-      const label = thumbnailElement.querySelector('.selected-color-label');
-      label.textContent = colorLabel;
-      label.classList.add('active');
-
-      const mainImage = document.getElementById('mainProductImage');
-    if (mainImage) {
-      mainImage.src = imageName; // ex: "beige.jpg"
-       }
-    }
 
     function toggleDropdown(dropdown) {
       const isOpen = dropdown.classList.contains('open');
@@ -774,10 +760,6 @@
         modal.classList.remove('active');
       }
     });
-
-    function openSizeModal() {
-      document.getElementById('sizeModal').classList.add('active');
-    }
 
     function closeSizeModal(event) {
       const modal = document.getElementById('sizeModal');
@@ -882,6 +864,87 @@ function scrollToImage(imageId) {
   const productId = params.get("id");
   console.log("Produit ouvert :", productId);
   // Ici tu charges dynamiquement les infos du produit
+</script>
+    <script>
+  // Références
+  const mainCarousel = document.querySelector('.main-product-carousel');
+  const scrollBar = document.querySelector('.scroll-indicator-bar');
+
+  // Set Fallback si une couleur n'a pas de data-images
+  const FALLBACK_IMAGES = [
+    'hoodie-avant.png',
+    'hoodiefavant.png',   // (vérifie l’orthographe de ce fichier)
+    'hoodieprofil.png',
+    'hoodiearriere.png'
+  ];
+
+  // Reconstruit le carrousel vertical selon une liste d'images
+  function renderMainImages(images) {
+    // 1) Rebuild images
+    mainCarousel.innerHTML = '';
+    images.forEach((src, i) => {
+      const img = document.createElement('img');
+      img.className = 'carousel-image';
+      img.id = `img${i + 1}`;
+      img.src = src;
+      img.alt = `Vue ${i + 1}`;
+      mainCarousel.appendChild(img);
+    });
+
+    // 2) Rebuild dots
+    scrollBar.innerHTML = '';
+    images.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'scroll-dot';
+      dot.dataset.target = `img${i + 1}`;
+      dot.addEventListener('click', () => {
+        document.getElementById(dot.dataset.target)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      scrollBar.appendChild(dot);
+    });
+  }
+
+  // Sélection d'une couleur via la vignette
+  function selectColor(thumbnailEl) {
+    // Reset labels
+    document.querySelectorAll('.thumbnail .selected-color-label').forEach(l => {
+      l.textContent = '';
+      l.classList.remove('active');
+    });
+
+    // Récupère la couleur
+    const color = (thumbnailEl.dataset.color || '').trim();
+    const label = thumbnailEl.querySelector('.selected-color-label');
+
+    if (label) {
+      label.textContent = color ? color.toUpperCase() : '';
+      label.classList.add('active');
+    }
+
+    // Liste d'images pour cette couleur
+    let images = [];
+    const raw = thumbnailEl.dataset.images;
+    if (raw) {
+      try { images = JSON.parse(raw); } catch (e) { images = []; }
+    }
+    if (!images.length) images = FALLBACK_IMAGES;
+
+    renderMainImages(images);
+  }
+
+  // Branche les clics sur toutes les vignettes
+  document.querySelectorAll('.thumbnail').forEach(th => {
+    th.addEventListener('click', (e) => {
+      e.stopPropagation();
+      selectColor(th);
+    });
+  });
+
+  // Sélection initiale: 1ère vignette au chargement
+  window.addEventListener('DOMContentLoaded', () => {
+    const firstThumb = document.querySelector('.thumbnail');
+    if (firstThumb) selectColor(firstThumb);
+  });
 </script>
 </body>
 </html>
