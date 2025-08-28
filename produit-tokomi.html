@@ -57,7 +57,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 360px; /* Hauteur visible du carrousel */
+  height: 500px; /* Hauteur visible du carrousel */
   overflow-y: auto;
   scroll-snap-type: y mandatory;
   gap: 12px;
@@ -70,10 +70,20 @@
 
 .carousel-image {
   width: 280px;
-  height: 360px;
+  height: 500px;
   object-fit: cover;
   scroll-snap-align: start;
   border-radius: 8px;
+}
+@media (max-width: 768px) {
+  .main-product-carousel {
+    height: 420px;  /* un peu moins haut sur mobile */
+  }
+
+  .carousel-image {
+    width: 300px;
+    height: 420px;
+  }
 }
 .scroll-indicator-bar {
    position: absolute;
