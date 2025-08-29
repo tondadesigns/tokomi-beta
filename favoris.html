@@ -626,7 +626,7 @@ html, body {
   <div class="tabs">
     <a href="panier-favoris.html" class="tab-link">PANIER <strong id="cart-count"></strong></a>
     <span class="active">FAVORIS <strong id="favorites-count"></strong></span>
-    <a href="listes.html" class="tab-link">LISTES <strong id="cart-count"></strong></a>
+    <a href="listes.html" class="tab-link">LISTES <strong id="lists-count"></strong></a>
   </div>
 
 
@@ -695,14 +695,19 @@ html, body {
 document.addEventListener("DOMContentLoaded", () => {
   renderFavorites();
   updateCounts();
-
+  });
   // Si favoris changent depuis une autre page/onglet
   window.addEventListener("storage", (e) => {
-    if (e.key === "tokomi_favorites") {
-      renderFavorites();
-      updateCounts();
-    }
-  });
+    if (
+    e.key === "tokomi_favorites" ||
+    e.key === "tokomi_cart_items" ||
+    e.key === "tokomiLists"
+  ) {
+    // Si favoris changent ailleurs, on re-render; sinon maj compteurs suffit
+    if (e.key === "tokomi_favorites") renderFavorites();
+    updateCounts();
+  }
+});
 
   // Délégation pour les cases à cocher rendues dynamiquement
   document.addEventListener('change', (ev) => {
@@ -729,7 +734,23 @@ function getCart() {
 function setCart(arr) {
   localStorage.setItem("tokomi_cart_items", JSON.stringify(arr));
 }
+// --- LISTES: lecture et compteur ---
+const LS_LISTS_KEY = 'tokomiLists';
 
+function getTokomiLists() {
+  try {
+    return JSON.parse(localStorage.getItem(LS_LISTS_KEY)) || [];
+  } catch {
+    return [];
+  }
+}
+
+function updateListCount() {
+  const listsCountEl = document.getElementById('lists-count');
+  if (listsCountEl) {
+    listsCountEl.textContent = getTokomiLists().length;
+  }
+}
 /* Rendu dynamique des favoris */
 function renderFavorites() {
   const container = document.getElementById("favorites-items");
@@ -821,11 +842,14 @@ function removeFavorite(index) {
 function updateCounts() {
   const cart = getCart();
   const favs = getFavorites();
+  const lists = getTokomiLists();
   const cartCount = document.getElementById("cart-count");
   const favoritesCount = document.getElementById("favorites-count");
-
+  const listsCount = document.getElementById("lists-count");
+  
   if (cartCount) cartCount.textContent = cart.length;
   if (favoritesCount) favoritesCount.textContent = favs.length || 0;
+  if (listsCount) listsCount.textContent = lists.length;
 }
 
 /* Compat : ta fonction existante appelle updateFavoritesCount().
