@@ -2406,17 +2406,36 @@ function updateTotal() {
   const footerTotal = document.querySelector(".cart-footer .cart-total");
   if (footerTotal) footerTotal.textContent = `€${total.toFixed(2)}`;
 }
+// --- LISTES: lecture depuis localStorage ---
+const LS_LISTS_KEY = 'tokomiLists';
 
+function getTokomiLists() {
+  try {
+    return JSON.parse(localStorage.getItem(LS_LISTS_KEY)) || [];
+  } catch {
+    return [];
+  }
+}
 // ---- COMPTEURS
 function updateCounts() {
-  const cart = JSON.parse(localStorage.getItem("tokomi_cart_items")) || [];
-  const favs = JSON.parse(localStorage.getItem("tokomi_favorites")) || [];
-  const cartCount = document.getElementById("cartCount");
-  const favoritesCount = document.getElementById("favoritesCount");
+  const cart  = JSON.parse(localStorage.getItem("tokomi_cart_items")) || [];
+  const favs  = JSON.parse(localStorage.getItem("tokomi_favorites")) || [];
+  const lists = getTokomiLists();
 
-  if (cartCount) cartCount.textContent = cart.length;
-  if (favoritesCount) favoritesCount.textContent = favs.length || 0;
+  const cartCountEl      = document.getElementById("cartCount");
+  const favoritesCountEl = document.getElementById("favoritesCount");
+  const listsCountEl     = document.getElementById("listsCount");
+
+  if (cartCountEl)      cartCountEl.textContent      = cart.length;
+  if (favoritesCountEl) favoritesCountEl.textContent = favs.length || 0;
+  if (listsCountEl)     listsCountEl.textContent     = lists.length;
 }
+
+window.addEventListener("storage", (e) => {
+  if (e.key === "tokomiLists" || e.key === "tokomi_cart_items" || e.key === "tokomi_favorites") {
+    updateCounts();
+  }
+});
 
 // ---- ACTIONS
 function increaseQty(index) {
