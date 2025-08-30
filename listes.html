@@ -518,8 +518,8 @@
 
   <div class="tabs">
     <a href="panier-favoris.html" class="tab-link">PANIER <strong id="cart-count">0</strong></a>
-    <a href="favoris.html" class="tab-link">FAVORIS <strongid="favorites-count">0</strong></a>
-    <span class="active">LISTES <span id="lists-count">0</span></span>
+    <a href="favoris.html" class="tab-link">FAVORIS <strong id="favorites-count">0</strong></a>
+    <span class="active">LISTES <strong id="lists-count">0</strong></span>
   </div>
 
 
@@ -789,10 +789,6 @@ function deleteList(item) {
     // Sauvegarde dans localStorage après création
    
 
-function updateListCount() {
-  const count = document.getElementById('listContainer').children.length;
-  document.getElementById('list-count').textContent = count;
-}
     
 function updateListSelectionUI() {
     const checkboxes = document.querySelectorAll('.list-card.selectable .list-checkbox');
