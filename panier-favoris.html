@@ -1119,7 +1119,7 @@ font-weight: 300;
 
   <div class="alert" id="alertBox">Ajouté aux favoris</div>
 
-<body style="margin:0; padding:0;">
+
   <div class="page-content">
     <!-- contenu scrollable ici (produits, etc.) -->
   </div>
@@ -1564,7 +1564,12 @@ function updateCartTotals() {
 }
 
 // Mets à jour au chargement
-document.addEventListener("DOMContentLoaded", updateCartCount);
+document.addEventListener("DOMContentLoaded", () => {
+  renderCart();
+  updateTotal();
+  updateCounts();
+  updateCartTotals();
+});
 
   function updateFavoritesCount(count) {
     favoritesCount = count;
@@ -1589,40 +1594,21 @@ document.addEventListener("DOMContentLoaded", updateCartCount);
     if (product) {
       product.remove();
       delete quantities[id];
-      updateCartCount();
+      updateCounts();
       calculateTotal();
       updateCheckoutTotal();
       persistTotals();
     }
   }
 
-  function addToFavorites(productName) {
-    favoritesCount++;
-    updateFavoritesCount(favoritesCount);
-    const alertBox = document.getElementById('alertBox');
-    alertBox.textContent = `${productName} ajouté aux favoris`;
-    alertBox.style.display = 'block';
-    setTimeout(() => {
-      alertBox.style.display = 'none';
-    }, 2000);
-  }
+  
 
-  function updateQty(id, delta) {
-    if (!(id in quantities)) return;
-    quantities[id] = Math.max(1, quantities[id] + delta);
-    document.getElementById(`qty-${id}`).textContent = quantities[id];
-    updateCartCount();
-    calculateTotal();
-    updateCheckoutTotal();
-    updateCartTotals();
-    persistTotals();
-  }
 
   
 
 
   // Initial setup
-  updateCartCount();
+  updateCounts();
   calculateTotal();
 
 function openCheckout() {
@@ -1761,7 +1747,7 @@ document.getElementById('address-form').addEventListener('submit', function(even
   document.getElementById('address-page').style.display = 'none';
   document.getElementById('checkout-page').style.display = 'block';
 // Sauvegarde dans localStorage
-  localStorage.setItem('tokomi_address', addressText);
+  localStorage.setItem('tokomi_address', formattedAddress);
 
   document.getElementById('address-summary').style.display = 'block';
   
@@ -2300,7 +2286,7 @@ function selectShipping(optionLabel, shippingPrice) {
   });
 
   // Initialiser la liste des favoris depuis le localStorage (ou tableau vide)
-let favorisList = JSON.parse(localStorage.getItem('tokomi_favoris')) || [];
+let favorisList = JSON.parse(localStorage.getItem('tokomi_favorites')) || [];
 
 function addToFavorites(button) {
   const productItem = button.closest('.product-item');
@@ -2316,7 +2302,7 @@ function addToFavorites(button) {
     if (exists) return;
 
   favorisList.push(product);
-  localStorage.setItem('tokomi_favoris', JSON.stringify(favorisList));
+  localStorage.setItem('tokomi_favorites', JSON.stringify(favorisList));
 
   // Mise à jour compteur
   const counter = document.getElementById('favorites-count');
@@ -2360,20 +2346,21 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ---- RENDER: construit #cart-items depuis localStorage
+<script>
 function renderCart() {
   const container = document.getElementById("cart-items");
   const items = JSON.parse(localStorage.getItem('tokomi_cart_items')) || [];
 
   container.innerHTML = "";
-  
-  if (cart.length === 0) {
+
+  // ✅ quand le panier est vide
+  if (items.length === 0) {
     container.innerHTML = `<p class="empty-message">Le panier est vide.</p>`;
     updateCounts();
-    updateTotal(); // si tu affiches aussi un total
+    updateTotal();
     return;
   }
 
-  
   items.forEach((item, index) => {
     const quantity = item.quantity || 1;
 
@@ -2381,11 +2368,11 @@ function renderCart() {
     div.className = "cart-item";
     div.innerHTML = `
       <div class="cart-product">
-        <div class="cart-image" style="background-image: url('${item.image}');"></div>
+        <div class="cart-image" style="background-image: url('${item.image || ''}');"></div>
         <div class="cart-info">
           <div class="cart-title">${(item.name || "").toUpperCase()}</div>
           <div class="cart-subtitle">TAILLE ${item.size ?? ""} – NOIR</div>
-          <div class="cart-price">€${item.price}</div>
+          <div class="cart-price">€${parseFloat(item.price || 0).toFixed(2)}</div>
 
           <div class="quantity-controls">
             <button class="qty-btn" onclick="decreaseQty(${index})">–</button>
@@ -2402,6 +2389,8 @@ function renderCart() {
     `;
     container.appendChild(div);
   });
+}
+</script>
 }
 
 // ---- TOTAL (met à jour #cart-total si présent et le footer .cart-total)
