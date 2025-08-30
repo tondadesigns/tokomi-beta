@@ -2288,62 +2288,6 @@ function selectShipping(optionLabel, shippingPrice) {
   // Initialiser la liste des favoris depuis le localStorage (ou tableau vide)
 let favorisList = JSON.parse(localStorage.getItem('tokomi_favorites')) || [];
 
-function addToFavorites(button) {
-  const productItem = button.closest('.product-item');
-    const name = productItem.querySelector('.product-name').textContent.trim();
-    const meta = productItem.querySelector('.product-meta').textContent.trim();
-    const price = productItem.querySelector('.product-price').textContent.trim();
-    const image = productItem.querySelector('.product-image').style.backgroundImage || '';
-
-    const product = { name, meta, price, image };
-
-    // Vérifie doublon par nom + meta
-    const exists = favorisList.some(p => p.name === name && p.meta === meta);
-    if (exists) return;
-
-  favorisList.push(product);
-  localStorage.setItem('tokomi_favorites', JSON.stringify(favorisList));
-
-  // Mise à jour compteur
-  const counter = document.getElementById('favorites-count');
-    if (counter) {
-      counter.textContent = favorisList.length;
-  updateFavoritesCount(favoritesCount);
-}
-  // Affiche la confirmation
-  const alertBox = document.getElementById('alertBox');
-  alertBox.textContent = `${name} ajouté aux favoris`;
-  alertBox.style.display = 'block';
-  setTimeout(() => {
-    alertBox.style.display = 'none';
-  }, 2000);
-
-  // Désactive tous les boutons avec ce nom produit
-  document.querySelectorAll('.btn-save').forEach(btn => {
-    if (btn.dataset.name === productName) {
-      button.disabled = true;
-      button.textContent = ' ENREGISTRÉ';
-    }
-  });
-}
-
-// Lors du chargement de la page, désactive les boutons déjà enregistrés
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.btn-save').forEach(btn => {
-    const productName = btn.dataset.name;
-    if (favorisList.includes(productName)) {
-      btn.disabled = true;
-      btn.textContent = 'ENREGISTRÉ';
-    }
-  });
-});
-
-   document.addEventListener("DOMContentLoaded", function () {
-  renderCart();      // construit la liste à partir du localStorage
-  updateTotal();     // calcule le total
-  updateCounts();    // met à jour les compteurs PANIER/FAVORIS
-  updateCartTotals();
-});
 
 // ---- RENDER: construit #cart-items depuis localStorage
 function renderCart() {
