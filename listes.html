@@ -784,8 +784,19 @@ function deleteList(item) {
 
 
     function updateEmptyMessage() {
-      emptyMessage.style.display = listContainer.children.length === 0 ? 'block' : 'none';
-    }
+        const msg = document.getElementById('emptyMessage');
+  if (!msg) return;
+
+  const lists = getLists(); // source de vérité: localStorage 'tokomiLists'
+
+  if (lists.length === 0) {
+    msg.textContent = 'Aucune liste pour l’instant.';
+    msg.style.display = 'block';
+  } else {
+    msg.textContent = '';
+    msg.style.display = 'none';
+  }
+}
     // Sauvegarde dans localStorage après création
    
 
