@@ -717,7 +717,6 @@ document.addEventListener("DOMContentLoaded", () => {
       product.classList.toggle('selected', ev.target.checked);
       updateSelectionButtonsState(); // ta fonction existante
     }
-  });
 });
 
 /* Helpers stockage */
@@ -1023,39 +1022,11 @@ function closeModal() {
 </div>
 
 <script>
-  function updateFavoritesCount() {
-   
-    // Compter le nombre de produits affichés dans la page
-    const products = document.querySelectorAll('.product');
-    const count = products.length;
-
-    // Cibler l'élément qui affiche le compteur
-    const counter = document.getElementById('favorites-count');
-    if (counter) {
-      counter.textContent = count;
-   
-    }
-  }
-
-  // Exécuté au chargement de la page
-  document.addEventListener("DOMContentLoaded", updateFavoritesCount);
-
-  // 🔁 Appelle cette fonction après tout ajout ou suppression de favoris
-  function addToFavorites(product) {
-    const raw = localStorage.getItem("tokomiFavorites");
-    const favorites = raw ? JSON.parse(raw) : [];
-    favorites.push(product);
-    localStorage.setItem("tokomiFavorites", JSON.stringify(favorites));
-    updateFavoritesCount();
-  }
-
-  function removeFromFavorites(productId) {
-    const raw = localStorage.getItem("tokomiFavorites");
-    const favorites = raw ? JSON.parse(raw) : [];
-    const updated = favorites.filter(p => p.id !== productId);
-    localStorage.setItem("tokomiFavorites", JSON.stringify(updated));
-    updateFavoritesCount();
-  }
+// (on ne redéfinit plus updateFavoritesCount ici)
+// on s’appuie sur updateCounts() centralisé
+document.addEventListener("DOMContentLoaded", () => {
+  updateCounts();
+});
 </script>
 
 <!-- MODAL : AJOUTER À -->
@@ -1076,7 +1047,7 @@ function closeModal() {
 </div>
 <script>
 /* === Stockage partagé avec listes.html === */
-const LS_LISTS_KEY = 'tokomiLists';
+
 /* === Gestion modal === */
 let currentFavIndex = null; // l’index du produit cliqué dans favoris
 /** Retourne un tableau de listes: [{id, title, items:[]}, ...] */
