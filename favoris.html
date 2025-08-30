@@ -605,6 +605,13 @@ html, body {
   font-family: 'Space Grotesk', sans-serif;
 }
 
+.empty-message {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 300;
+  color: #999;
+  margin-top: 32px;
+}
 
   </style>
 </head>
@@ -757,7 +764,7 @@ function renderFavorites() {
   container.innerHTML = "";
 
   if (favs.length === 0) {
-    container.innerHTML = `<p style="font-size:14px; padding: 0 16px;">Aucun favori pour l’instant.</p>`;
+    container.innerHTML = `<p class="empty-message">Aucun favori pour l’instant.</p>`;
     // Met à jour le compteur affiché
     updateCounts();
     return;
