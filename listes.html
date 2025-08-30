@@ -517,9 +517,9 @@
 </div>
 
   <div class="tabs">
-    <a href="panier-favoris.html" class="tab-link">PANIER <strong></strong></a>
-    <a href="favoris.html" class="tab-link">FAVORIS <strong></strong></a>
-    <span class="active">LISTES <span id="list-count">0</span></span>
+    <a href="panier-favoris.html" class="tab-link">PANIER <strong id="cart-count">0</strong></a>
+    <a href="favoris.html" class="tab-link">FAVORIS <strongid="favorites-count">0</strong></a>
+    <span class="active">LISTES <span id="lists-count">0</span></span>
   </div>
 
 
@@ -634,6 +634,44 @@ function saveLists(lists) {
     
     const listNameInput = document.getElementById('listName');
 
+/* === Helpers PANIER / FAVORIS / LISTES === */
+function getCart() {
+  try { return JSON.parse(localStorage.getItem('tokomi_cart_items')) || []; }
+  catch { return []; }
+}
+function getFavorites() {
+  try { return JSON.parse(localStorage.getItem('tokomi_favorites')) || []; }
+  catch { return []; }
+}
+// on réutilise la source de vérité des listes déjà définie plus haut
+function getTokomiLists() {
+  return getLists(); // alias propre
+}
+
+/* === Compteurs onglets === */
+function updateCounts() {
+  const cart  = getCart();
+  const favs  = getFavorites();
+  const lists = getTokomiLists();
+
+  const cartEl      = document.getElementById('cart-count');
+  const favsEl      = document.getElementById('favorites-count');
+  const listsEl     = document.getElementById('lists-count');
+
+  if (cartEl)  cartEl.textContent  = cart.length;
+  if (favsEl)  favsEl.textContent  = favs.length || 0;
+  if (listsEl) listsEl.textContent = lists.length;
+}
+
+/* === Compteur LISTES (compat avec ancien id) === */
+function updateListCount() {
+  const n = getTokomiLists().length;
+  const elNew = document.getElementById('lists-count');
+  const elOld = document.getElementById('list-count'); // compat si reste quelque part
+  if (elNew) elNew.textContent = n;
+  if (elOld) elOld.textContent = n;
+}
+
 function toggleContextMenu(e) {
   e.stopPropagation();
   const menu = document.getElementById('menu');
@@ -703,6 +741,7 @@ document.addEventListener('keydown', (e) => {
   renderLists();
   updateListCount();
   updateEmptyMessage();
+  updateCounts();
 
   // (Optionnel) Feedback
   alert(`Liste « ${name} » créée.`);
@@ -941,6 +980,7 @@ function renameSelectedList() {
   exitSelectionMode();
   updateListCount();
   updateEmptyMessage();
+  updateCounts();
 }
 
 function deleteSelectedLists() {
@@ -967,6 +1007,7 @@ function deleteSelectedLists() {
   updateEmptyMessage();
   updateListCount();
   updateListSelectionUI();
+  updateCounts();
 }
   
     
@@ -1015,9 +1056,21 @@ document.addEventListener('DOMContentLoaded', () => {
   renderLists();
   updateEmptyMessage();
   updateListCount();
+  updateCounts();
 });
    
-
+window.addEventListener('storage', (e) => {
+  if (e.key === 'tokomi_cart_items' || e.key === 'tokomi_favorites' || e.key === 'tokomiLists') {
+    // on ne re-render pas forcément ici, mais on met bien à jour les compteurs
+    updateCounts();
+    if (e.key === 'tokomiLists') {
+      // si les listes ont changé ailleurs, on peut rafraîchir l’affichage local aussi
+      renderLists();
+      updateEmptyMessage();
+      updateListCount();
+    }
+  }
+});
 // ✅ Quand on coche/décoche une liste, on met à jour la barre d’actions
 document.addEventListener('change', (e) => {
   if (e.target.matches('.list-checkbox')) {
