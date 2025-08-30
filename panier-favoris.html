@@ -2346,7 +2346,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ---- RENDER: construit #cart-items depuis localStorage
-<script>
 function renderCart() {
   const container = document.getElementById("cart-items");
   const items = JSON.parse(localStorage.getItem('tokomi_cart_items')) || [];
@@ -2390,8 +2389,7 @@ function renderCart() {
     container.appendChild(div);
   });
 }
-</script>
-}
+
 
 // ---- TOTAL (met à jour #cart-total si présent et le footer .cart-total)
 function updateTotal() {
