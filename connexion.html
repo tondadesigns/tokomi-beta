@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Connexion – Tokomi</title>
+  <title data-i18n-title="auth.loginTitle">Connexion – Tokomi</title>
   <style>
     html, body {
       margin: 0;
@@ -109,23 +109,27 @@
       text-decoration: underline;
     }
   </style>
+  <!-- i18n -->
+  <script defer src="i18n/translations.js"></script>
+  <script defer src="i18n/i18n.js"></script>
+  <script defer src="i18n/tokomi-i18n-compat.js"></script>
 </head>
 <body>
-  <button class="btn-retour" onclick="location.href='intro-utilisateur.html'">RETOUR</button>
+  <button class="btn-retour" onclick="location.href='intro-utilisateur.html'" data-i18n="common.back">RETOUR</button>
   <div class="login-container">
-    <h2>Connexion</h2>
+    <h2 data-i18n="auth.loginTitle">Connexion</h2>
     <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="">
+      <label for="email" data-i18n="auth.userPlaceholder">Email</label>
+      <input type="email" id="email" data-i18n-placeholder="auth.userPlaceholder" placeholder="">
     </div>
     <div class="form-group">
-      <label for="password">Mot de passe</label>
-      <input type="password" id="password" placeholder="">
+      <label for="password" data-i18n-placeholder="auth.passPlaceholder" >Mot de passe</label>
+      <input type="password" id="password" data-i18n-placeholder="auth.passPlaceholder" placeholder="">
     </div>
-    <button class="submit-btn" onclick="login()">Se connecter</button>
+    <button class="submit-btn" onclick="login()" data-i18n="auth.loginCta">Se connecter</button>
     <div class="extra-links">
   
-      <a href="motdepasseoublie.html">Mot de passe oublié ?</a>
+      <a href="motdepasseoublie.html" data-i18n="auth.forgot">Mot de passe oublié ?</a>
     </div>
   </div>
 
