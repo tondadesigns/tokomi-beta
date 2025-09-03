@@ -9,7 +9,7 @@
     .btn-retour {
       position:absolute; left:10px; top:54px; color:#000; background:none; border:none;
       font-size:11px; font-weight:300; cursor:pointer; font-family:'Space Grotesk', sans-serif;
-      z-index: 9999; /* ✅ reste cliquable au-dessus de tout */
+      z-index: 9999; /* Toujours cliquable */
     }
     .title { text-align:center; margin-top:120px; font-size:13px; font-weight:600; text-transform:uppercase; }
     .container { margin-top:38px; padding:40px 24px; display:flex; flex-direction:column; gap:24px; }
@@ -28,10 +28,10 @@
 </head>
 <body>
 
-  <!-- ✅ onclick direct + type="button" = redirection garantie -->
+  <!-- ✅ Redirection vers profil.html -->
   <button class="btn-retour" id="btnRetour" type="button"
           data-i18n="common.back"
-          onclick="location.href='accueil.html'">RETOUR</button>
+          onclick="location.href='profil.html'">RETOUR</button>
 
   <div class="title" id="pageTitle" data-i18n="common.language">Langue</div>
 
@@ -50,30 +50,28 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // ✅ Défensif si le module i18n n'est pas chargé
-      const i18n = window.tokomiI18n;
-      const lang = i18n ? i18n.getLang() : 'fr';
+      const lang = window.tokomiI18n?.getLang() || 'fr';
       document.getElementById(lang)?.setAttribute('checked', 'checked');
 
-      // (Optionnel) Ajout JS en plus de l'onclick HTML
-      const btn = document.getElementById('btnRetour');
-      btn?.addEventListener('click', () => { location.href = 'accueil.html'; });
+      // Bouton retour (sécurité si onclick direct cassé)
+      document.getElementById('btnRetour').addEventListener('click', () => {
+        location.href = 'profil.html';
+      });
 
-      // Radios accessibles (clavier/label)
+      // Radios
       document.getElementById('fr')?.addEventListener('change', () => selectLangue('fr'));
       document.getElementById('en')?.addEventListener('change', () => selectLangue('en'));
     });
 
-    // ✅ Persiste + redirige après choix de langue
+    // Choix langue → redirige vers profil.html
     function selectLangue(id) {
       const i18n = window.tokomiI18n;
       if (i18n && typeof i18n.setLang === 'function') {
-        i18n.setLang(id, { redirect: true, redirectTo: 'accueil.html' });
+        i18n.setLang(id, { redirect: true, redirectTo: 'profil.html' });
       } else {
-        // Fallback si le module i18n est absent
         localStorage.setItem('tokomi_lang', (id === 'en') ? 'en' : 'fr');
         document.documentElement.setAttribute('lang', (id === 'en') ? 'en' : 'fr');
-        location.href = 'accueil.html';
+        location.href = 'profil.html';
       }
     }
   </script>
