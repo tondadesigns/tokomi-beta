@@ -23,15 +23,12 @@
     }
     input[type="radio"]:checked + .custom-radio::after { transform:translate(-50%,-50%) scale(1); }
   </style>
-  <!-- Module i18n commun -->
-  <script src="/js/tokomi-i18n.js"></script>
 </head>
 <body>
 
   <!-- ✅ Redirection vers profil.html -->
   <button class="btn-retour" id="btnRetour" type="button"
-          data-i18n="common.back"
-          onclick="location.href='profil.html'">RETOUR</button>
+          data-i18n="common.back">RETOUR</button>
 
   <div class="title" id="pageTitle" data-i18n="common.language">Langue</div>
 
@@ -48,54 +45,25 @@
     </label>
   </div>
 
+  <!-- Scripts i18n (chargés une seule fois, dans cet ordre) -->
+  <script defer src="/i18n/translations.js"></script>
+  <script defer src="/i18n/i18n.js"></script>
+  <script defer src="/i18n/tokomi-i18n-compat.js"></script>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const lang = window.tokomiI18n?.getLang() || 'fr';
+      // Pré-sélection radio selon la langue sauvegardée
+      const lang = tokomiI18n.getLang();
       document.getElementById(lang)?.setAttribute('checked', 'checked');
 
-      // Bouton retour (sécurité si onclick direct cassé)
-      document.getElementById('btnRetour').addEventListener('click', () => {
-        location.href = 'profil.html';
-      });
-
-      // Radios
-      document.getElementById('fr')?.addEventListener('change', () => selectLangue('fr'));
-      document.getElementById('en')?.addEventListener('change', () => selectLangue('en'));
+      // Bouton retour -> profil.html
+      tokomiI18n.bindBackButton('#btnRetour', 'profil.html');
     });
 
-    // Choix langue → redirige vers profil.html
+    // Changement de langue → redirection vers profil.html
     function selectLangue(id) {
-      const i18n = window.tokomiI18n;
-      if (i18n && typeof i18n.setLang === 'function') {
-        i18n.setLang(id, { redirect: true, redirectTo: 'profil.html' });
-      } else {
-        localStorage.setItem('tokomi_lang', (id === 'en') ? 'en' : 'fr');
-        document.documentElement.setAttribute('lang', (id === 'en') ? 'en' : 'fr');
-        location.href = 'profil.html';
-      }
+      tokomiI18n.setLang(id, { redirect: true, redirectTo: 'profil.html' });
     }
   </script>
-  
-  <!-- ordre des scripts -->
-<script defer src="/i18n/translations.js"></script>
-<script defer src="/i18n/i18n.js"></script>
-<script defer src="/i18n/tokomi-i18n-compat.js"></script>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Pré-sélection radio sans redirection
-    const lang = tokomiI18n.getLang(); // 'fr' | 'en'
-    document.getElementById(lang)?.setAttribute('checked', 'checked');
-
-    // Bouton retour -> profil.html (double sécurité)
-    tokomiI18n.bindBackButton('#btnRetour', 'profil.html');
-  });
-
-  function selectLangue(id) {
-    tokomiI18n.setLang(id, { redirect: true, redirectTo: 'profil.html' });
-  }
-</script>
-  
-  
 </body>
 </html>
