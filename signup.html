@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Créer un compte – Tokomi</title>
+  <title data-i18n-title="signup.title" >Créer un compte – Tokomi</title>
   <style>
     html, body {
       margin: 0;
@@ -205,42 +205,46 @@
       }
     }
   </style>
+  <!-- i18n -->
+  <script defer src="i18n/translations.js"></script>
+  <script defer src="i18n/i18n.js"></script>
+  <script defer src="i18n/tokomi-i18n-compat.js"></script>
 </head>
 <body>
-  <button class="btn-retour" onclick="location.href='intro-utilisateur.html'">RETOUR</button>
+  <button class="btn-retour" onclick="location.href='intro-utilisateur.html'" data-i18n="common.back">RETOUR</button>
   <div class="form-container">
-    <h2>Mon compte</h2>
+    <h2 data-i18n="signup.heading">Mon compte</h2>
     <form id="signupForm" onsubmit="showModal(event)">
       <div class="form-group">
-        <label for="first-name" style="color: grey; font-size: 300;">Prénom</label>
-        <input type="text" id="first-name" name="first-name" required>
+        <label for="first-name" data-i18n="signup.labels.firstName" style="color: grey; font-size: 300;">Prénom</label>
+        <input type="text" id="first-name" name="first-name" required.data-i18n-placeholder="signup.labels.firstName"  placeholder="Prénom">
       </div>
       <div class="form-group">
-        <label for="last-name" style="color: grey; font-size: 300;" >Nom</label>
-        <input type="text" id="last-name" name="last-name" required>
+        <label for="last-name" data-i18n="signup.labels.lastName" style="color: grey; font-size: 300;" >Nom</label>
+        <input type="text" id="last-name" name="last-name" required  data-i18n-placeholder="signup.labels.lastName" placeholder="Nom">
       </div>
       <div class="form-group">
-        <label for="last-name" style="color: grey; font-size: 300;" >Adresse postale</label>
-        <input type="text" id="address1" name="address1" required>
+        <label for="address1" data-i18n="signup.labels.address"style="color: grey; font-size: 300;" >Adresse postale</label>
+        <input type="text" id="address1" name="address1" required data-i18n-placeholder="signup.labels.address" placeholder="Adresse postale">
       </div>
       <div class="form-group">
-        <label for="email" style="color: grey; font-size: 300;">Adresse e-mail</label>
-        <input type="email" id="email" name="email" required>
+        <label for="email" data-i18n="auth.userLabel" style="color: grey; font-size: 300;">Adresse e-mail</label>
+        <input type="email" id="email" name="email" required data-i18n-placeholder="auth.userPlaceholder" placeholder="Adresse e-mail">
       </div>
       <div class="form-group">
-        <label for="email" style="color: grey; font-size: 300;">Téléphone</label>
-        <input type="tel" id="phone" name="phone" required pattern="[0-9+\\s]{6,20}" >
+        <label for="phone" data-i18n="signup.labels.phone" style="color: grey; font-size: 300;">Téléphone</label>
+        <input type="tel" id="phone" name="phone" required pattern="[0-9+\\s]{6,20}" data-i18n-placeholder="signup.labels.phone" placeholder="Téléphone">
       </div>
       <div class="form-group">
-        <label for="password" style="color: grey; font-size: 300;">Mot de passe</label>
-        <input type="password" id="password" name="password" required>
+        <label for="password" data-i18n="auth.passLabel" style="color: grey; font-size: 300;">Mot de passe</label>
+        <input type="password" id="password" name="password" required data-i18n-placeholder="auth.passPlaceholder" placeholder="Mot de passe">
       </div>
-      <button type="submit" class="submit-btn">Valider</button>
+      <button type="submit" class="submit-btn" data-i18n="signup.submitCta">Valider</button>
     </form>
   </div>
 
   <div class="social-container">
-    <h3>VIA</h3>
+    <h3 data-i18n="signup.via">VIA</h3>
     <button class="social-button apple" onclick="window.location.href='https://appleid.apple.com/'"><img src="apple-logo.png" alt="Apple"> Apple</button>
     <button class="social-button google" onclick="window.location.href='https://accounts.google.com/'"><img src="google-logo.png" alt="Google"> Google</button>
     <button class="social-button facebook" onclick="window.location.href='https://www.facebook.com/login/'"><img src="facebook-logo.png" alt="Facebook"> Facebook</button>
@@ -248,7 +252,7 @@
 
   <div class="modal-overlay" id="confirmationModal">
     <div class="modal-content">
-      <p>Merci, vous allez recevoir un message de confirmation à l'adresse email fournie.</p>
+      <p data-i18n="signup.modalThanks">Merci, vous allez recevoir un message de confirmation à l'adresse email fournie.</p>
     </div>
   </div>
   <script>
