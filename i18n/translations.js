@@ -42,7 +42,7 @@ window.I18N = {
       newArrivals: "NOUVEAUTÉS"
     },
 
-    // ✅ Nouveau : bloc complet pour profil.html
+    // Profil
     profile: {
       title: "Profil – Tokomi",
       welcome: "BIENVENUE",
@@ -73,7 +73,7 @@ window.I18N = {
     },
 
     header: {
-      cart: "PANIER",   // ✅ MAJUSCULES
+      cart: "PANIER",   // MAJUSCULES pour l’affichage souhaité
       home: "Accueil",
       explore: "Explorer",
       profile: "Profil"
@@ -85,12 +85,22 @@ window.I18N = {
       profile: "PROFIL"
     },
 
+    // Auth / Connexion / Mot de passe oublié
     auth: {
       loginTitle: "Connexion",
+      // labels distincts (si tu veux autre chose que les placeholders)
+      userLabel: "Adresse e-mail",
+      passLabel: "Mot de passe",
+      // placeholders
       userPlaceholder: "Adresse e-mail",
       passPlaceholder: "Mot de passe",
+      // boutons / liens
       loginCta: "Se connecter",
-      forgot: "Mot de passe oublié ?"
+      forgot: "Mot de passe oublié ?",
+      // page "mot de passe oublié"
+      forgotTitle: "Réinitialiser votre mot de passe",
+      forgotInstruction: "Entrez votre adresse e-mail.",
+      sendCta: "Envoyer"
     }
   },
 
@@ -134,7 +144,6 @@ window.I18N = {
       newArrivals: "NEW ARRIVALS"
     },
 
-    // ✅ Profil EN
     profile: {
       title: "Profile – Tokomi",
       welcome: "WELCOME",
@@ -165,7 +174,7 @@ window.I18N = {
     },
 
     header: {
-      cart: "CART",     // ✅ MAJUSCULES
+      cart: "CART",
       home: "Home",
       explore: "Explore",
       profile: "Profile"
@@ -179,10 +188,19 @@ window.I18N = {
 
     auth: {
       loginTitle: "Sign in",
+      // labels
+      userLabel: "Email address",
+      passLabel: "Password",
+      // placeholders
       userPlaceholder: "Email address",
       passPlaceholder: "Password",
+      // buttons / links
       loginCta: "Sign in",
-      forgot: "Forgot password?"
+      forgot: "Forgot password?",
+      // forgot page
+      forgotTitle: "Reset your password",
+      forgotInstruction: "Enter your email address.",
+      sendCta: "Send"
     }
   }
 };
