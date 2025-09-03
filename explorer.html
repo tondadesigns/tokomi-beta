@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tokomi – Explorer</title>
+  <title data-i18n-title="explore.title">Tokomi – Explorer</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="./shopping bag icon.png" type="image/png" />
   <style>
@@ -390,24 +390,24 @@ html, body {
 </head>
 
 <body class="page-parcours">
-<a href="#" id="cancel-search" class="cancel-search hidden">ANNULER</div>
+<a href="#" id="cancel-search" class="cancel-search hidden" data-i18n="explore.search.cancel">ANNULER</div>
   <!-- Menu Catégories + Panier -->
   <header class="top-nav">
     <nav class="category-nav">
-      <a href="#" class="cat-link active">FEMME</a>
-      <a href="#" class="cat-link">HOMME</a>
-      <a href="#" class="cat-link">ENFANTS</a>
+      <a href="#" class="cat-link active" data-i18n="explore.cats.women" >FEMME</a>
+      <a href="#" class="cat-link" data-i18n="explore.cats.men">HOMME</a>
+      <a href="#" class="cat-link" data-i18n="explore.cats.kids" >ENFANTS</a>
     </nav>
-    <a href="panier-favoris.html" class="cart-button" role="button">PANIER</a>
+    <a href="panier-favoris.html" class="cart-button" role="button" data-i18n="header.cart">PANIER</a>
   </header>
 
   <!-- Barre de recherche -->
   <section class="search-bar">
-    <input type="text" placeholder="QUE RECHERCHEZ-VOUS ?" />
+    <input type="text" placeholder="QUE RECHERCHEZ-VOUS ?" data-i18n-placeholder="explore.search.placeholder"/>
   </section>
 
 <section class="category-line">
-  <a href="resultats.html" class="category-title">EN SOLDE
+  <a href="resultats.html" class="category-title" data-i18n="explore.onSale">EN SOLDE
   </a>
 </section>
 
@@ -424,7 +424,7 @@ html, body {
 
   <section class="product-carousel-section">
     <div class="section-header">
-      <a href="resultats.html" class="section-title">NOUVEAUTÉS</a>
+      <a href="resultats.html" class="section-title" data-i18n="explore.newArrivals">NOUVEAUTÉS</a>
       
     </div>
 
@@ -481,18 +481,18 @@ html, body {
   <footer class="sticky-footer">
     <a href="accueil.html" class="menu-item">
       
-      <span>ACCUEIL</span>
+      <span data-i18n="nav.home">ACCUEIL</span>
     </a>
 
     <a href="explorer.html" class="menu-item active"> 
       
-      <span>EXPLORER</span>
+      <span data-i18n="nav.explore">EXPLORER</span>
     </a>
     
     
     <a href="profil.html"class="menu-item">
       
-      <span>PROFIL</span>
+      <span data-i18n="nav.profile">PROFIL</span>
     </a>
   </footer>
   
