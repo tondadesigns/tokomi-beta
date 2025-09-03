@@ -399,6 +399,20 @@ margin-bottom: -48px;
     
 </style>
 
+<!-- i18n: chemins RELATIFS (adaptés au dev local) -->
+  <script defer src="i18n/translations.js"></script>
+  <script defer src="i18n/i18n.js"></script>
+  <script defer src="i18n/tokomi-i18n-compat.js"></script>
+
+  <!-- Failsafe: applique la langue sauvegardée si l’auto-init n’a pas tourné -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const lang = localStorage.getItem('selectedLang') || 'fr';
+      if (window.applyTranslations) {
+        window.applyTranslations(lang);
+      }
+    });
+  </script>
 
 </head>
 <body>
@@ -934,18 +948,7 @@ margin-bottom: -48px;
       <span data-i18n="nav.profile">PROFIL</span>
     </a>
   </footer>
-  <script defer src="/i18n/translations.js"></script>
-<script defer src="/i18n/i18n.js"></script>
-<script defer src="/i18n/tokomi-i18n-compat.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    console.log('I18N present?', !!window.I18N);
-    console.log('applyTranslations present?', typeof window.applyTranslations);
-    console.log('current lang:', localStorage.getItem('selectedLang'));
-    // Test manuel: change la langue en anglais pour voir si ça bouge
-    // window.applyTranslations && window.applyTranslations('en');
-  });
-</script>
+
   <script src="app.js"></script>
   
   <script>
