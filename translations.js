@@ -5,6 +5,15 @@
 window.I18N = {
   fr: {
     htmlLang: "fr",
+
+    // ✅ Ajout minimal pour usages communs (retour, libellés langue)
+    common: {
+      back: "RETOUR",
+      language: "Langue",
+      french: "Français",
+      english: "Anglais"
+    },
+
     intro: {
       title: "Bienvenue – Tokomi",
       btnGuest: "Poursuivre en tant qu’invité",
@@ -34,16 +43,26 @@ window.I18N = {
       home: "ACCUEIL",
       explore: "EXPLORER",
       profile: "PROFIL"
-     }, 
+    },
     auth: {
       loginTitle: "Connexion",
-      userPlaceholder: "Adresse e‑mail",
+      userPlaceholder: "Adresse e-mail",
       passPlaceholder: "Mot de passe",
       loginCta: "Se connecter"
     }
   },
+
   en: {
     htmlLang: "en",
+
+    // ✅ Ajout minimal pour usages communs (retour, libellés langue)
+    common: {
+      back: "BACK",
+      language: "Language",
+      french: "French",
+      english: "English"
+    },
+
     intro: {
       title: "Welcome – Tokomi",
       btnGuest: "Continue as guest",
@@ -54,9 +73,9 @@ window.I18N = {
       title: "Home – Tokomi",
       hero: {
         title: "SUMMER COLLECTION",
-        subtitle: "AVAILABLE NOW"        
-    },
-    sections: {
+        subtitle: "AVAILABLE NOW"
+      },
+      sections: {
         summerShoesNew: "SUMMER SHOES: NEW ARRIVALS",
         recommendedSales: "RECOMMENDED SALES",
         summerShoes707: "#707 SUMMER SHOES",
