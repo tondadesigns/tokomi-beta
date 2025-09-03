@@ -26,6 +26,7 @@ window.I18N = {
       title: "COLLECTION ÉTÉ",
       subtitle: "MAINTENANT DISPONIBLE"
       },
+      
       sections: {
         summerShoesNew: "CHAUSSURES D'ÉTÉ: NOUVEL ARRIVAGE",
         recommendedSales: "SOLDES RECOMMANDÉS",
@@ -34,6 +35,16 @@ window.I18N = {
         accessibleLuxury740: "#740 LUXE ACCESSIBLE"
       }
     },
+    
+    explore: {
+      title: "Tokomi – Explorer",
+      cats: { women: "Femme", men: "Homme", kids: "Enfants" },
+      search: { placeholder: "QUE RECHERCHEZ-VOUS ?", cancel: "Annuler" },
+      onSale: "En solde",
+      newArrivals: "Nouveautés"
+    },
+
+   
     header: {
       cart: "Panier",
       home: "Accueil",
@@ -84,6 +95,16 @@ window.I18N = {
         accessibleLuxury740: "#740 ACCESSIBLE LUXURY"
       }
     },
+    
+    explore: {
+      title: "Tokomi – Explore",
+      cats: { women: "Women", men: "Men", kids: "Kids" },
+      search: { placeholder: "WHAT ARE YOU LOOKING FOR?", cancel: "Cancel" },
+      onSale: "On sale",
+      newArrivals: "New arrivals"
+    },
+
+ 
     header: {
       cart: "Cart",
       home: "Home",
