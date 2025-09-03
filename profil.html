@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title data-i18n-title="profile.title">Profil – Tokomi</title>
   <style>
     body {
@@ -92,11 +91,13 @@
       text-decoration: none;
       transition: color 0.2s ease;
     }
+
     .menu-item:hover,
     .menu-item.active {
       color: #000;
       font-weight: 600;
     }
+
     .btn-signup {
       font-size: 22px;
       color: black;
@@ -106,10 +107,10 @@
     }
   </style>
 
-  <!-- i18n (⚠️ chemins relatifs recommandés) -->
-  <script defer src="i18n/translations.js"></script>
-  <script defer src="i18n/i18n.js"></script>
-  <script defer src="i18n/tokomi-i18n-compat.js"></script>
+  <!-- i18n -->
+  <script defer src="/i18n/translations.js"></script>
+  <script defer src="/i18n/i18n.js"></script>
+  <script defer src="/i18n/tokomi-i18n-compat.js"></script>
 </head>
 <body>
 
@@ -166,55 +167,31 @@
   </footer>
 
   <script>
-    // --- Fallback i18n (si applyTranslations n'existe pas) ---
-    function getDeep(obj, path) {
-      return path.split('.').reduce((o, k) => (o && o[k] !== undefined ? o[k] : undefined), obj);
-    }
-    function applyTranslationsLite(lang) {
-      const dict = (window.I18N || {})[lang] || {};
-      // text content
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        const val = getDeep(dict, key);
-        if (val !== undefined) el.textContent = val;
-      });
-      // placeholders
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder');
-        const val = getDeep(dict, key);
-        if (val !== undefined) el.setAttribute('placeholder', val);
-      });
-      // <title>
-      const titleEl = document.querySelector('title[data-i18n-title]');
-      if (titleEl) {
-        const key = titleEl.getAttribute('data-i18n-title');
-        const val = getDeep(dict, key);
-        if (val !== undefined) document.title = val;
-      }
-      // <html lang="">
-      if (dict.htmlLang) document.documentElement.lang = dict.htmlLang;
-    }
+    // Petit helper pour récupérer la langue et traduire dynamiquement
     function currentLang() {
       return localStorage.getItem('selectedLang') || 'fr';
     }
     function t(path, fallback = '') {
-      const dict = (window.I18N || {})[currentLang()] || {};
-      const val = getDeep(dict, path);
-      return (val !== undefined && val !== null) ? val : fallback;
+      try {
+        return path.split('.').reduce((o, k) => (o || {})[k], (window.I18N || {})[currentLang()]) || fallback;
+      } catch { return fallback; }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      const lang = currentLang();
-      // Applique i18n (officiel si dispo, sinon fallback lite)
-      (window.applyTranslations || applyTranslationsLite)(lang);
+      // Applique i18n statique (titres, labels avec data-i18n, placeholders…)
+      if (window.applyTranslations) {
+        applyTranslations(currentLang());
+      }
 
       const auth = localStorage.getItem('tokomi_auth');         // 'user' | 'guest' | null
       const data = JSON.parse(localStorage.getItem('signupData') || '{}');
       const usernameDiv = document.querySelector('.username');
       const authBtn = document.getElementById('authBtn');
 
+      // Affiche le prénom (username) en UPPERCASE si connecté user
       if (auth === 'user') {
         if (usernameDiv) usernameDiv.textContent = (data.prenom || '').toUpperCase();
+
         if (authBtn) {
           authBtn.textContent = t('profile.buttons.logout', 'DÉCONNEXION');
           authBtn.setAttribute('data-i18n', 'profile.buttons.logout');
@@ -223,8 +200,10 @@
             window.location.href = 'accueil.html';
           };
         }
+
       } else if (auth === 'guest') {
         if (usernameDiv) usernameDiv.textContent = '';
+
         if (authBtn) {
           authBtn.textContent = t('profile.buttons.login', 'SE CONNECTER');
           authBtn.setAttribute('data-i18n', 'profile.buttons.login');
@@ -232,6 +211,8 @@
             localStorage.removeItem('tokomi_auth');
             window.location.href = 'connexion.html';
           };
+
+          // Ajoute "Créer un compte"
           const signupBtn = document.createElement('button');
           signupBtn.textContent = t('profile.buttons.signup', 'CRÉER UN COMPTE');
           signupBtn.setAttribute('data-i18n', 'profile.buttons.signup');
@@ -242,12 +223,16 @@
           signupBtn.style.marginLeft = '-1px';
           authBtn.insertAdjacentElement('afterend', signupBtn);
         }
+
       } else {
+        // Non connecté
         if (usernameDiv) usernameDiv.textContent = '';
+
         if (authBtn) {
           authBtn.textContent = t('profile.buttons.login', 'SE CONNECTER');
           authBtn.setAttribute('data-i18n', 'profile.buttons.login');
           authBtn.onclick = () => { window.location.href = 'connexion.html'; };
+
           const signupBtn = document.createElement('button');
           signupBtn.textContent = t('profile.buttons.signup', 'CRÉER UN COMPTE');
           signupBtn.setAttribute('data-i18n', 'profile.buttons.signup');
@@ -260,23 +245,33 @@
         }
       }
 
-      // Réapplique i18n pour les éléments injectés (ex: bouton "Créer un compte")
-      (window.applyTranslations || applyTranslationsLite)(lang);
+      // Réapplique i18n sur les éléments ajoutés dynamiquement (signupBtn)
+      if (window.applyTranslations) {
+        applyTranslations(currentLang());
+      }
     });
 
-    // Optionnel : ton helper login
+    // Reste de ton code de login si nécessaire
     function login() {
       const email    = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
-      if (!email || !password) { alert("Veuillez remplir tous les champs."); return; }
+
+      if (!email || !password) {
+        alert("Veuillez remplir tous les champs.");
+        return;
+      }
+
       const data = JSON.parse(localStorage.getItem('signupData') || '{}');
+
       if (!data.email || !data.password) {
         alert("Aucun compte enregistré. Créez un compte d’abord.");
         window.location.href = 'signup.html';
         return;
       }
+
       const okEmail = data.email.trim().toLowerCase() === email.toLowerCase();
       const okPwd   = data.password === password;
+
       if (okEmail && okPwd) {
         localStorage.setItem('tokomi_auth', 'user');
         localStorage.setItem('tokomi_username', data.prenom || '');
