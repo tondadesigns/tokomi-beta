@@ -35,7 +35,7 @@ window.I18N = {
       }
     },
     header: {
-      cart: "Panier",
+      cart: "PANIER",
       home: "Accueil",
       explore: "Explorer",
       profile: "Profil"
@@ -85,7 +85,7 @@ window.I18N = {
       }
     },
     header: {
-      cart: "Cart",
+      cart: "CART",
       home: "Home",
       explore: "Explore",
       profile: "Profile"
