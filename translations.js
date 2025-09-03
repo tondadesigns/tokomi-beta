@@ -23,8 +23,8 @@ window.I18N = {
     accueil: {
       title: "Accueil – Tokomi",
       hero: {
-        title: "COLLECTION ÉTÉ",
-        subtitle: "MAINTENANT DISPONIBLE"
+      title: "COLLECTION ÉTÉ",
+      subtitle: "MAINTENANT DISPONIBLE"
       },
       sections: {
         summerShoesNew: "CHAUSSURES D'ÉTÉ: NOUVEL ARRIVAGE",
@@ -35,6 +35,7 @@ window.I18N = {
       }
     },
     header: {
+      cart: "Panier",
       home: "Accueil",
       explore: "Explorer",
       profile: "Profil"
@@ -84,6 +85,7 @@ window.I18N = {
       }
     },
     header: {
+      cart: "Cart",
       home: "Home",
       explore: "Explore",
       profile: "Profile"
