@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Profil – Tokomi</title>
+  <title data-i18n-title="profile.title">Profil – Tokomi</title>
   <style>
     body {
       font-family: 'Space Grotesk', sans-serif;
@@ -20,13 +20,13 @@
     }
 
     .username {
-  text-align: center;
-  font-size: 20px; /* raisonnable visuellement */
-  font-weight: 500;
-  margin-top: -12px; /* réduit l’espace entre les deux */
-  font-family: 'Space Grotesk', sans-serif;
-}
-    
+      text-align: center;
+      font-size: 20px;
+      font-weight: 500;
+      margin-top: -12px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
     .btn {
       display: block;
       width: calc(100% - 48px);
@@ -41,49 +41,8 @@
       border: none;
       background: none;
       cursor: pointer;
-    }
-
-    .carousel {
-      display: flex;
-      overflow-x: auto;
-      gap: 12px;
-      padding: 16px;
-    }
-
-    .carousel-item {
-      min-width: 160px;
-      flex: 0 0 auto;
       text-align: left;
     }
-
-    .carousel-item img {
-      width: 200px;
-      height: 500px; /* ou plus si tu veux encore plus long */
-  object-fit: cover;
-      border: 1px solid #ddd;
-    }
-
-    .carousel-item .brand,
-    .carousel-item .product,
-    .carousel-item .price {
-      font-size: 26px;
-      margin-top: 4px;
-    }
-
-    .carousel-item .product {
-      font-weight: 300;
-      font-size: 26px;
-    }
-
-    .carousel-item  .brand {
-      font-size:28px;
-      font-weight: 600;
-    }
-
-    .carousel-item .price {
-      font-size: 28px;
-      margin-bottom: -16px;
-      }
 
     .section {
       padding: 0 16px 16px 16px;
@@ -95,225 +54,232 @@
 
     .section h3 {
       font-size: 28px;
-      
       font-weight: 600;
       margin-bottom: 8px;
     }
 
     .section .btn {
       border: none;
-      text-align: left;
       font-size: 22px !important;
       padding-left: 0;
       margin: 0 0 8px 0;
       background: none;
       color: #000;
     }
-  /* FOOTER  */
-.sticky-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: white;
-  display: flex;
-  height: 40px;
-  justify-content: space-around;
-  padding: 18px 0;
-  border-top: 1px solid #ccc;
-  z-index: 1000;
-}
-.menu-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 23px;
-  margin-top: 3px;
-  font-family: 'Space Grotesk', sans-serif;
-  color: #666;
-  text-decoration: none;
-  transition: color 0.2 ease;
-}
 
-.menu-item:hover,
-.menu-item.active {
-  color: #000;
-  font-weight: 600;
-}
+    /* FOOTER  */
+    .sticky-footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: white;
+      display: flex;
+      height: 40px;
+      justify-content: space-around;
+      padding: 18px 0;
+      border-top: 1px solid #ccc;
+      z-index: 1000;
+    }
+    .menu-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 23px;
+      margin-top: 3px;
+      font-family: 'Space Grotesk', sans-serif;
+      color: #666;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
 
-.btn-signup {
-  font-size: 22px;
-  color: black;
-  margin-top: 2px !important;
-  margin-bottom: 30px !important;
-  margin-left: -1px;
-}
-    
+    .menu-item:hover,
+    .menu-item.active {
+      color: #000;
+      font-weight: 600;
+    }
+
+    .btn-signup {
+      font-size: 22px;
+      color: black;
+      margin-top: 2px !important;
+      margin-bottom: 30px !important;
+      margin-left: -1px;
+    }
   </style>
+
+  <!-- i18n -->
+  <script defer src="/i18n/translations.js"></script>
+  <script defer src="/i18n/i18n.js"></script>
+  <script defer src="/i18n/tokomi-i18n-compat.js"></script>
 </head>
 <body>
 
   <header>
-    BIENVENUE 
+    <span data-i18n="profile.welcome">BIENVENUE</span>
   </header>
-  <div style="text-align: center; font-size: 62px !important; font-weight: 500;  margin-bottom: -20px;font-family: 'Space Grotesk', sans-serif;"></div>
-  <div class="username" style="margin-bottom: 150px;" ></div>
+
+  <div style="text-align:center; font-size:62px !important; font-weight:500; margin-bottom:-20px; font-family:'Space Grotesk', sans-serif;"></div>
+  <div class="username" style="margin-bottom:150px;"></div>
+
+  <div class="section">
+    <h3 data-i18n="profile.sections.account">MON COMPTE</h3>
+    <button class="btn" style="margin-top:-8px; font-size:22px;" onclick="window.location.href='panier-favoris.html'" data-i18n="profile.buttons.cart">PANIER</button>
+    <button class="btn" style="margin-top:-18px; font-size:22px;" onclick="window.location.href='favoris.html'" data-i18n="profile.buttons.favorites">FAVORIS</button>
+    <button class="btn" style="margin-top:-20px; font-size:22px;" onclick="window.location.href='listes.html'" data-i18n="profile.buttons.lists">LISTES</button>
+    <button class="btn" style="margin-top:-18px; font-size:22px;" onclick="window.location.href='informationspersonnelles.html'" data-i18n="profile.buttons.personalInfo">INFORMATIONS PERSONNELLES</button>
+    <button class="btn" style="margin-top:-21px;" onclick="window.location.href='historique-2.html'" data-i18n="profile.buttons.orderHistory">HISTORIQUE DES COMMANDES</button>
+    <button class="btn" style="margin-top:-18px; margin-bottom:-34px;" onclick="window.location.href='membership.html'" data-i18n="profile.buttons.membership">PROGRAMME DE MEMBRE</button>
   </div>
 
   <div class="section">
-    <h3>MON COMPTE</h3>
-    <button class="btn" style="margin-top: -8px; font-size: 22px;" onclick="window.location.href='panier-favoris.html'">Panier</button>
-    <button class="btn" style="margin-top: -18px; font-size: 22px;" onclick="window.location.href='favoris.html'">Favoris</button>
-    <button class="btn" style="margin-top: -20px; font-size: 22px;" onclick="window.location.href='listes.html'">Listes</button>
-    <button class="btn" style="margin-top: -18px; font-size: 22px;" onclick="window.location.href='informationspersonnelles.html'">Informations personnelles</button>
-    <button class="btn" style="margin-top: -21px;" onclick="window.location.href='historique-2.html'">Historique des commandes</button>
-    <button class="btn" style="margin-top: -18px; margin-bottom: -34px;" onclick="window.location.href='membership.html'">Programme de membre</button>
+    <h3 data-i18n="profile.sections.settings">MES RÉGLAGES</h3>
+    <button class="btn" style="margin-top:-8px;" onclick="window.location.href='preferencesnav.html'" data-i18n="profile.buttons.navPreferences">PRÉFÉRENCES DE NAVIGATION</button>
+    <button class="btn" style="margin-top:-19px;" onclick="window.location.href='notification.html'" data-i18n="profile.buttons.notifications">NOTIFICATIONS</button>
+    <button class="btn" style="margin-top:-20px;" onclick="window.location.href='langue.html'" data-i18n="profile.buttons.language">LANGUE</button>
+    <button class="btn" style="margin-top:-18px; margin-bottom:-34px;" onclick="window.location.href='paysregion-7.html'" data-i18n="profile.buttons.countryRegion">PAYS / RÉGION</button>
   </div>
 
   <div class="section">
-    <h3>MES RÉGLAGES</h3>
-    <button class="btn" style="margin-top: -8px;" onclick="window.location.href='preferencesnav.html'">Préférences de navigation</button>
-    <button class="btn" style="margin-top: -19px;" onclick="window.location.href='notification.html'">Notifications</button>
-    <button class="btn" style="margin-top: -20px;" onclick="window.location.href='langue.html'"  >Langue</button>
-    <button class="btn" style="margin-top: -18px; margin-bottom: -34px;" onclick="window.location.href='paysregion-7.html'">Pays / Région</button>
-  </div>
+    <h3 data-i18n="profile.sections.support">ASSISTANCE</h3>
+    <button class="btn" style="margin-top:-8px; margin-bottom:-10px;" onclick="window.location.href='contactez-nous.html'" data-i18n="profile.buttons.contactUs">CONTACTEZ-NOUS</button>
+    <button class="btn" style="margin-top:-8px;" onclick="window.location.href='frasqu.html'" data-i18n="profile.buttons.faq">FAQ</button>
+    <button class="btn" style="margin-top:-18px; margin-bottom:32px;" onclick="window.location.href='politique-confidentialite.html'" data-i18n="profile.buttons.privacyPolicy">POLITIQUE DE CONFIDENTIALITÉ</button>
+    <button class="btn" style="margin-top:-40px; margin-bottom:32px;" onclick="window.location.href='conditions-generales.html'" data-i18n="profile.buttons.terms">CONDITIONS GÉNÉRALES</button>
 
-  <div class="section">
-    <h3>ASSISTANCE</h3>
-    <button class="btn" style="margin-top: -8px; margin-bottom: -10px;" onclick="window.location.href='contactez-nous.html'">CONTACTEZ-NOUS</button>
-    <button class="btn" style="margin-top: -8px;" onclick="window.location.href='frasqu.html'">FAQ</button>
-    <button class="btn" style="margin-top: -18px;margin-bottom: 32px;" onclick="window.location.href='politique-confidentialite.html'">POLITIQUE DE CONFIDENTIALITÉ</button>
-    <button class="btn" style="margin-top: -40px;margin-bottom: 32px;" onclick="window.location.href='conditions-generales.html'">CONDITIONS GÉNÉRALES</button>
-  <button id="authBtn" class="btn" style="margin-top: 6px;margin-bottom: 8px !important; margin-left: -1px;">Déconnexion</button>
+    <!-- Bouton auth dynamique -->
+    <button id="authBtn" class="btn" style="margin-top:6px; margin-bottom:8px !important; margin-left:-1px;" data-i18n="profile.buttons.logout">
+      DÉCONNEXION
+    </button>
   </div>
 
   <div id="signupContainer"></div>
-  
 
-<footer class="sticky-footer">
-    <a href="accueil.html" class="menu-item ">
-      
-      <span>ACCUEIL</span>
+  <footer class="sticky-footer">
+    <a href="accueil.html" class="menu-item">
+      <span data-i18n="nav.home">ACCUEIL</span>
     </a>
-
-    <a href="explorer.html" class="menu-item"> 
-      
-      <span>EXPLORER</span>
+    <a href="explorer.html" class="menu-item">
+      <span data-i18n="nav.explore">EXPLORER</span>
     </a>
-    
-    
-    <a href="profil.html"class="menu-item active">
-      
-      <span>PROFIL</span>
+    <a href="profil.html" class="menu-item active">
+      <span data-i18n="nav.profile">PROFIL</span>
     </a>
   </footer>
 
-  <script defer src="/i18n/translations.js"></script>
-<script defer src="/i18n/i18n.js"></script>
-<script defer src="/i18n/tokomi-i18n-compat.js"></script>
-
   <script>
+    // Petit helper pour récupérer la langue et traduire dynamiquement
+    function currentLang() {
+      return localStorage.getItem('selectedLang') || 'fr';
+    }
+    function t(path, fallback = '') {
+      try {
+        return path.split('.').reduce((o, k) => (o || {})[k], (window.I18N || {})[currentLang()]) || fallback;
+      } catch { return fallback; }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
-  const auth = localStorage.getItem('tokomi_auth');
-  const data = JSON.parse(localStorage.getItem('signupData') || '{}');
-  const usernameDiv = document.querySelector('.username');
-  const authBtn = document.getElementById('authBtn') || document.querySelector('.btn');
-      
-  if (auth === 'user') {
-  // ✅ Prénom = username
-    if (usernameDiv) usernameDiv.textContent = (data.prenom || "").toUpperCase();
-    
-// Bouton = Déconnexion
-    if (authBtn) {
-      authBtn.textContent = 'Déconnexion';
-      authBtn.onclick = () => {
-        localStorage.removeItem('tokomi_auth');
+      // Applique i18n statique (titres, labels avec data-i18n, placeholders…)
+      if (window.applyTranslations) {
+        applyTranslations(currentLang());
+      }
+
+      const auth = localStorage.getItem('tokomi_auth');         // 'user' | 'guest' | null
+      const data = JSON.parse(localStorage.getItem('signupData') || '{}');
+      const usernameDiv = document.querySelector('.username');
+      const authBtn = document.getElementById('authBtn');
+
+      // Affiche le prénom (username) en UPPERCASE si connecté user
+      if (auth === 'user') {
+        if (usernameDiv) usernameDiv.textContent = (data.prenom || '').toUpperCase();
+
+        if (authBtn) {
+          authBtn.textContent = t('profile.buttons.logout', 'DÉCONNEXION');
+          authBtn.setAttribute('data-i18n', 'profile.buttons.logout');
+          authBtn.onclick = () => {
+            localStorage.removeItem('tokomi_auth');
+            window.location.href = 'accueil.html';
+          };
+        }
+
+      } else if (auth === 'guest') {
+        if (usernameDiv) usernameDiv.textContent = '';
+
+        if (authBtn) {
+          authBtn.textContent = t('profile.buttons.login', 'SE CONNECTER');
+          authBtn.setAttribute('data-i18n', 'profile.buttons.login');
+          authBtn.onclick = () => {
+            localStorage.removeItem('tokomi_auth');
+            window.location.href = 'connexion.html';
+          };
+
+          // Ajoute "Créer un compte"
+          const signupBtn = document.createElement('button');
+          signupBtn.textContent = t('profile.buttons.signup', 'CRÉER UN COMPTE');
+          signupBtn.setAttribute('data-i18n', 'profile.buttons.signup');
+          signupBtn.onclick = () => window.location.href = 'signup.html';
+          signupBtn.className = 'btn btn-signup';
+          signupBtn.style.marginTop = '2px';
+          signupBtn.style.marginBottom = '30px';
+          signupBtn.style.marginLeft = '-1px';
+          authBtn.insertAdjacentElement('afterend', signupBtn);
+        }
+
+      } else {
+        // Non connecté
+        if (usernameDiv) usernameDiv.textContent = '';
+
+        if (authBtn) {
+          authBtn.textContent = t('profile.buttons.login', 'SE CONNECTER');
+          authBtn.setAttribute('data-i18n', 'profile.buttons.login');
+          authBtn.onclick = () => { window.location.href = 'connexion.html'; };
+
+          const signupBtn = document.createElement('button');
+          signupBtn.textContent = t('profile.buttons.signup', 'CRÉER UN COMPTE');
+          signupBtn.setAttribute('data-i18n', 'profile.buttons.signup');
+          signupBtn.onclick = () => window.location.href = 'signup.html';
+          signupBtn.className = 'btn btn-signup';
+          signupBtn.style.marginTop = '4px';
+          signupBtn.style.marginBottom = '30px';
+          signupBtn.style.marginLeft = '-1px';
+          authBtn.insertAdjacentElement('afterend', signupBtn);
+        }
+      }
+
+      // Réapplique i18n sur les éléments ajoutés dynamiquement (signupBtn)
+      if (window.applyTranslations) {
+        applyTranslations(currentLang());
+      }
+    });
+
+    // Reste de ton code de login si nécessaire
+    function login() {
+      const email    = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        alert("Veuillez remplir tous les champs.");
+        return;
+      }
+
+      const data = JSON.parse(localStorage.getItem('signupData') || '{}');
+
+      if (!data.email || !data.password) {
+        alert("Aucun compte enregistré. Créez un compte d’abord.");
+        window.location.href = 'signup.html';
+        return;
+      }
+
+      const okEmail = data.email.trim().toLowerCase() === email.toLowerCase();
+      const okPwd   = data.password === password;
+
+      if (okEmail && okPwd) {
+        localStorage.setItem('tokomi_auth', 'user');
+        localStorage.setItem('tokomi_username', data.prenom || '');
         window.location.href = 'accueil.html';
-      };
+      } else {
+        alert("Identifiants incorrects.");
+      }
     }
-    
-  } else if (auth === 'guest') {
-   // vider le nom
-    
-    if (usernameDiv) usernameDiv.textContent = '';
-
-    // transformer le bouton Déconnexion -> Se connecter
-    // (idéal: donne un id à ce bouton, ex. id="authBtn")
-    
-    if (authBtn) {
-      authBtn.textContent = 'Se connecter';
-      authBtn.onclick = () => {
-        localStorage.removeItem('tokomi_auth'); // on sort du mode invité
-        window.location.href = 'connexion.html';
-      };
-    
-    // 3) Ajouter le bouton "Créer un compte"
-      const signupBtn = document.createElement('button');
-      signupBtn.textContent = 'Créer un compte';
-      signupBtn.onclick = redirectToSignUp;
-      signupBtn.style.marginTop = '2px';
-      signupBtn.style.marginBottom = '30px';
-      signupBtn.style.marginLeft = '-1px';
-      signupBtn.className = 'btn btn-signup';
-      
-      authBtn.insertAdjacentElement('afterend', signupBtn);
-    }
-    } else {
-    // Aucun flag (non connecté) : proposer Se connecter + Créer un compte
-    if (usernameDiv) usernameDiv.textContent = '';
-
-    if (authBtn) {
-      authBtn.textContent = 'Se connecter';
-      authBtn.onclick = () => { window.location.href = 'connexion.html'; };
-
-      const signupBtn = document.createElement('button');
-      signupBtn.textContent = 'Créer un compte';
-      signupBtn.onclick = redirectToSignUp;
-      signupBtn.style.marginTop = '4px';
-      signupBtn.style.marginBottom = '30px';
-      signupBtn.style.marginLeft = '-1px';
-      signupBtn.className = 'btn btn-signup';
-      authBtn.insertAdjacentElement('afterend', signupBtn);
-    }
-  }
-});
-    function redirectToSignUp() {
-  window.location.href = 'signup.html'; // adapte si ta page s’appelle autrement
-}
   </script>
-<script>
-function login() {
-  const email    = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value;
-
-  if (!email || !password) {
-    alert("Veuillez remplir tous les champs.");
-    return;
-  }
-
-  const data = JSON.parse(localStorage.getItem('signupData') || '{}');
-
-  // Vérification simple des identifiants
-  if (!data.email || !data.password) {
-    alert("Aucun compte enregistré. Créez un compte d’abord.");
-    window.location.href = 'signup.html';
-    return;
-  }
-
-  const okEmail = data.email.trim().toLowerCase() === email.toLowerCase();
-  const okPwd   = data.password === password;
-
-  if (okEmail && okPwd) {
-    // Authentifié : on passe en mode user et on pousse le prénom comme username
-    localStorage.setItem('tokomi_auth', 'user');
-    localStorage.setItem('tokomi_username', data.prenom || '');
-
-    // redirection vers le profil (où .username affichera le prénom)
-    window.location.href = 'accueil.html';
-  } else {
-    alert("Identifiants incorrects.");
-  }
-}
-</script>
-
 </body>
 </html>
