@@ -5,12 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Langue – Tokomi</title>
   <style>
-    body {
-      font-family: 'Space Grotesk', sans-serif; margin:0; padding:0; background:#fff;
-    }
+    body { font-family:'Space Grotesk', sans-serif; margin:0; padding:0; background:#fff; }
     .btn-retour {
       position:absolute; left:10px; top:54px; color:#000; background:none; border:none;
       font-size:11px; font-weight:300; cursor:pointer; font-family:'Space Grotesk', sans-serif;
+      z-index: 9999; /* ✅ reste cliquable au-dessus de tout */
     }
     .title { text-align:center; margin-top:120px; font-size:13px; font-weight:600; text-transform:uppercase; }
     .container { margin-top:38px; padding:40px 24px; display:flex; flex-direction:column; gap:24px; }
@@ -29,7 +28,10 @@
 </head>
 <body>
 
-  <button class="btn-retour" id="btnRetour" data-i18n="common.back">RETOUR</button>
+  <!-- ✅ onclick direct + type="button" = redirection garantie -->
+  <button class="btn-retour" id="btnRetour" type="button"
+          data-i18n="common.back"
+          onclick="location.href='accueil.html'">RETOUR</button>
 
   <div class="title" id="pageTitle" data-i18n="common.language">Langue</div>
 
@@ -47,24 +49,32 @@
   </div>
 
   <script>
-    // Pré-sélection de la radio au chargement (sans redirection)
     document.addEventListener('DOMContentLoaded', () => {
-      const lang = window.tokomiI18n.getLang(); // 'fr' | 'en'
+      // ✅ Défensif si le module i18n n'est pas chargé
+      const i18n = window.tokomiI18n;
+      const lang = i18n ? i18n.getLang() : 'fr';
       document.getElementById(lang)?.setAttribute('checked', 'checked');
 
-      // Bouton retour -> accueil.html
-      document.getElementById('btnRetour').addEventListener('click', () => {
-        location.href = 'accueil.html';
-      });
+      // (Optionnel) Ajout JS en plus de l'onclick HTML
+      const btn = document.getElementById('btnRetour');
+      btn?.addEventListener('click', () => { location.href = 'accueil.html'; });
 
-      // Permet aussi de changer via la radio (clavier/label)
+      // Radios accessibles (clavier/label)
       document.getElementById('fr')?.addEventListener('change', () => selectLangue('fr'));
       document.getElementById('en')?.addEventListener('change', () => selectLangue('en'));
     });
 
-    // Quand on choisit une langue sur cette page : on persiste + redirige
+    // ✅ Persiste + redirige après choix de langue
     function selectLangue(id) {
-      window.tokomiI18n.setLang(id, { redirect: true, redirectTo: 'accueil.html' });
+      const i18n = window.tokomiI18n;
+      if (i18n && typeof i18n.setLang === 'function') {
+        i18n.setLang(id, { redirect: true, redirectTo: 'accueil.html' });
+      } else {
+        // Fallback si le module i18n est absent
+        localStorage.setItem('tokomi_lang', (id === 'en') ? 'en' : 'fr');
+        document.documentElement.setAttribute('lang', (id === 'en') ? 'en' : 'fr');
+        location.href = 'accueil.html';
+      }
     }
   </script>
 </body>
