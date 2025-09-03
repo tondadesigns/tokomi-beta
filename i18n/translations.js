@@ -34,7 +34,6 @@ window.I18N = {
       }
     },
 
-    // ✅ manquante chez toi
     explore: {
       title: "Tokomi – Explorer",
       cats: { women: "FEMME", men: "HOMME", kids: "ENFANTS" },
@@ -43,8 +42,38 @@ window.I18N = {
       newArrivals: "NOUVEAUTÉS"
     },
 
+    // ✅ Nouveau : bloc complet pour profil.html
+    profile: {
+      title: "Profil – Tokomi",
+      welcome: "BIENVENUE",
+      sections: {
+        account: "MON COMPTE",
+        settings: "MES RÉGLAGES",
+        support: "ASSISTANCE"
+      },
+      buttons: {
+        cart: "PANIER",
+        favorites: "FAVORIS",
+        lists: "LISTES",
+        personalInfo: "INFORMATIONS PERSONNELLES",
+        orderHistory: "HISTORIQUE DES COMMANDES",
+        membership: "PROGRAMME DE MEMBRE",
+        navPreferences: "PRÉFÉRENCES DE NAVIGATION",
+        notifications: "NOTIFICATIONS",
+        language: "LANGUE",
+        countryRegion: "PAYS / RÉGION",
+        contactUs: "CONTACTEZ-NOUS",
+        faq: "FAQ",
+        privacyPolicy: "POLITIQUE DE CONFIDENTIALITÉ",
+        terms: "CONDITIONS GÉNÉRALES",
+        login: "SE CONNECTER",
+        signup: "CRÉER UN COMPTE",
+        logout: "DÉCONNEXION"
+      }
+    },
+
     header: {
-      cart: "PANIER",
+      cart: "PANIER",   // ✅ MAJUSCULES
       home: "Accueil",
       explore: "Explorer",
       profile: "Profil"
@@ -96,7 +125,6 @@ window.I18N = {
       }
     },
 
-    // ✅ manquante chez toi
     explore: {
       title: "Tokomi – Explore",
       cats: { women: "WOMEN", men: "MEN", kids: "KIDS" },
@@ -105,8 +133,38 @@ window.I18N = {
       newArrivals: "NEW ARRIVALS"
     },
 
+    // ✅ Profil EN
+    profile: {
+      title: "Profile – Tokomi",
+      welcome: "WELCOME",
+      sections: {
+        account: "MY ACCOUNT",
+        settings: "MY SETTINGS",
+        support: "SUPPORT"
+      },
+      buttons: {
+        cart: "CART",
+        favorites: "FAVORITES",
+        lists: "LISTS",
+        personalInfo: "PERSONAL INFORMATION",
+        orderHistory: "ORDER HISTORY",
+        membership: "MEMBERSHIP PROGRAM",
+        navPreferences: "BROWSING PREFERENCES",
+        notifications: "NOTIFICATIONS",
+        language: "LANGUAGE",
+        countryRegion: "COUNTRY / REGION",
+        contactUs: "CONTACT US",
+        faq: "FAQ",
+        privacyPolicy: "PRIVACY POLICY",
+        terms: "TERMS & CONDITIONS",
+        login: "LOG IN",
+        signup: "CREATE ACCOUNT",
+        logout: "LOG OUT"
+      }
+    },
+
     header: {
-      cart: "CART",
+      cart: "CART",     // ✅ MAJUSCULES
       home: "Home",
       explore: "Explore",
       profile: "Profile"
