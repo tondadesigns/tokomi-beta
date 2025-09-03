@@ -38,10 +38,10 @@ window.I18N = {
     
     explore: {
       title: "Tokomi – Explorer",
-      cats: { women: "Femme", men: "Homme", kids: "Enfants" },
-      search: { placeholder: "QUE RECHERCHEZ-VOUS ?", cancel: "Annuler" },
-      onSale: "En solde",
-      newArrivals: "Nouveautés"
+      cats: { women: "FEMME", men: "HOMME", kids: "ENFANTS" },
+      search: { placeholder: "QUE RECHERCHEZ-VOUS ?", cancel: "ANNULER" },
+      onSale: "EN SOLDE",
+      newArrivals: "NOUVEAUTÉS"
     },
 
    
@@ -98,10 +98,10 @@ window.I18N = {
     
     explore: {
       title: "Tokomi – Explore",
-      cats: { women: "Women", men: "Men", kids: "Kids" },
-      search: { placeholder: "WHAT ARE YOU LOOKING FOR?", cancel: "Cancel" },
-      onSale: "On sale",
-      newArrivals: "New arrivals"
+      cats: { women: "WOMEN", men: "MEN", kids: "KIDS" },
+      search: { placeholder: "WHAT ARE YOU LOOKING FOR?", cancel: "CANCEL" },
+      onSale: "ON SALE",
+      newArrivals: "NEW ARRIVALS"
     },
 
  
