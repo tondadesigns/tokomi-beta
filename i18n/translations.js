@@ -89,7 +89,8 @@ window.I18N = {
       loginTitle: "Connexion",
       userPlaceholder: "Adresse e-mail",
       passPlaceholder: "Mot de passe",
-      loginCta: "Se connecter"
+      loginCta: "Se connecter",
+      forgot: "Mot de passe oublié ?"
     }
   },
 
@@ -180,7 +181,8 @@ window.I18N = {
       loginTitle: "Sign in",
       userPlaceholder: "Email address",
       passPlaceholder: "Password",
-      loginCta: "Sign in"
+      loginCta: "Sign in",
+      forgot: "Forgot password?"
     }
   }
 };
