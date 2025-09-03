@@ -49,7 +49,6 @@
     }
 
     .langue-label {
-      left: 6px;
       font-size: 11px;
       font-weight: 300;
       color: #333;
@@ -89,59 +88,73 @@
 </head>
 <body>
 
-  <button class="btn-retour" onclick="location.href='profil.html'">RETOUR</button>
+  <button class="btn-retour" id="btnRetour">RETOUR</button>
 
-  <div class="title">Langue</div>
+  <div class="title" id="pageTitle">Langue</div>
 
   <div class="container">
     <label class="langue-option">
-      <span class="langue-label">Français</span>
+      <span class="langue-label" id="labelFr">Français</span>
       <input type="radio" name="langue" id="fr">
       <span class="custom-radio" onclick="selectLangue('fr')"></span>
     </label>
     <label class="langue-option">
-      <span class="langue-label">Anglais</span>
+      <span class="langue-label" id="labelEn">Anglais</span>
       <input type="radio" name="langue" id="en">
       <span class="custom-radio" onclick="selectLangue('en')"></span>
     </label>
-    
   </div>
 
   <script>
   const LANG_KEY = 'tokomi_lang';
 
-  // Enregistre et applique la langue (sans redirection)
+  // Dictionnaire de traductions
+  const translations = {
+    fr: {
+      retour: "RETOUR",
+      title: "Langue",
+      fr: "Français",
+      en: "Anglais"
+    },
+    en: {
+      retour: "BACK",
+      title: "Language",
+      fr: "French",
+      en: "English"
+    }
+  };
+
+  // Applique la traduction
   function applyLang(lang) {
     const safe = (lang === 'en') ? 'en' : 'fr';
     localStorage.setItem(LANG_KEY, safe);
     document.documentElement.setAttribute('lang', safe);
-    // Si tu veux rediriger juste après le choix, dé-commente la ligne ci-dessous :
-    // location.href = 'accueil.html';
+
+    // Mise à jour du texte
+    document.getElementById("btnRetour").textContent = translations[safe].retour;
+    document.getElementById("pageTitle").textContent = translations[safe].title;
+    document.getElementById("labelFr").textContent = translations[safe].fr;
+    document.getElementById("labelEn").textContent = translations[safe].en;
   }
 
-  // Garde ta signature et tes appels existants
   function selectLangue(id) {
     const input = document.getElementById(id);
     if (!input) return;
     input.checked = true;
-    applyLang(id); // id est 'fr' ou 'en'
+    applyLang(id);
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    // Pré-sélection selon la préférence enregistrée (fr par défaut)
+    // Charge la langue sauvegardée (fr par défaut)
     const saved = localStorage.getItem(LANG_KEY) || 'fr';
     const el = document.getElementById(saved);
     if (el) el.checked = true;
-    document.documentElement.setAttribute('lang', saved);
+    applyLang(saved);
 
-    // Si l’utilisateur change la radio via clavier/label, on persiste aussi
-    const fr = document.getElementById('fr');
-    const en = document.getElementById('en');
-    fr?.addEventListener('change', () => fr.checked && applyLang('fr'));
-    en?.addEventListener('change', () => en.checked && applyLang('en'));
+    // Change aussi si on clique directement sur la radio
+    document.getElementById('fr')?.addEventListener('change', () => applyLang('fr'));
+    document.getElementById('en')?.addEventListener('change', () => applyLang('en'));
   });
-</script>
-
-
+  </script>
 </body>
 </html>
