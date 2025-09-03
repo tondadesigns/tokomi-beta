@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Mot de passe oublié – Tokomi</title>
+  <title data-i18n-title="auth.forgotTitle">Mot de passe oublié – Tokomi</title>
   <style>
     html, body {
       margin: 0;
@@ -89,16 +89,20 @@
       background-color: #222;
     }
   </style>
+  <!-- i18n -->
+  <script defer src="i18n/translations.js"></script>
+  <script defer src="i18n/i18n.js"></script>
+  <script defer src="i18n/tokomi-i18n-compat.js"></script>
 </head>
 <body>
   
-  <button class="btn-retour" onclick="location.href='connexion.html'">RETOUR</button>
+  <button class="btn-retour" onclick="location.href='connexion.html'" data-i18n="common.back" >RETOUR</button>
 
   <div class="forgot-container">
-    <h2>Réinitialiser votre mot de passe</h2>
-    <p>Entrez votre adresse email.</p>
-    <input type="email" id="email" placeholder="Votre adresse email" />
-    <button class="submit-btn" onclick="submitEmail()">Envoyer</button>
+    <h2 data-i18n="auth.forgotTitle">Réinitialiser votre mot de passe</h2>
+    <p data-i18n="auth.forgotInstruction">Entrez votre adresse email.</p>
+    <input type="email" id="email" data-i18n-placeholder="auth.userPlaceholder" placeholder="Votre adresse email" />
+    <button class="submit-btn" onclick="submitEmail()" data-i18n="auth.sendCta" >Envoyer</button>
   </div>
 
   <script>
