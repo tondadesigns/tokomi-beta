@@ -6,155 +6,66 @@
   <title>Langue – Tokomi</title>
   <style>
     body {
-      font-family: 'Space Grotesk', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #fff;
+      font-family: 'Space Grotesk', sans-serif; margin:0; padding:0; background:#fff;
     }
-
     .btn-retour {
-      position: absolute;
-      left: 10px;
-      top: 54px;
-      color: black;
-      background: none;
-      border: none;
-      font-size: 11px;
-      font-weight: 300;
-      cursor: pointer;
-      font-family: 'Space Grotesk', sans-serif;
+      position:absolute; left:10px; top:54px; color:#000; background:none; border:none;
+      font-size:11px; font-weight:300; cursor:pointer; font-family:'Space Grotesk', sans-serif;
     }
-
-    .title {
-      text-align: center;
-      margin-top: 120px;
-      font-size: 13px;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-
-    .container {
-      margin-top: 38px;
-      padding: 40px 24px 40px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    .langue-option {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 12px;
-    }
-
-    .langue-label {
-      font-size: 11px;
-      font-weight: 300;
-      color: #333;
-      text-transform: uppercase;
-    }
-
-    input[type="radio"] {
-      display: none;
-    }
-
-    .custom-radio {
-      width: 12px;
-      height: 12px;
-      border: 1px solid #333;
-      border-radius: 50%;
-      position: relative;
-      cursor: pointer;
-    }
-
+    .title { text-align:center; margin-top:120px; font-size:13px; font-weight:600; text-transform:uppercase; }
+    .container { margin-top:38px; padding:40px 24px; display:flex; flex-direction:column; gap:24px; }
+    .langue-option { display:flex; align-items:center; justify-content:space-between; padding-bottom:12px; }
+    .langue-label { font-size:11px; font-weight:300; color:#333; text-transform:uppercase; }
+    input[type="radio"] { display:none; }
+    .custom-radio { width:12px; height:12px; border:1px solid #333; border-radius:50%; position:relative; cursor:pointer; }
     .custom-radio::after {
-      content: "";
-      width: 6px;
-      height: 6px;
-      background-color: #000;
-      border-radius: 50%;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      transition: transform 0.2s ease;
+      content:""; width:6px; height:6px; background:#000; border-radius:50%; position:absolute;
+      top:50%; left:50%; transform:translate(-50%,-50%) scale(0); transition:transform .2s ease;
     }
-
-    input[type="radio"]:checked + .custom-radio::after {
-      transform: translate(-50%, -50%) scale(1);
-    }
+    input[type="radio"]:checked + .custom-radio::after { transform:translate(-50%,-50%) scale(1); }
   </style>
+  <!-- Module i18n commun -->
+  <script src="/js/tokomi-i18n.js"></script>
 </head>
 <body>
 
-  <button class="btn-retour" id="btnRetour">RETOUR</button>
+  <button class="btn-retour" id="btnRetour" data-i18n="common.back">RETOUR</button>
 
-  <div class="title" id="pageTitle">Langue</div>
+  <div class="title" id="pageTitle" data-i18n="common.language">Langue</div>
 
   <div class="container">
     <label class="langue-option">
-      <span class="langue-label" id="labelFr">Français</span>
+      <span class="langue-label" id="labelFr" data-i18n="common.french">Français</span>
       <input type="radio" name="langue" id="fr">
       <span class="custom-radio" onclick="selectLangue('fr')"></span>
     </label>
     <label class="langue-option">
-      <span class="langue-label" id="labelEn">Anglais</span>
+      <span class="langue-label" id="labelEn" data-i18n="common.english">Anglais</span>
       <input type="radio" name="langue" id="en">
       <span class="custom-radio" onclick="selectLangue('en')"></span>
     </label>
   </div>
 
   <script>
-  const LANG_KEY = 'tokomi_lang';
+    // Pré-sélection de la radio au chargement (sans redirection)
+    document.addEventListener('DOMContentLoaded', () => {
+      const lang = window.tokomiI18n.getLang(); // 'fr' | 'en'
+      document.getElementById(lang)?.setAttribute('checked', 'checked');
 
-  // Dictionnaire de traductions
-  const translations = {
-    fr: {
-      retour: "RETOUR",
-      title: "Langue",
-      fr: "Français",
-      en: "Anglais"
-    },
-    en: {
-      retour: "BACK",
-      title: "Language",
-      fr: "French",
-      en: "English"
+      // Bouton retour -> accueil.html
+      document.getElementById('btnRetour').addEventListener('click', () => {
+        location.href = 'accueil.html';
+      });
+
+      // Permet aussi de changer via la radio (clavier/label)
+      document.getElementById('fr')?.addEventListener('change', () => selectLangue('fr'));
+      document.getElementById('en')?.addEventListener('change', () => selectLangue('en'));
+    });
+
+    // Quand on choisit une langue sur cette page : on persiste + redirige
+    function selectLangue(id) {
+      window.tokomiI18n.setLang(id, { redirect: true, redirectTo: 'accueil.html' });
     }
-  };
-
-  // Applique la traduction
-  function applyLang(lang) {
-    const safe = (lang === 'en') ? 'en' : 'fr';
-    localStorage.setItem(LANG_KEY, safe);
-    document.documentElement.setAttribute('lang', safe);
-
-    // Mise à jour du texte
-    document.getElementById("btnRetour").textContent = translations[safe].retour;
-    document.getElementById("pageTitle").textContent = translations[safe].title;
-    document.getElementById("labelFr").textContent = translations[safe].fr;
-    document.getElementById("labelEn").textContent = translations[safe].en;
-  }
-
-  function selectLangue(id) {
-    const input = document.getElementById(id);
-    if (!input) return;
-    input.checked = true;
-    applyLang(id);
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    // Charge la langue sauvegardée (fr par défaut)
-    const saved = localStorage.getItem(LANG_KEY) || 'fr';
-    const el = document.getElementById(saved);
-    if (el) el.checked = true;
-    applyLang(saved);
-
-    // Change aussi si on clique directement sur la radio
-    document.getElementById('fr')?.addEventListener('change', () => applyLang('fr'));
-    document.getElementById('en')?.addEventListener('change', () => applyLang('en'));
-  });
   </script>
 </body>
 </html>
