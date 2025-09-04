@@ -472,6 +472,10 @@
 }
 
 </style>
+ <script defer src="/i18n/translations.js"></script>
+<script defer src="/i18n/i18n.js"></script>
+<script defer src="/i18n/tokomi-i18n-compat.js"></script>
+  
 </head>
 <body>
   <div class="product-hero">
@@ -750,12 +754,10 @@
   </footer>
   
   
-  <script defer src="/i18n/translations.js"></script>
-<script defer src="/i18n/i18n.js"></script>
-<script defer src="/i18n/tokomi-i18n-compat.js"></script>
-  
+ 
   
   <script>
+  let selectedColor = null;
     const cart = [];
 
     function toggleDropdown(dropdown) {
@@ -786,7 +788,7 @@
 
     function addToCart(size) {
       const cart = JSON.parse(localStorage.getItem("tokomi_cart_items")) || [];
-      const product = { name: "Baskets Geobasket", brand: "Rick Owens", price: 400, size: size, quantity: 1, image: "geobasket.jpg", timestamp: Date.now() };
+      const product = { name: "Baskets Geobasket", brand: "Rick Owens", price: 400, size: size, quantity: 1, image: "geobasket.jpg", color: (selectedColor || '').toLowerCase(), timestamp: Date.now() };
         const existing = cart.find(p => p.name === product.name && p.size === product.size);
         if (existing) {
         existing.quantity += 1;
@@ -930,6 +932,7 @@ function scrollToImage(imageId) {
 
     // Récupère la couleur
     const color = (thumbnailEl.dataset.color || '').trim();
+    selectedColor = color || null;
     const label = thumbnailEl.querySelector('.selected-color-label');
 
     if (label) {
