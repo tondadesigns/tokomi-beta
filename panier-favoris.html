@@ -2312,7 +2312,14 @@ function renderCart() {
         <div class="cart-image" style="background-image: url('${item.image || ''}');"></div>
         <div class="cart-info">
           <div class="cart-title">${(item.name || "").toUpperCase()}</div>
-          <div class="cart-subtitle">TAILLE ${item.size ?? ""} – NOIR</div>
+          <div class="cart-subtitle">
+          ${(() => {
+      const sizeText  = (item.size ?? '').toString().trim();
+      const colorText = (item.color ?? '').toString().trim();
+      const colorUp   = colorText ? colorText.toUpperCase() : ''; // fallback
+      return `TAILLE ${sizeText}${colorUp ? ' – ' + colorUp : ''}`;
+  })()}
+
           <div class="cart-price">€${parseFloat(item.price || 0).toFixed(2)}</div>
 
           <div class="quantity-controls">
