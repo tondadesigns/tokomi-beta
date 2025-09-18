@@ -42,6 +42,29 @@
   cursor: pointer;
   font-family: 'Space Grotesk', sans-serif;
 }
+    .user-membership {
+  position: absolute;
+  left: 30px;
+  top: 168px; /* juste sous le bouton RETOUR (124px) */
+  font-family: 'Space Grotesk', sans-serif;
+  text-transform: none;          /* garder la casse pour le nom */
+  color: #000;
+}
+
+.user-line {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  margin-bottom: 4px;
+  text-transform: uppercase;     /* garder l’uniformité TOKOMI */
+}
+
+.user-points {
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.2px;
+  text-transform: none;
+}
     .page-title {
   font-size: 30px;
   font-weight: 600;
@@ -208,6 +231,18 @@
 
   <header>
   <button class="btn-retour" onclick="location.href='profil.html'">RETOUR</button>
+
+  <!-- ↓↓↓ AJOUT ↓↓↓ -->
+<div class="user-membership">
+  <div class="user-line">
+    <span id="user-name">Invité</span> – Membre <span id="user-tier">BRONZE</span>
+  </div>
+  <div class="user-points">
+    Points cumulés: <span id="user-points">0</span>
+  </div>
+</div>
+<!-- ↑↑↑ AJOUT ↑↑↑ -->
+  
   <h1 class="page-title"> Adhésion</h1>
   </header>
 
@@ -303,6 +338,82 @@
   const total = images.length;
   let index = 0;
   let carouselInterval;
+  
+// ====== LECTURE LOCALSTORAGE + AFFICHAGE USER / TIER / POINTS ======
+
+// Essaie plusieurs clés possibles pour le nom utilisateur
+function getUserNameFromStorage() {
+  // ex: { name: "Kevin" } dans "tokomiUser"
+  try {
+    const userObj = JSON.parse(localStorage.getItem('tokomiUser') || 'null');
+    if (userObj && (userObj.name || userObj.username || userObj.fullName)) {
+      return (userObj.name || userObj.username || userObj.fullName).toString();
+    }
+  } catch(e){}
+
+  // clés simples courantes
+  const candidates = ['tokomi_user_name', 'tokomiUserName', 'user_name', 'username', 'fullName', 'name'];
+  for (const key of candidates) {
+    const val = localStorage.getItem(key);
+    if (val && val.trim()) return val.trim();
+  }
+  return 'Invité';
+}
+
+// Essaie plusieurs clés pour le montant cumulé (points)
+function getTotalSpendFromStorage() {
+  // ex: { loyaltyTotal: 3450 } dans "tokomiLoyalty"
+  try {
+    const loyaltyObj = JSON.parse(localStorage.getItem('tokomiLoyalty') || 'null');
+    if (loyaltyObj && typeof loyaltyObj.loyaltyTotal !== 'undefined') {
+      return Number(loyaltyObj.loyaltyTotal) || 0;
+    }
+  } catch(e){}
+
+  const candidates = [
+    'tokomi_total_spend',
+    'tokomiTotalSpend',
+    'tokomi_loyalty_total',
+    'loyaltyTotal',
+    'totalSpend',
+    'tokomi_points'
+  ];
+  for (const key of candidates) {
+    const raw = localStorage.getItem(key);
+    if (raw !== null) {
+      const n = Number(raw);
+      if (!Number.isNaN(n)) return n;
+    }
+  }
+  return 0;
+}
+
+// Calcule le palier de membership à partir du total cumulé
+function computeTier(total) {
+  if (total >= 12000) return 'CLIENT PRIVÉ';
+  if (total >= 6000)  return 'PLATINE';
+  if (total >= 2400)  return 'OR';
+  if (total >= 1200)  return 'ARGENT';
+  return 'BRONZE';
+}
+
+// Met à jour l’UI
+(function renderUserMembership() {
+  const nameEl  = document.getElementById('user-name');
+  const tierEl  = document.getElementById('user-tier');
+  const ptsEl   = document.getElementById('user-points');
+
+  const userName = getUserNameFromStorage();
+  const total    = getTotalSpendFromStorage();
+  const tier     = computeTier(total);
+
+  const fmt = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 });
+
+  if (nameEl) nameEl.textContent = userName;
+  if (tierEl) tierEl.textContent = tier;
+  if (ptsEl)  ptsEl.textContent  = fmt.format(total);
+})();
+
 
 
   // Fonction pour démarrer ou redémarrer le scroll automatique
