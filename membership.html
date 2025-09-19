@@ -350,22 +350,31 @@
 // ====== LECTURE LOCALSTORAGE + AFFICHAGE USER / TIER / POINTS ======
 
 // Essaie plusieurs clés possibles pour le nom utilisateur
+// Essaie plusieurs sources pour récupérer le prénom / nom
 function getUserNameFromStorage() {
-  // ex: { name: "Kevin" } dans "tokomiUser"
+  // 1) Objet central si présent
   try {
-    const userObj = JSON.parse(localStorage.getItem('tokomiUser') || 'null');   if (userObj) {
-      // priorité au prénom
+    const userObj = JSON.parse(localStorage.getItem('tokomiUser') || 'null');
+    if (userObj) {
       if (userObj.firstName) return String(userObj.firstName);
-      // fallback si tu n’as que name/username/fullName
       if (userObj.name || userObj.username || userObj.fullName) {
         return String(userObj.name || userObj.username || userObj.fullName);
       }
     }
   } catch(e){}
 
-  // clés simples courantes en fallback
+  // 2) Données du signup (ton formulaire actuel)
+  try {
+    const sd = JSON.parse(localStorage.getItem('signupData') || 'null');
+    if (sd && (sd.prenom || sd.firstName)) {
+      return String(sd.prenom || sd.firstName).trim();
+    }
+  } catch(e){}
+
+  // 3) Clés simples (ajout de "tokomi_username")
   const candidates = [
     'tokomi_user_name', 'tokomiUserName',
+    'tokomi_username',            // ← ajouté
     'user_first_name', 'firstName', 'given_name',
     'user_name', 'username', 'fullName', 'name'
   ];
@@ -373,8 +382,10 @@ function getUserNameFromStorage() {
     const val = localStorage.getItem(key);
     if (val && val.trim()) return val.trim();
   }
+
   return 'Invité';
 }
+
 
 // Essaie plusieurs clés pour le montant cumulé (points)
 function getTotalSpendFromStorage() {
