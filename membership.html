@@ -353,14 +353,22 @@
 function getUserNameFromStorage() {
   // ex: { name: "Kevin" } dans "tokomiUser"
   try {
-    const userObj = JSON.parse(localStorage.getItem('tokomiUser') || 'null');
-    if (userObj && (userObj.name || userObj.username || userObj.fullName)) {
-      return (userObj.name || userObj.username || userObj.fullName).toString();
+    const userObj = JSON.parse(localStorage.getItem('tokomiUser') || 'null');   if (userObj) {
+      // priorité au prénom
+      if (userObj.firstName) return String(userObj.firstName);
+      // fallback si tu n’as que name/username/fullName
+      if (userObj.name || userObj.username || userObj.fullName) {
+        return String(userObj.name || userObj.username || userObj.fullName);
+      }
     }
   } catch(e){}
 
-  // clés simples courantes
-  const candidates = ['tokomi_user_name', 'tokomiUserName', 'user_name', 'username', 'fullName', 'name'];
+  // clés simples courantes en fallback
+  const candidates = [
+    'tokomi_user_name', 'tokomiUserName',
+    'user_first_name', 'firstName', 'given_name',
+    'user_name', 'username', 'fullName', 'name'
+  ];
   for (const key of candidates) {
     const val = localStorage.getItem(key);
     if (val && val.trim()) return val.trim();
