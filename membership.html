@@ -387,15 +387,127 @@ function getUserNameFromStorage() {
 }
 
 
+function parseMoney(val) {
+  if (typeof val === 'number') return val;
+  if (val == null) return 0;
+  let s = String(val).trim();
+
+  // enlève symboles monétaires et espaces
+  s = s.replace(/[€$£¥]|[A-Z]{2,}/gi, '').replace(/\s/g, '');
+
+  // cas "1.234,56" (EU) -> "1234.56"
+  if (s.includes(',') && s.includes('.')) {
+    // on suppose virgule = décimales, point = milliers
+    s = s.replace(/\./g, '').replace(',', '.');
+  } else if (s.includes(',') && !s.includes('.')) {
+    // "1234,56" -> "1234.56"
+    s = s.replace(',', '.');
+  } else {
+    // "1,234.56" (US) -> "1234.56"
+    s = s.replace(/,/g, '');
+  }
+  const n = Number(s);
+  return Number.isFinite(n) ? n : 0;
+}
+
+// Normalise la valeur d'une clé LS potentielle en tableau d'ordres
+function normalizeOrdersFromLSValue(v) {
+  if (!v) return [];
+  if (Array.isArray(v)) return v;
+  if (typeof v === 'object') {
+    if (Array.isArray(v.orders))  return v.orders;
+    if (Array.isArray(v.history)) return v.history;
+    // objet indexé par id -> valeurs
+    return Object.values(v);
+  }
+  return [];
+}
+
+// Récupère les commandes depuis plusieurs clés probables de historique-2.html
+function collectOrdersFromHistoryKeys() {
+  const KEYS = [
+    'tokomi_historique_2',
+    'historique2',
+    'tokomiHistorique2',
+    'tokomi_orders',
+    'tokomiOrderHistory',
+    'tokomi_history_orders',
+    'orderHistory',
+    'orders',
+    'tokomi_past_orders',
+    'tokomiPurchases',
+    'purchases'
+  ];
+
+  const seen = new Set();
+  const orders = [];
+
+  for (const key of KEYS) {
+    const raw = localStorage.getItem(key);
+    if (!raw) continue;
+    try {
+      const parsed = JSON.parse(raw);
+      const arr = normalizeOrdersFromLSValue(parsed);
+      for (const o of arr) {
+        if (!o) continue;
+        // déduplique par id/référence si dispo
+        const id =
+          (o.id || o.orderId || o.ref || o.reference || o.number || o.code || '') + '';
+        const sig =
+          id || JSON.stringify([o.total ?? o.amount ?? o.price, o.date ?? o.createdAt ?? '']).slice(0, 120);
+        if (seen.has(sig)) continue;
+        seen.add(sig);
+        orders.push(o);
+      }
+    } catch (e) {
+      // ignore parsing errors
+    }
+  }
+  return orders;
+}
+
+// Somme les commandes (ignore annulées/remboursées si indiqué)
+function sumOrders(orders) {
+  let sum = 0;
+  for (const o of orders) {
+    // filtre statuts annulés/remboursés
+    const st = (o && o.status ? String(o.status) : '').toLowerCase();
+    if (/annul|cancel|rembours|refund/.test(st)) continue;
+
+    // cherche un total direct
+    let tot = o?.total ?? o?.grandTotal ?? o?.totalAmount ?? o?.amount ?? o?.price ?? null;
+
+    // sinon, somme des lignes
+    if (tot == null && Array.isArray(o?.items)) {
+      let t = 0;
+      for (const it of o.items) {
+        const qty = Number(it?.qty ?? it?.quantity ?? 1);
+        const p = parseMoney(it?.total ?? it?.price ?? it?.amount);
+        t += qty * p;
+      }
+      tot = t;
+    }
+
+    sum += parseMoney(tot);
+  }
+  return sum;
+}
+  
+
 // Essaie plusieurs clés pour le montant cumulé (points)
 function getTotalSpendFromStorage() {
-  // ex: { loyaltyTotal: 3450 } dans "tokomiLoyalty"
+  // 1) Tente de reconstituer depuis l'historique (historique-2.html)
+  const orders = collectOrdersFromHistoryKeys();
+  const histTotal = sumOrders(orders);
+  if (histTotal > 0) return histTotal;
+
+  // 2) Fallbacks : cumul direct
   try {
     const loyaltyObj = JSON.parse(localStorage.getItem('tokomiLoyalty') || 'null');
     if (loyaltyObj && typeof loyaltyObj.loyaltyTotal !== 'undefined') {
       return Number(loyaltyObj.loyaltyTotal) || 0;
     }
-  } catch(e){}
+  } catch (e) {}
 
   const candidates = [
     'tokomi_total_spend',
@@ -408,7 +520,7 @@ function getTotalSpendFromStorage() {
   for (const key of candidates) {
     const raw = localStorage.getItem(key);
     if (raw !== null) {
-      const n = Number(raw);
+      const n = parseMoney(raw);
       if (!Number.isNaN(n)) return n;
     }
   }
