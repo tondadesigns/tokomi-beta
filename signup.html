@@ -275,9 +275,28 @@
 
     // Sauvegarde
     localStorage.setItem('signupData', JSON.stringify(data));
-    localStorage.setItem('tokomi_auth', 'user');            // connecté
-    localStorage.setItem('tokomi_username', data.prenom||"");// prénom = username si besoin
+    localStorage.setItem('tokomi_auth', 'user');      // connecté
 
+      // Objet utilisateur centralisé (priorité au prénom)
+    const existingUser = JSON.parse(localStorage.getItem('tokomiUser') || '{}');
+    const full = `${data.prenom} ${data.nom}`.trim();
+
+    const user = {
+      ...existingUser,
+      firstName: data.prenom,
+      name: existingUser.name || full,
+      fullName: existingUser.fullName || full,
+      email: data.email,
+      phone: data.telephone,
+      address1: data.adresse
+    };
+    localStorage.setItem('tokomiUser', JSON.stringify(user));
+    
+    localStorage.setItem('tokomi_user_name', data.prenom);// prénom = username si besoin
+    localStorage.setItem('tokomiUserName', data.prenom);
+    localStorage.setItem('username', data.prenom);
+    localStorage.setItem
+    
     // UI: modal de confirmation puis redirection
     showModal();
     setTimeout(() => {
