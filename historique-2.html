@@ -146,6 +146,69 @@ document.addEventListener('DOMContentLoaded', () => {
   const orders = JSON.parse(localStorage.getItem('tokomi_orders')) || [];
   container.innerHTML = '';
 
+  // === Enhancer non-invasif : calcule et persiste le cumul ===
+(function persistCumulativeTotalFromOrders() {
+  try {
+    const total = (orders || []).reduce((acc, o) => {
+      // ignore « annulé / remboursé »
+      const st = String(o?.status || '').toLowerCase();
+      if (/annul|cancel|rembours|refund/.test(st)) return acc;
+
+      // total de la commande : on respecte o.total, sinon on calcule via produits
+      const t = (typeof o?.total !== 'undefined')
+        ? parseMoney(o.total)
+        : sumItems(o?.products);
+
+      return acc + (Number.isFinite(t) ? t : 0);
+    }, 0);
+
+    const rounded = Math.round(total);
+
+    // Mises à jour compatibles avec membership.html (ne casse rien du rendu)
+    localStorage.setItem('tokomi_total_spend', String(rounded));
+
+    let loyalty = {};
+    try { loyalty = JSON.parse(localStorage.getItem('tokomiLoyalty') || '{}') || {}; } catch(e) {}
+    loyalty.loyaltyTotal = rounded;
+    localStorage.setItem('tokomiLoyalty', JSON.stringify(loyalty));
+  } catch(e) {
+    // silencieux pour ne pas casser le flux
+  }
+
+  // Helpers locaux pour éviter toute collision de noms
+  function sumItems(items) {
+    if (!Array.isArray(items)) return 0;
+    let t = 0;
+    for (const it of items) {
+      const qty  = Number(it?.qty ?? it?.quantity ?? 1);
+      const unit = parseMoney(it?.price ?? it?.amount ?? it?.total ?? 0);
+      t += qty * unit;
+    }
+    return t;
+  }
+
+  function parseMoney(val) {
+    if (typeof val === 'number') return Number.isFinite(val) ? val : 0;
+    if (val == null) return 0;
+    let s = String(val).trim();
+
+    // enlève symboles et espaces
+    s = s.replace(/[€$£¥]|[A-Z]{2,}/gi, '').replace(/\s/g, '');
+
+    // normalise formats EU/US
+    if (s.includes(',') && s.includes('.')) {
+      s = s.replace(/\./g, '').replace(',', '.'); // 1.234,56 -> 1234.56
+    } else if (s.includes(',') && !s.includes('.')) {
+      s = s.replace(',', '.');                    // 1234,56  -> 1234.56
+    } else {
+      s = s.replace(/,/g, '');                    // 1,234.56 -> 1234.56
+    }
+    const n = Number(s);
+    return Number.isFinite(n) ? n : 0;
+  }
+})();
+
+  
   if (!orders.length) {
     const empty = document.createElement('div');
     empty.className = 'no-orders';
