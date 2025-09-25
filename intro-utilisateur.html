@@ -163,6 +163,7 @@
   // ===== Logique existante conservée =====
   function continueAsGuest() {
     // marquer le mode invité et nettoyer un éventuel nom
+    try { TokomiSession?.enterGuestMode?.(); } catch(e) {}
     localStorage.setItem('tokomi_auth', 'guest');
     localStorage.removeItem('tokomi_username');
 
