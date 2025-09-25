@@ -296,6 +296,15 @@
     localStorage.setItem('tokomiUserName', data.prenom);
     localStorage.setItem('username', data.prenom);
     localStorage.setItem
+
+    try {
+  TokomiSession.login({
+    email:     data.email,
+    firstName: data.prenom,
+    lastName:  data.nom
+  });
+} catch(e) {}
+
     
     // UI: modal de confirmation puis redirection
     showModal();
