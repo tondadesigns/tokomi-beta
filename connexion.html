@@ -173,14 +173,6 @@ function login() {
   localStorage.setItem('tokomi_username', (data.prenom || "").trim());
 
   
-  try {
-  TokomiSession.login({
-    email:     user.email,
-    firstName: user.firstName || user.prenom,
-    lastName:  user.lastName  || user.nom
-  });
-} catch(e) {}
-  
   // Redirection vers le profil (où .username affichera le prénom)
   window.location.href = 'profil.html';
 }
