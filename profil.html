@@ -182,7 +182,16 @@
       if (window.applyTranslations) {
         applyTranslations(currentLang());
       }
+      const btn = document.getElementById('authBtn');
+  if (!btn) return;
 
+  btn.addEventListener('click', () => {
+    try { TokomiSession?.enterGuestMode?.(); } catch(e) {}
+    // Fallback si tu n’as rien d’autre :
+    // localStorage.setItem('tokomi_auth','guest');
+    // location.href = 'intro-utilisateur.html';
+  });
+});
       const auth = localStorage.getItem('tokomi_auth');         // 'user' | 'guest' | null
       const data = JSON.parse(localStorage.getItem('signupData') || '{}');
       const usernameDiv = document.querySelector('.username');
